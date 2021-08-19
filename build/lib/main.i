@@ -1870,32 +1870,14 @@ static inline int joystick_2_up()
 }
 # 6 "C:\\Vide2.5.1.w64\\Vide.w64\\vectrex-pong\\source\\main.c" 2
 # 18 "C:\\Vide2.5.1.w64\\Vide.w64\\vectrex-pong\\source\\main.c"
-int player1_x = -0x24/2;
-int player1_y = 100;
-int player2_x = -0x24/2;
-int player2_y = -100;
+int player1_x, player1_y;
+int player2_x, player2_y;
 
 char player1_score_str[7];
 char player2_score_str[7];
 
-int dot_x = 0;
-int dot_y = 0;
-int dot_x_vel = 2;
-int dot_y_vel = 2;
-
-
-
-
-void setup(void) {
-  disable_controller_1_x();
-  disable_controller_1_y();
-  disable_controller_2_x();
-  disable_controller_2_y();
-  Clear_Score(player1_score_str);
-  Clear_Score(player2_score_str);
-  player1_score_str[6] = '\x80';
-  player2_score_str[6] = '\x80';
-}
+int dot_x, dot_y;
+int dot_x_vel, dot_y_vel;
 
 static inline void loop_setup(void) {
   Wait_Recal();
@@ -1909,6 +1891,26 @@ void reset_round(void) {
   dot_y = 0;
   dot_x_vel = 2;
   dot_y_vel = 2;
+
+  player1_x = -0x24/2;
+  player1_y = 100;
+  player2_x = -0x24/2;
+  player2_y = -100;
+}
+
+
+
+
+void setup(void) {
+  disable_controller_1_x();
+  disable_controller_1_y();
+  disable_controller_2_x();
+  disable_controller_2_y();
+  Clear_Score(player1_score_str);
+  Clear_Score(player2_score_str);
+  player1_score_str[6] = '\x80';
+  player2_score_str[6] = '\x80';
+  reset_round();
 }
 
 

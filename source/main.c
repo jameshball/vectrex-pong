@@ -15,32 +15,14 @@
 #define BOUND_X 100
 #define BOUND_Y 120
 
-int player1_x = -HALF_PADDLE;
-int player1_y = PADDLE_Y;
-int player2_x = -HALF_PADDLE;
-int player2_y = -PADDLE_Y;
+int player1_x, player1_y;
+int player2_x, player2_y;
 
 char player1_score_str[7];
 char player2_score_str[7];
 
-int dot_x = 0;
-int dot_y = 0;
-int dot_x_vel = 2;
-int dot_y_vel = 2;
-
-/*
- * A simple setup routine that enables/disables the joystick
- */
-void setup(void) {
-  disable_controller_1_x();
-  disable_controller_1_y();
-  disable_controller_2_x();
-  disable_controller_2_y();
-  Clear_Score(player1_score_str);
-  Clear_Score(player2_score_str);
-  player1_score_str[6] = '\x80';
-  player2_score_str[6] = '\x80';
-}
+int dot_x, dot_y;
+int dot_x_vel, dot_y_vel;
 
 static inline void loop_setup(void) {
   Wait_Recal();
@@ -54,6 +36,26 @@ void reset_round(void) {
   dot_y = 0;
   dot_x_vel = 2;
   dot_y_vel = 2;
+
+  player1_x = -HALF_PADDLE;
+  player1_y = PADDLE_Y;
+  player2_x = -HALF_PADDLE;
+  player2_y = -PADDLE_Y;
+}
+
+/*
+ * A simple setup routine that enables/disables the joystick
+ */
+void setup(void) {
+  disable_controller_1_x();
+  disable_controller_1_y();
+  disable_controller_2_x();
+  disable_controller_2_y();
+  Clear_Score(player1_score_str);
+  Clear_Score(player2_score_str);
+  player1_score_str[6] = '\x80';
+  player2_score_str[6] = '\x80';
+  reset_round();
 }
 
 /*

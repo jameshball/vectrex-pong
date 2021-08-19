@@ -39,160 +39,221 @@
 
 ; Compiler executable checksum: 8f282e2d9663ae6148257c524e608c63
 
-	.globl	_player1_x
-	.area	.data
-_player1_x:
-	.byte	-18
-	.globl	_player1_y
-_player1_y:
-	.byte	100
-	.globl	_player2_x
-_player2_x:
-	.byte	-18
-	.globl	_player2_y
-_player2_y:
-	.byte	-100
 	.area	.bss
+	.globl	_player1_x
+_player1_x:	.blkb	1
+	.globl	_player1_y
+_player1_y:	.blkb	1
+	.globl	_player2_x
+_player2_x:	.blkb	1
+	.globl	_player2_y
+_player2_y:	.blkb	1
 	.globl	_player1_score_str
 _player1_score_str:	.blkb	7
 	.globl	_player2_score_str
 _player2_score_str:	.blkb	7
 	.globl	_dot_x
-	.area	.data
-_dot_x:
-	.byte	0
+_dot_x:	.blkb	1
 	.globl	_dot_y
-_dot_y:
-	.byte	0
+_dot_y:	.blkb	1
 	.globl	_dot_x_vel
-_dot_x_vel:
-	.byte	2
+_dot_x_vel:	.blkb	1
 	.globl	_dot_y_vel
-_dot_y_vel:
-	.byte	2
+_dot_y_vel:	.blkb	1
 	.area	.text
-	.globl	_setup
-_setup:
-;----- asm -----
-; 35 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[34]  disable_controller_1_x();
-;--- end asm ---
-	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
-;----- asm -----
-; 37 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[35]  disable_controller_1_y();
-;--- end asm ---
-	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
-;----- asm -----
-; 39 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[36]  disable_controller_2_x();
-;--- end asm ---
-	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
-;----- asm -----
-; 41 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[37]  disable_controller_2_y();
-;--- end asm ---
-	clr	_Vec_Joy_Mux_2_Y	; Vec_Joy_Mux_2_Y
-;----- asm -----
-; 43 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[38]  Clear_Score(player1_score_str);
-;--- end asm ---
-	ldx	#_player1_score_str	;,
-	jsr	___Clear_Score
-;----- asm -----
-; 45 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[39]  Clear_Score(player2_score_str);
-;--- end asm ---
-	ldx	#_player2_score_str	;,
-	jsr	___Clear_Score
-;----- asm -----
-; 47 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[40]  player1_score_str[6] = '€';
-;--- end asm ---
-	ldb	#-128	;,
-	stb	_player1_score_str+6	;, player1_score_str
-;----- asm -----
-; 49 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[41]  player2_score_str[6] = '€';
-;--- end asm ---
-	stb	_player2_score_str+6	;, player2_score_str
-	rts
 	.globl	_reset_round
 _reset_round:
 ;----- asm -----
-; 65 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[52]  dot_x = 0;
+; 39 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[34]  dot_x = 0;
 ;--- end asm ---
 	clr	_dot_x	; dot_x
 ;----- asm -----
-; 67 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[53]  dot_y = 0;
+; 41 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[35]  dot_y = 0;
 ;--- end asm ---
 	clr	_dot_y	; dot_y
 ;----- asm -----
-; 69 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[54]  dot_x_vel = 2;
+; 43 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[36]  dot_x_vel = 2;
 ;--- end asm ---
 	ldb	#2	;,
 	stb	_dot_x_vel	;, dot_x_vel
 ;----- asm -----
-; 71 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[55]  dot_y_vel = 2;
+; 45 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[37]  dot_y_vel = 2;
 ;--- end asm ---
 	stb	_dot_y_vel	;, dot_y_vel
+;----- asm -----
+; 48 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[39]  player1_x = -HALF_PADDLE;
+;--- end asm ---
+	ldb	#-18	;,
+	stb	_player1_x	;, player1_x
+;----- asm -----
+; 50 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[40]  player1_y = PADDLE_Y;
+;--- end asm ---
+	ldb	#100	;,
+	stb	_player1_y	;, player1_y
+;----- asm -----
+; 52 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[41]  player2_x = -HALF_PADDLE;
+;--- end asm ---
+	ldb	#-18	;,
+	stb	_player2_x	;, player2_x
+;----- asm -----
+; 54 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[42]  player2_y = -PADDLE_Y;
+;--- end asm ---
+	ldb	#-100	;,
+	stb	_player2_y	;, player2_y
+	rts
+	.globl	_setup
+_setup:
+;----- asm -----
+; 62 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[49]  disable_controller_1_x();
+;--- end asm ---
+	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
+;----- asm -----
+; 64 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[50]  disable_controller_1_y();
+;--- end asm ---
+	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
+;----- asm -----
+; 66 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[51]  disable_controller_2_x();
+;--- end asm ---
+	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
+;----- asm -----
+; 68 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[52]  disable_controller_2_y();
+;--- end asm ---
+	clr	_Vec_Joy_Mux_2_Y	; Vec_Joy_Mux_2_Y
+;----- asm -----
+; 70 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[53]  Clear_Score(player1_score_str);
+;--- end asm ---
+	ldx	#_player1_score_str	;,
+	jsr	___Clear_Score
+;----- asm -----
+; 72 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[54]  Clear_Score(player2_score_str);
+;--- end asm ---
+	ldx	#_player2_score_str	;,
+	jsr	___Clear_Score
+;----- asm -----
+; 74 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[55]  player1_score_str[6] = '€';
+;--- end asm ---
+	ldb	#-128	;,
+	stb	_player1_score_str+6	;, player1_score_str
+;----- asm -----
+; 76 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[56]  player2_score_str[6] = '€';
+;--- end asm ---
+	stb	_player2_score_str+6	;, player2_score_str
+;----- asm -----
+; 78 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[57]  reset_round();
+; 39 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[34]  dot_x = 0;
+;--- end asm ---
+	clr	_dot_x	; dot_x
+;----- asm -----
+; 41 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[35]  dot_y = 0;
+;--- end asm ---
+	clr	_dot_y	; dot_y
+;----- asm -----
+; 43 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[36]  dot_x_vel = 2;
+;--- end asm ---
+	ldb	#2	;,
+	stb	_dot_x_vel	;, dot_x_vel
+;----- asm -----
+; 45 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[37]  dot_y_vel = 2;
+;--- end asm ---
+	stb	_dot_y_vel	;, dot_y_vel
+;----- asm -----
+; 48 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[39]  player1_x = -HALF_PADDLE;
+;--- end asm ---
+	ldb	#-18	;,
+	stb	_player1_x	;, player1_x
+;----- asm -----
+; 50 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[40]  player1_y = PADDLE_Y;
+;--- end asm ---
+	ldb	#100	;,
+	stb	_player1_y	;, player1_y
+;----- asm -----
+; 52 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[41]  player2_x = -HALF_PADDLE;
+;--- end asm ---
+	ldb	#-18	;,
+	stb	_player2_x	;, player2_x
+;----- asm -----
+; 54 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[42]  player2_y = -PADDLE_Y;
+;--- end asm ---
+	ldb	#-100	;,
+	stb	_player2_y	;, player2_y
 	rts
 	.globl	_main
 _main:
 	leas	-7,s	;,,
 ;----- asm -----
-; 81 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[64]  setup();
+; 88 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[66]  setup();
 ;--- end asm ---
 	jsr	_setup
 ;----- asm -----
-; 84 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[66]  while (1) {
+; 91 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[68]  while (1) {
 ;--- end asm ---
 	lbra	L18	;
 L10:
 	ldb	3,s	;, dot_y.14
 	cmpb	#-120	;cmpqi:	;,
 	lblt	L21	;
-	ldb	_player1_x	; player1_x.59, player1_x
-	cmpb	1,s	;cmpqi:(R)	; player1_x.59, dot_x.12
+	ldb	_player1_x	; player1_x.60, player1_x
+	cmpb	1,s	;cmpqi:(R)	; player1_x.60, dot_x.12
 	lbgt	L13	;
-	addb	#36	; player1_x.59,
-	cmpb	1,s	;cmpqi:(R)	; player1_x.59, dot_x.12
+	addb	#36	; player1_x.60,
+	cmpb	1,s	;cmpqi:(R)	; player1_x.60, dot_x.12
 	lblt	L13	;
 	ldb	_player1_y	;, player1_y
-	stb	5,s	;, player1_y.60
+	stb	5,s	;, player1_y.61
 	subb	2,s	; tmp52, dot_y_vel.13
 	cmpb	3,s	;cmpqi:(R)	; tmp52, dot_y.14
 	lbgt	L13	;
-	ldb	5,s	;, player1_y.60
+	ldb	5,s	;, player1_y.61
 	addb	2,s	;, dot_y_vel.13
-	stb	5,s	;, player1_y.60
+	stb	5,s	;, player1_y.61
 	ldb	3,s	;, dot_y.14
-	cmpb	5,s	;cmpqi:	;, player1_y.60
+	cmpb	5,s	;cmpqi:	;, player1_y.61
 	lbgt	L13	;
 ;----- asm -----
-; 156 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[112]      dot_y_vel = -dot_y_vel;
+; 163 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[114]      dot_y_vel = -dot_y_vel;
 ;--- end asm ---
 	ldb	2,s	; dot_y_vel.15, dot_y_vel.13
 	negb	; dot_y_vel.15
 	stb	_dot_y_vel	; dot_y_vel.15, dot_y_vel
 ;----- asm -----
-; 158 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[113]      dot_y = dot_y + 2 * dot_y_vel;
+; 165 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[115]      dot_y = dot_y + 2 * dot_y_vel;
 ;--- end asm ---
 	aslb	; dot_y_vel.15
 	addb	3,s	; dot_y_vel.15, dot_y.14
 	stb	_dot_y	; dot_y_vel.15, dot_y
 L11:
 ;----- asm -----
-; 168 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[120]    if (dot_x > BOUND_X || dot_x < -BOUND_X) {
+; 175 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[122]    if (dot_x > BOUND_X || dot_x < -BOUND_X) {
 ;--- end asm ---
 	ldb	_dot_x	; tmp59, dot_x
 	addb	#100	; tmp59,
@@ -200,56 +261,56 @@ L11:
 	lbhi	L22	;
 L18:
 ;----- asm -----
-; 86 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[67]    loop_setup();
-; 54 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[45]  Wait_Recal();
+; 93 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[69]    loop_setup();
+; 28 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[27]  Wait_Recal();
 ;--- end asm ---
 	jsr	___Wait_Recal
 ;----- asm -----
-; 56 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[46]  check_buttons(); /* update status of buttons * /
+; 30 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[28]  check_buttons(); /* update status of buttons * /
 ;--- end asm ---
 	jsr	___Read_Btns
 ;----- asm -----
-; 58 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[47]  Intensity_a(MAX_BRIGHTNESS); /* set some brightness * /
+; 32 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[29]  Intensity_a(MAX_BRIGHTNESS); /* set some brightness * /
 ;--- end asm ---
 	ldb	#127	;,
 	jsr	__Intensity_a
 ;----- asm -----
-; 60 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[48]  VIA_t1_cnt_lo = SCALE;      /* set scale factor * /
+; 34 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[30]  VIA_t1_cnt_lo = SCALE;      /* set scale factor * /
 ;--- end asm ---
 	ldb	#127	;,
 	stb	_VIA_t1_cnt_lo	;, VIA_t1_cnt_lo
 ;----- asm -----
-; 90 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[70]    Print_Str_d(127, -128, player1_score_str);
+; 97 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[72]    Print_Str_d(127, -128, player1_score_str);
 ;--- end asm ---
 	stb	,-s	;,
 	ldx	#_player1_score_str	;,
 	incb	;
 	jsr	__Print_Str_d
 ;----- asm -----
-; 92 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[71]    Print_Str_d(-128, -128, player2_score_str);
+; 99 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[73]    Print_Str_d(-128, -128, player2_score_str);
 ;--- end asm ---
 	ldb	#-128	;,
 	stb	,-s	;,
 	ldx	#_player2_score_str	;,
 	jsr	__Print_Str_d
 ;----- asm -----
-; 96 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[74]    Dot_d(dot_y, dot_x);
+; 103 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[76]    Dot_d(dot_y, dot_x);
 ;--- end asm ---
 	ldb	_dot_y	;, dot_y
 	stb	,-s	;,
 	ldb	_dot_x	;, dot_x
 	jsr	__Dot_d
 ;----- asm -----
-; 98 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[75]    Moveto_d(-dot_y, -dot_x);
+; 105 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[77]    Moveto_d(-dot_y, -dot_x);
 ;--- end asm ---
 	ldb	_dot_x	;, dot_x
 	negb	;
@@ -260,8 +321,8 @@ L18:
 	ldb	4,s	;,
 	jsr	__Moveto_d
 ;----- asm -----
-; 102 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[78]    if (button_1_1_held() && player1_x > -BOUND_X) {
+; 109 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[80]    if (button_1_1_held() && player1_x > -BOUND_X) {
 ;--- end asm ---
 	ldb	_Vec_Btn_State	;, Vec_Btn_State
 	stb	8,s	;, D.3132
@@ -272,32 +333,32 @@ L18:
 	cmpb	#-99	;cmpqi:	; player1_x.3,
 	blt	L6	;
 ;----- asm -----
-; 104 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[79]      player1_x -= PADDLE_SPEED;
+; 111 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[81]      player1_x -= PADDLE_SPEED;
 ;--- end asm ---
 	addb	#-3	; player1_x.3,
 	stb	_player1_x	; player1_x.3, player1_x
 L6:
 ;----- asm -----
-; 107 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[81]    if (button_1_2_held() && player1_x + PADDLE_LENGTH < BOUND_X) {
+; 114 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[83]    if (button_1_2_held() && player1_x + PADDLE_LENGTH < BOUND_X) {
 ;--- end asm ---
 	ldb	#2	; tmp45,
 	andb	4,s	; tmp45, D.3132
 	beq	L7	;
-	ldb	_player1_x	; player1_x.51, player1_x
-	cmpb	#63	;cmpqi:	; player1_x.51,
+	ldb	_player1_x	; player1_x.52, player1_x
+	cmpb	#63	;cmpqi:	; player1_x.52,
 	bgt	L7	;
 ;----- asm -----
-; 109 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[82]      player1_x += PADDLE_SPEED;
+; 116 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[84]      player1_x += PADDLE_SPEED;
 ;--- end asm ---
-	addb	#3	; player1_x.51,
-	stb	_player1_x	; player1_x.51, player1_x
+	addb	#3	; player1_x.52,
+	stb	_player1_x	; player1_x.52, player1_x
 L7:
 ;----- asm -----
-; 112 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[84]    if (button_1_3_held() && player2_x > - BOUND_X) {
+; 119 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[86]    if (button_1_3_held() && player2_x > - BOUND_X) {
 ;--- end asm ---
 	ldb	#4	; tmp46,
 	andb	4,s	; tmp46, D.3132
@@ -306,47 +367,47 @@ L7:
 	cmpb	#-99	;cmpqi:	; player2_x.6,
 	blt	L8	;
 ;----- asm -----
-; 114 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[85]      player2_x -= PADDLE_SPEED;
+; 121 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[87]      player2_x -= PADDLE_SPEED;
 ;--- end asm ---
 	addb	#-3	; player2_x.6,
 	stb	_player2_x	; player2_x.6, player2_x
 L8:
 ;----- asm -----
-; 117 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[87]    if (button_1_4_held() && player2_x + PADDLE_LENGTH < BOUND_X) {
+; 124 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[89]    if (button_1_4_held() && player2_x + PADDLE_LENGTH < BOUND_X) {
 ;--- end asm ---
 	ldb	#8	;,
 	andb	4,s	;, D.3132
 	beq	L9	;
-	ldb	_player2_x	; player2_x.52, player2_x
-	cmpb	#63	;cmpqi:	; player2_x.52,
+	ldb	_player2_x	; player2_x.53, player2_x
+	cmpb	#63	;cmpqi:	; player2_x.53,
 	bgt	L9	;
 ;----- asm -----
-; 119 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[88]      player2_x += PADDLE_SPEED;
+; 126 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[90]      player2_x += PADDLE_SPEED;
 ;--- end asm ---
-	addb	#3	; player2_x.52,
-	stb	_player2_x	; player2_x.52, player2_x
+	addb	#3	; player2_x.53,
+	stb	_player2_x	; player2_x.53, player2_x
 L9:
 ;----- asm -----
-; 124 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[92]    Moveto_d(player1_y, player1_x);
+; 131 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[94]    Moveto_d(player1_y, player1_x);
 ;--- end asm ---
 	ldb	_player1_y	;, player1_y
 	stb	,-s	;,
 	ldb	_player1_x	;, player1_x
 	jsr	__Moveto_d
 ;----- asm -----
-; 126 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[93]    Draw_Line_d(0, PADDLE_LENGTH);
+; 133 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[95]    Draw_Line_d(0, PADDLE_LENGTH);
 ;--- end asm ---
 	clr	,-s	;
 	ldb	#36	;,
 	jsr	__Draw_Line_d
 ;----- asm -----
-; 128 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[94]    Moveto_d(-player1_y, -player1_x - PADDLE_LENGTH);
+; 135 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[96]    Moveto_d(-player1_y, -player1_x - PADDLE_LENGTH);
 ;--- end asm ---
 	ldb	#-36	; tmp49,
 	subb	_player1_x	; tmp49, player1_x
@@ -357,31 +418,31 @@ L9:
 	ldb	3,s	;,
 	jsr	__Moveto_d
 ;----- asm -----
-; 132 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[97]    Moveto_d(player2_y, player2_x);
+; 139 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[99]    Moveto_d(player2_y, player2_x);
 ;--- end asm ---
 	ldb	_player2_y	;, player2_y
 	stb	,-s	;,
 	ldb	_player2_x	;, player2_x
 	jsr	__Moveto_d
 ;----- asm -----
-; 134 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[98]    Draw_Line_d(0, PADDLE_LENGTH);
+; 141 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[100]    Draw_Line_d(0, PADDLE_LENGTH);
 ;--- end asm ---
 	clr	,-s	;
 	ldb	#36	;,
 	jsr	__Draw_Line_d
 ;----- asm -----
-; 138 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[101]    dot_x = dot_x + dot_x_vel;
+; 145 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[103]    dot_x = dot_x + dot_x_vel;
 ;--- end asm ---
 	ldb	_dot_x_vel	;, dot_x_vel
 	addb	_dot_x	;, dot_x
 	stb	6,s	;, dot_x.12
 	stb	_dot_x	;, dot_x
 ;----- asm -----
-; 140 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[102]    dot_y = dot_y + dot_y_vel;
+; 147 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[104]    dot_y = dot_y + dot_y_vel;
 ;--- end asm ---
 	ldb	_dot_y_vel	;, dot_y_vel
 	stb	7,s	;, dot_y_vel.13
@@ -389,94 +450,118 @@ L9:
 	stb	8,s	;, dot_y.14
 	stb	_dot_y	;, dot_y
 ;----- asm -----
-; 144 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[105]    if (dot_y > BOUND_Y) {
+; 151 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[107]    if (dot_y > BOUND_Y) {
 ;--- end asm ---
 	leas	5,s	;,,
 	cmpb	#120	;cmpqi:	;,
 	lble	L10	;
 ;----- asm -----
-; 146 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[106]      Add_Score_a(1, player2_score_str);
+; 153 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[108]      Add_Score_a(1, player2_score_str);
 ;--- end asm ---
 	ldx	#_player2_score_str	;,
 	ldb	#1	;,
 	jsr	__Add_Score_a
 ;----- asm -----
-; 148 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[107]      reset_round();
+; 155 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[109]      reset_round();
 ;--- end asm ---
 L19:
 ;----- asm -----
-; 65 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[52]  dot_x = 0;
+; 39 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[34]  dot_x = 0;
 ;--- end asm ---
 	clr	_dot_x	; dot_x
 ;----- asm -----
-; 67 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[53]  dot_y = 0;
+; 41 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[35]  dot_y = 0;
 ;--- end asm ---
 	clr	_dot_y	; dot_y
 ;----- asm -----
-; 69 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[54]  dot_x_vel = 2;
+; 43 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[36]  dot_x_vel = 2;
 ;--- end asm ---
 	ldb	#2	;,
 	stb	_dot_x_vel	;, dot_x_vel
 ;----- asm -----
-; 71 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[55]  dot_y_vel = 2;
+; 45 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[37]  dot_y_vel = 2;
 ;--- end asm ---
 	stb	_dot_y_vel	;, dot_y_vel
+;----- asm -----
+; 48 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[39]  player1_x = -HALF_PADDLE;
+;--- end asm ---
+	ldb	#-18	;,
+	stb	_player1_x	;, player1_x
+;----- asm -----
+; 50 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[40]  player1_y = PADDLE_Y;
+;--- end asm ---
+	ldb	#100	;,
+	stb	_player1_y	;, player1_y
+;----- asm -----
+; 52 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[41]  player2_x = -HALF_PADDLE;
+;--- end asm ---
+	ldb	#-18	;,
+	stb	_player2_x	;, player2_x
+;----- asm -----
+; 54 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[42]  player2_y = -PADDLE_Y;
+;--- end asm ---
+	ldb	#-100	;,
+	stb	_player2_y	;, player2_y
 	lbra	L11	;
 L13:
-	ldb	_player2_x	; player2_x.61, player2_x
-	cmpb	1,s	;cmpqi:(R)	; player2_x.61, dot_x.12
+	ldb	_player2_x	; player2_x.62, player2_x
+	cmpb	1,s	;cmpqi:(R)	; player2_x.62, dot_x.12
 	lbgt	L11	;
-	addb	#36	; player2_x.61,
-	cmpb	1,s	;cmpqi:(R)	; player2_x.61, dot_x.12
+	addb	#36	; player2_x.62,
+	cmpb	1,s	;cmpqi:(R)	; player2_x.62, dot_x.12
 	lblt	L11	;
 	ldb	_player2_y	;, player2_y
-	stb	6,s	;, player2_y.62
+	stb	6,s	;, player2_y.63
 	addb	2,s	; tmp56, dot_y_vel.13
 	cmpb	3,s	;cmpqi:(R)	; tmp56, dot_y.14
 	lbgt	L11	;
-	ldb	6,s	; tmp57, player2_y.62
+	ldb	6,s	; tmp57, player2_y.63
 	subb	2,s	; tmp57, dot_y_vel.13
 	cmpb	3,s	;cmpqi:(R)	; tmp57, dot_y.14
 	lblt	L11	;
 ;----- asm -----
-; 161 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[115]      dot_y_vel = -dot_y_vel;
+; 168 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[117]      dot_y_vel = -dot_y_vel;
 ;--- end asm ---
-	ldb	2,s	; dot_y_vel.63, dot_y_vel.13
-	negb	; dot_y_vel.63
-	stb	_dot_y_vel	; dot_y_vel.63, dot_y_vel
+	ldb	2,s	; dot_y_vel.64, dot_y_vel.13
+	negb	; dot_y_vel.64
+	stb	_dot_y_vel	; dot_y_vel.64, dot_y_vel
 ;----- asm -----
-; 163 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[116]      dot_y = dot_y + 2 * dot_y_vel;
+; 170 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[118]      dot_y = dot_y + 2 * dot_y_vel;
 ;--- end asm ---
-	aslb	; dot_y_vel.63
-	addb	3,s	; dot_y_vel.63, dot_y.14
-	stb	_dot_y	; dot_y_vel.63, dot_y
+	aslb	; dot_y_vel.64
+	addb	3,s	; dot_y_vel.64, dot_y.14
+	stb	_dot_y	; dot_y_vel.64, dot_y
 	lbra	L11	;
 L21:
 ;----- asm -----
-; 151 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[109]      Add_Score_a(1, player1_score_str);
+; 158 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[111]      Add_Score_a(1, player1_score_str);
 ;--- end asm ---
 	ldx	#_player1_score_str	;,
 	ldb	#1	;,
 	jsr	__Add_Score_a
 ;----- asm -----
-; 153 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[110]      reset_round();
+; 160 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[112]      reset_round();
 ;--- end asm ---
 	lbra	L19	;
 L22:
 ;----- asm -----
-; 170 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
-	; #ENR#[121]      dot_x_vel = -dot_x_vel;
+; 177 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.enr.c" 1
+	; #ENR#[123]      dot_x_vel = -dot_x_vel;
 ;--- end asm ---
 	neg	_dot_x_vel	; dot_x_vel
 	lbra	L18	;
