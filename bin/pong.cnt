@@ -1,0 +1,470 @@
+HIGHEST_USED_RAM $0000
+COMMENT $0000 not used RAM onword...
+LABEL $0000 _game_header
+LABEL $0017 _crt0_init_data
+LABEL $002F _crt0_copy_data
+LABEL $0037 _crt0_init_bss
+LABEL $0040 _crt0_zero_bss
+LABEL $0046 _crt0_startup
+LABEL $004F _crt0_restart
+LABEL $0052 _memcmp
+LABEL $005F L2
+LABEL $0095 L4
+LABEL $009B L9
+LABEL $00A3 _memcpy
+LABEL $00B2 L12
+LABEL $00CC L11
+LABEL $00D2 _memmove
+LABEL $00E5 L18
+LABEL $0102 L17
+LABEL $0108 L16
+LABEL $011F L24
+LABEL $0126 L19
+LABEL $0138 _memset
+LABEL $0146 L27
+LABEL $014E L26
+LABEL $0152 __Dot_d
+LABEL $0157 __Dot_dd
+LABEL $015C __Print_Str_hwyx
+LABEL $0165 __Print_Str_yx
+LABEL $016E __Print_Str_d
+LABEL $0179 __Print_Str_dd
+LABEL $0184 __Print_List_hw
+LABEL $018D __Print_List
+LABEL $0196 __Print_List_chk
+LABEL $019F __Print_Ships_x
+LABEL $01A4 __Print_Ships
+LABEL $01A9 __Print_Str
+LABEL $01B2 __Print_MRast
+LABEL $01B9 __Draw_Pat_VL_aa
+LABEL $01BE __Draw_Pat_VL_a
+LABEL $01C3 __Draw_Line_d
+LABEL $01C8 __Draw_VL_ab
+LABEL $01CD __Draw_VL_a
+LABEL $01D2 __Mov_Draw_VL_ab
+LABEL $01D7 __Mov_Draw_VL_a
+LABEL $01DC __Mov_Draw_VL_d
+LABEL $01E1 __Rot_VL_Mode
+LABEL $01EC __Rot_VL_Pack
+LABEL $01F5 __Rot_VL_M_dft
+LABEL $01FE __Random_3
+LABEL $0204 __Random
+LABEL $020A __Bitmask_a
+LABEL $0212 __Abs_a_b
+LABEL $021A __Xform_Sin
+LABEL $0222 __Get_Rise_Run
+LABEL $0228 __Xform_Run_a
+LABEL $0230 __Xform_Run
+LABEL $0236 __Xform_Rise_a
+LABEL $023E __Xform_Rise
+LABEL $0244 __Clear_x_d
+LABEL $0249 __Move_Mem_a_1
+LABEL $0254 __Move_Mem_a
+LABEL $025F __Clear_x_b_a
+LABEL $0264 __Read_Btns_Mask
+LABEL $0269 __Select_Game
+LABEL $0272 __Display_Option
+LABEL $027D __Add_Score_a
+LABEL $0286 __Add_Score_d
+LABEL $028B __Compare_Score
+LABEL $0296 __New_High_Score
+LABEL $029F __Sound_Byte
+LABEL $02A4 __Sound_Byte_x
+LABEL $02A9 __Sound_Bytes
+LABEL $02B2 __Sound_Bytes_x
+LABEL $02BB __Do_Sound
+LABEL $02C2 __Init_Music_chk
+LABEL $02CB __Init_Music
+LABEL $02D4 __Init_Music_a
+LABEL $02DD __Init_Music_x
+LABEL $02E6 __Explosion_Snd
+LABEL $02EF __Moveto_d_7F
+LABEL $02F4 __Moveto_dd_7F
+LABEL $02F9 __Moveto_d
+LABEL $02FE __Moveto_dd
+LABEL $0303 __Intensity_a
+LABEL $0308 __Obj_Will_Hit_u
+LABEL $031A __Obj_Will_Hit
+LABEL $032C __Obj_Hit
+LABEL $033C __Rise_Run_X
+LABEL $0344 __Rise_Run_Y
+LABEL $034C __Rise_Run_Len
+LABEL $0354 __Rot_VL_ab
+LABEL $035F __Rot_VL_Diff
+LABEL $0368 __Rot_VL
+LABEL $0371 __Dot_y
+LABEL $037A __Dot_py
+LABEL $0383 __Draw_Pack
+LABEL $038D __Draw_Pack_py
+LABEL $0397 __Print_Msg
+LABEL $03A2 __Displ8_xy
+LABEL $03AB __Displ16_xy
+LABEL $03B4 __Ranpos
+LABEL $03BA __Draw_Scores
+LABEL $03C1 __Draw_Score
+LABEL $03C8 __Wait_Bound
+LABEL $03CF _setup
+LABEL $03DC _main
+LABEL $03FF L14
+LABEL $0423 L10
+LABEL $042D L11
+LABEL $0435 L4
+LABEL $0472 L5
+LABEL $0482 L6
+LABEL $0492 L7
+LABEL $04A2 L8
+LABEL $04E7 L9
+LABEL $E7B5 ___Displ8_xy
+LABEL $E7D2 ___Displ16_xy
+LABEL $E98A ___Ranpos
+LABEL $EA3E ___Rnd_Cone
+LABEL $EA5D ___Dot_y
+LABEL $EA6D ___Dot_py
+LABEL $EA7F ___Draw_Pack
+LABEL $EA8D ___Draw_Pack_py
+LABEL $EAA8 ___Print_Msg
+LABEL $EAB4 ___Draw_Score
+LABEL $EACF ___Draw_Scores
+LABEL $EAF0 ___Wait_Bound
+LABEL $F000 ___Reset
+LABEL $F14C ___Init_VIA
+LABEL $F164 ___Init_OS_RAM
+LABEL $F18B ___Init_OS
+LABEL $F192 ___Wait_Recal
+LABEL $F1AA ___DP_to_D0
+LABEL $F1AF ___DP_to_C8
+LABEL $F1B4 ___Read_Btns_Mask
+LABEL $F1BA ___Read_Btns
+LABEL $F1F5 ___Joy_Analog
+LABEL $F1F8 ___Joy_Digital
+LABEL $F256 ___Sound_Byte
+LABEL $F259 ___Sound_Byte_x
+LABEL $F272 ___Clear_Sound
+LABEL $F27D ___Sound_Bytes
+LABEL $F284 ___Sound_Bytes_x
+LABEL $F289 ___Do_Sound
+LABEL $F28C ___Do_Sound_x
+LABEL $F29D ___Intensity_1F
+LABEL $F2A1 ___Intensity_3F
+LABEL $F2A5 ___Intensity_5F
+LABEL $F2A9 ___Intensity_7F
+LABEL $F2AB ___Intensity_a
+LABEL $F2BE ___Dot_ix_b
+LABEL $F2C1 ___Dot_ix
+LABEL $F2C3 ___Dot_d
+LABEL $F2C5 ___Dot_here
+LABEL $F2D5 ___Dot_List
+LABEL $F2DE ___Dot_List_Reset
+LABEL $F2E6 ___Recalibrate
+LABEL $F2F2 ___Moveto_x_7F
+LABEL $F2FC ___Moveto_d_7F
+LABEL $F308 ___Moveto_ix_FF
+LABEL $F30C ___Moveto_ix_7F
+LABEL $F30E ___Moveto_ix_b
+LABEL $F310 ___Moveto_ix
+LABEL $F312 ___Moveto_d
+LABEL $F34A ___Reset0Ref_D0
+LABEL $F34F ___Check0Ref
+LABEL $F354 ___Reset0Ref
+LABEL $F35B ___Reset_Pen
+LABEL $F36B ___Reset0Int
+LABEL $F373 ___Print_Str_hwyx
+LABEL $F378 ___Print_Str_yx
+LABEL $F37A ___Print_Str_d
+LABEL $F385 ___Print_List_hw
+LABEL $F38A ___Print_List
+LABEL $F38C ___Print_List_chk
+LABEL $F391 ___Print_Ships_x
+LABEL $F393 ___Print_Ships
+LABEL $F3AD ___Mov_Draw_VLc_a
+LABEL $F3B1 ___Mov_Draw_VL_b
+LABEL $F3B5 ___Mov_Draw_VLcs
+LABEL $F3B7 ___Mov_Draw_VL_ab
+LABEL $F3B9 ___Mov_Draw_VL_a
+LABEL $F3BC ___Mov_Draw_VL
+LABEL $F3BE ___Mov_Draw_VL_d
+LABEL $F3CE ___Draw_VLc
+LABEL $F3D2 ___Draw_VL_b
+LABEL $F3D6 ___Draw_VLcs
+LABEL $F3D8 ___Draw_VL_ab
+LABEL $F3DA ___Draw_VL_a
+LABEL $F3DD ___Draw_VL
+LABEL $F3DF ___Draw_Line_d
+LABEL $F404 ___Draw_VLp_FF
+LABEL $F408 ___Draw_VLp_7F
+LABEL $F40C ___Draw_VLp_scale
+LABEL $F40E ___Draw_VLp_b
+LABEL $F410 ___Draw_VLp
+LABEL $F433 ___Draw_Pat_VL_aa
+LABEL $F434 ___Draw_Pat_VL_a
+LABEL $F437 ___Draw_Pat_VL
+LABEL $F439 ___Draw_Pat_VL_d
+LABEL $F46E ___Draw_VL_mode
+LABEL $F495 ___Print_Str
+LABEL $F498 ___Print_MRast
+LABEL $F511 ___Random_3
+LABEL $F517 ___Random
+LABEL $F533 ___Init_Music_Buf
+LABEL $F53F ___Clear_x_b
+LABEL $F542 ___Clear_C8_RAM
+LABEL $F545 ___Clear_x_256
+LABEL $F548 ___Clear_x_d
+LABEL $F550 ___Clear_x_b_80
+LABEL $F552 ___Clear_x_b_a
+LABEL $F55A ___Dec_3_Counters
+LABEL $F55E ___Dec_6_Counters
+LABEL $F563 ___Dec_Counters
+LABEL $F56D ___Delay_3
+LABEL $F571 ___Delay_2
+LABEL $F575 ___Delay_1
+LABEL $F579 ___Delay_0
+LABEL $F57A ___Delay_b
+LABEL $F57D ___Delay_RTS
+LABEL $F57E ___Bitmask_a
+LABEL $F584 ___Abs_a_b
+LABEL $F58B ___Abs_b
+LABEL $F593 ___Rise_Run_Angle
+LABEL $F5D9 ___Get_Rise_Idx
+LABEL $F5DB ___Xform_Sin
+LABEL $F5EF ___Get_Rise_Run
+LABEL $F5FF ___Rise_Run_X
+LABEL $F601 ___Rise_Run_Y
+LABEL $F603 ___Rise_Run_Len
+LABEL $F610 ___Rot_VL_ab
+LABEL $F613 ___Rot_VL_Diff
+LABEL $F616 ___Rot_VL
+LABEL $F61F ___Rot_VL_Mode
+LABEL $F622 ___Rot_VL_Pack
+LABEL $F62B ___Rot_VL_M_dft
+LABEL $F65B ___Xform_Run_a
+LABEL $F65D ___Xform_Run
+LABEL $F661 ___Xform_Rise_a
+LABEL $F663 ___Xform_Rise
+LABEL $F67F ___Move_Mem_a_1
+LABEL $F683 ___Move_Mem_a
+LABEL $F687 ___Init_Music_chk
+LABEL $F68D ___Init_Music
+LABEL $F690 ___Init_Music_a
+LABEL $F692 ___Init_Music_x
+LABEL $F742 ___Stop_Sound
+LABEL $F7A9 ___Select_Game
+LABEL $F835 ___Display_Option
+LABEL $F84F ___Clear_Score
+LABEL $F85E ___Add_Score_a
+LABEL $F87C ___Add_Score_d
+LABEL $F8B7 ___Strip_Zeros
+LABEL $F8C7 ___Compare_Score
+LABEL $F8D8 ___New_High_Score
+LABEL $F8E5 ___Obj_Will_Hit_u
+LABEL $F8F3 ___Obj_Will_Hit
+LABEL $F8FF ___Obj_Hit
+LABEL $F92E ___Explosion_Snd
+LABEL $F9CA ___Set_Amp
+COMMENT $00C7 cmphi
+COMMENT $00D8 cmphi
+COMMENT $00FC cmphi: R:d with R:x
+COMMENT $00FE cmphi
+COMMENT $0148 cmphi: R:u with R:x
+COMMENT $014A cmphi
+COMMENT $0154 BIOS call
+COMMENT $0159 BIOS call
+COMMENT $0160 BIOS call
+COMMENT $0169 BIOS call
+COMMENT $0174 BIOS call
+COMMENT $017F BIOS call
+COMMENT $0188 BIOS call
+COMMENT $0191 BIOS call
+COMMENT $019A BIOS call
+COMMENT $01A1 BIOS call
+COMMENT $01A6 BIOS call
+COMMENT $01AD BIOS call
+COMMENT $01B4 BIOS call
+COMMENT $01BB BIOS call
+COMMENT $01C0 BIOS call
+COMMENT $01C5 BIOS call
+COMMENT $01CA BIOS call
+COMMENT $01CF BIOS call
+COMMENT $01D4 BIOS call
+COMMENT $01D9 BIOS call
+COMMENT $01DE BIOS call
+COMMENT $01E7 BIOS call
+COMMENT $01F0 BIOS call
+COMMENT $01F9 BIOS call
+COMMENT $01FE BIOS call
+COMMENT $0204 BIOS call
+COMMENT $020C BIOS call
+COMMENT $0214 BIOS call
+COMMENT $021C BIOS call
+COMMENT $0222 BIOS call
+COMMENT $022A BIOS call
+COMMENT $0230 BIOS call
+COMMENT $0238 BIOS call
+COMMENT $023E BIOS call
+COMMENT $0246 BIOS call
+COMMENT $024F BIOS call
+COMMENT $025A BIOS call
+COMMENT $0261 BIOS call
+COMMENT $0266 BIOS call
+COMMENT $026D BIOS call
+COMMENT $0278 BIOS call
+COMMENT $0281 BIOS call
+COMMENT $0288 BIOS call
+COMMENT $028F BIOS call
+COMMENT $029A BIOS call
+COMMENT $02A1 BIOS call
+COMMENT $02A6 BIOS call
+COMMENT $02AD BIOS call
+COMMENT $02B6 BIOS call
+COMMENT $02BD BIOS call
+COMMENT $02C6 BIOS call
+COMMENT $02CF BIOS call
+COMMENT $02D8 BIOS call
+COMMENT $02E1 BIOS call
+COMMENT $02EA BIOS call
+COMMENT $02F1 BIOS call
+COMMENT $02F6 BIOS call
+COMMENT $02FB BIOS call
+COMMENT $0300 BIOS call
+COMMENT $0305 BIOS call
+COMMENT $0311 BIOS call
+COMMENT $0323 BIOS call
+COMMENT $0333 BIOS call
+COMMENT $033E BIOS call
+COMMENT $0346 BIOS call
+COMMENT $034E BIOS call
+COMMENT $035A BIOS call
+COMMENT $0363 BIOS call
+COMMENT $036C BIOS call
+COMMENT $0375 BIOS call
+COMMENT $037E BIOS call
+COMMENT $0388 BIOS call
+COMMENT $0392 BIOS call
+COMMENT $039D BIOS call
+COMMENT $03A6 BIOS call
+COMMENT $03AF BIOS call
+COMMENT $03B4 BIOS call
+COMMENT $03BC BIOS call
+COMMENT $03C3 BIOS call
+COMMENT $03CA BIOS call
+COMMENT $03CF Vec_Joy_Mux_1_X
+COMMENT $03D2 Vec_Joy_Mux_1_Y
+COMMENT $03D5 Vec_Joy_Mux_2_X
+COMMENT $03D8 Vec_Joy_Mux_2_Y
+COMMENT $03DE Vec_Joy_Mux_1_X
+COMMENT $03E1 Vec_Joy_Mux_1_Y
+COMMENT $03E4 Vec_Joy_Mux_2_X
+COMMENT $03E7 Vec_Joy_Mux_2_Y
+COMMENT $03EC player1_x
+COMMENT $03EE player2_x
+COMMENT $03F2 dot_x
+COMMENT $03F4 dot_y
+COMMENT $03F8 dot_x_vel
+COMMENT $03FA dot_y_vel
+COMMENT $03FF tmp45
+COMMENT $0401  ; tmp45, new_x
+COMMENT $0407 tmp47
+COMMENT $0409 tmp46, dot_y_vel
+COMMENT $040B  ; tmp46, new_y
+COMMENT $0411 tmp48, dot_y_vel
+COMMENT $0413 tmp48
+COMMENT $0415  ; tmp48, new_y
+COMMENT $041B dot_y_vel
+COMMENT $041D dot_y_vel
+COMMENT $041F dot_y
+COMMENT $0421 new_y
+COMMENT $0423 tmp53, new_x
+COMMENT $0425 tmp53
+COMMENT $0427 : ; tmp53
+COMMENT $042B dot_x_vel
+COMMENT $042D new_y
+COMMENT $042F dot_y
+COMMENT $0431 new_x
+COMMENT $0433 dot_x
+COMMENT $0442 VIA_t1_cnt_lo
+COMMENT $0445 dot_y
+COMMENT $0449 dot_x
+COMMENT $044E dot_x
+COMMENT $0453 dot_y
+COMMENT $045D Vec_Btn_State
+COMMENT $0468 player1_x
+COMMENT $0470 player1_x
+COMMENT $0472 tmp40
+COMMENT $0474 tmp40, D.3096
+COMMENT $0478 player1_x
+COMMENT $0480 player1_x
+COMMENT $0482 tmp41
+COMMENT $0484 tmp41, D.3096
+COMMENT $0488 player2_x
+COMMENT $0490 player2_x
+COMMENT $0498 player2_x
+COMMENT $04A0 player2_x
+COMMENT $04A6 player1_x
+COMMENT $04B2 tmp44
+COMMENT $04B4 tmp44, player1_x
+COMMENT $04B6 tmp44
+COMMENT $04C5 player2_x
+COMMENT $04D1 dot_x_vel
+COMMENT $04D3 dot_x
+COMMENT $04D5 new_x
+COMMENT $04D7 dot_y_vel
+COMMENT $04D9 dot_y
+COMMENT $04DB new_y
+COMMENT $04DF player1_x
+COMMENT $04E1 : ;, new_x
+COMMENT $04E7 player2_x
+COMMENT $04E9 : ;, new_x
+COMMENT $04EF tmp49
+COMMENT $04F1  ; tmp49, new_x
+COMMENT $04F7 tmp50, dot_y_vel
+COMMENT $04F9 tmp50
+COMMENT $04FB  ; tmp50, new_y
+COMMENT $0501 tmp52
+COMMENT $0503 tmp51, dot_y_vel
+COMMENT $0505  ; tmp51, new_y
+COMMENT $050B dot_y_vel
+COMMENT $050D dot_y_vel
+COMMENT $050F dot_y
+COMMENT $0511 new_y
+C_INFO_BLOCK $03CF "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 21 "  disable_controller_1_x(); " BKPOINT=0
+C_INFO_BLOCK $03D2 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 22 "  disable_controller_1_y(); " BKPOINT=0
+C_INFO_BLOCK $03D5 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 23 "  disable_controller_2_x(); " BKPOINT=0
+C_INFO_BLOCK $03D8 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 24 "  disable_controller_2_y(); " BKPOINT=0
+C_INFO_BLOCK $03DE "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 21 "  int player1_x = -HALF_PADDLE;,   int player1_y = PADDLE_Y;,   int player2_x = -HALF_PADDLE;,   int player2_y = -PADDLE_Y;,   int dot_x = 13;,   int dot_y = 0;,   int dot_x_vel = 2;,   int dot_y_vel = 2;,   setup();,   disable_controller_1_x(); " BKPOINT=0
+C_INFO_BLOCK $03E1 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 22 "  disable_controller_1_y(); " BKPOINT=0
+C_INFO_BLOCK $03E4 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 23 "  disable_controller_2_x(); " BKPOINT=0
+C_INFO_BLOCK $03E7 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 24 "  disable_controller_2_y(); " BKPOINT=0
+C_INFO_BLOCK $03EA "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 52 "  while (1) { " BKPOINT=0
+C_INFO_BLOCK $041B "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 87 "      dot_y_vel = -dot_y_vel; " BKPOINT=0
+C_INFO_BLOCK $041D "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 88 "      new_y = dot_y + dot_y_vel; " BKPOINT=0
+C_INFO_BLOCK $0423 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 99 "    dot_x = new_x;,     dot_y = new_y;,     if (dot_x > BOUND_X || dot_x < -BOUND_X) { " BKPOINT=0
+C_INFO_BLOCK $042B "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 100 "      dot_x_vel = -dot_x_vel; " BKPOINT=0
+C_INFO_BLOCK $0435 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 28 "    loop_setup();,   Wait_Recal(); " BKPOINT=0
+C_INFO_BLOCK $0438 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 29 "  check_buttons(); /* update status of buttons * / " BKPOINT=0
+C_INFO_BLOCK $043B "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 30 "  Intensity_a(MAX_BRIGHTNESS); /* set some brightness * / " BKPOINT=0
+C_INFO_BLOCK $0440 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 31 "  VIA_t1_cnt_lo = SCALE;      /* set scale factor * / " BKPOINT=0
+C_INFO_BLOCK $0445 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 56 "    Dot_d(dot_y, dot_x); " BKPOINT=0
+C_INFO_BLOCK $044E "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 57 "    Moveto_d(-dot_y, -dot_x); " BKPOINT=0
+C_INFO_BLOCK $045D "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 60 "    if (button_1_1_held() && player1_x > -BOUND_X) { " BKPOINT=0
+C_INFO_BLOCK $046E "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 61 "      player1_x -= PADDLE_SPEED; " BKPOINT=0
+C_INFO_BLOCK $0472 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 63 "    if (button_1_2_held() && player1_x + PADDLE_LENGTH < BOUND_X) { " BKPOINT=0
+C_INFO_BLOCK $047E "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 64 "      player1_x += PADDLE_SPEED; " BKPOINT=0
+C_INFO_BLOCK $0482 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 66 "    if (button_1_3_held() && player2_x > - BOUND_X) { " BKPOINT=0
+C_INFO_BLOCK $048E "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 67 "      player2_x -= PADDLE_SPEED; " BKPOINT=0
+C_INFO_BLOCK $0492 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 69 "    if (button_1_4_held() && player2_x + PADDLE_LENGTH < BOUND_X) { " BKPOINT=0
+C_INFO_BLOCK $049E "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 70 "      player2_x += PADDLE_SPEED; " BKPOINT=0
+C_INFO_BLOCK $04A2 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 74 "    Moveto_d(player1_y, player1_x); " BKPOINT=0
+C_INFO_BLOCK $04AB "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 75 "    Draw_Line_d(0, PADDLE_LENGTH); " BKPOINT=0
+C_INFO_BLOCK $04B2 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 76 "    Moveto_d(-player1_y, -player1_x - PADDLE_LENGTH); " BKPOINT=0
+C_INFO_BLOCK $04C1 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 79 "    Moveto_d(player2_y, player2_x); " BKPOINT=0
+C_INFO_BLOCK $04CA "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 80 "    Draw_Line_d(0, PADDLE_LENGTH); " BKPOINT=0
+C_INFO_BLOCK $04D1 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 82 "    int new_x = dot_x + dot_x_vel; " BKPOINT=0
+C_INFO_BLOCK $04D7 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 83 "    int new_y = dot_y + dot_y_vel; " BKPOINT=0
+C_INFO_BLOCK $04DD "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 86 "    if (new_x >= player1_x && new_x <= player1_x + PADDLE_LENGTH && new_y >= player1_y - dot_y_vel && new_y <= player1_y + dot_y_vel) { " BKPOINT=0
+C_INFO_BLOCK $050B "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 90 "      dot_y_vel = -dot_y_vel; " BKPOINT=0
+C_INFO_BLOCK $050D "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 91 "      new_y = dot_y + dot_y_vel; " BKPOINT=0
+RANGE $0000-$0001 DB_DATA 8
+RANGE $0008-$0009 DB_DATA 8
+RANGE $000B-$000D DW_DATA 4
+RANGE $000D-$0012 DB_DATA 8
+RANGE $0017-$0516 CODE
+
