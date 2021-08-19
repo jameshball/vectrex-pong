@@ -15,6 +15,19 @@
 #define BOUND_X 100
 #define BOUND_Y 120
 
+int player1_x = -HALF_PADDLE;
+int player1_y = PADDLE_Y;
+int player2_x = -HALF_PADDLE;
+int player2_y = -PADDLE_Y;
+
+char player1_score_str[7];
+char player2_score_str[7];
+
+int dot_x = 0;
+int dot_y = 0;
+int dot_x_vel = 2;
+int dot_y_vel = 2;
+
 /*
  * A simple setup routine that enables/disables the joystick
  */
@@ -23,13 +36,24 @@ void setup(void) {
   disable_controller_1_y();
   disable_controller_2_x();
   disable_controller_2_y();
+  Clear_Score(player1_score_str);
+  Clear_Score(player2_score_str);
+  player1_score_str[6] = '\x80';
+  player2_score_str[6] = '\x80';
 }
 
-static inline void loop_setup() {
+static inline void loop_setup(void) {
   Wait_Recal();
   check_buttons(); /* update status of buttons */
   Intensity_a(MAX_BRIGHTNESS); /* set some brightness */
   VIA_t1_cnt_lo = SCALE;      /* set scale factor */
+}
+
+void reset_round(void) {
+  dot_x = 0;
+  dot_y = 0;
+  dot_x_vel = 2;
+  dot_y_vel = 2;
 }
 
 /*
@@ -38,20 +62,14 @@ static inline void loop_setup() {
  * be surely bothered!
  */
 int main(void) {
-  int player1_x = -HALF_PADDLE;
-  int player1_y = PADDLE_Y;
-  int player2_x = -HALF_PADDLE;
-  int player2_y = -PADDLE_Y;
-
-  int dot_x = 13;
-  int dot_y = 0;
-  int dot_x_vel = 2;
-  int dot_y_vel = 2;
-
   setup();
 
   while (1) {
     loop_setup();
+
+    // print scores
+    Print_Str_d(127, -128, player1_score_str);
+    Print_Str_d(-128, -128, player2_score_str);
 
     // draw dot and move back to origin
     Dot_d(dot_y, dot_x);
@@ -80,21 +98,24 @@ int main(void) {
     Moveto_d(player2_y, player2_x);
     Draw_Line_d(0, PADDLE_LENGTH);
 
-    int new_x = dot_x + dot_x_vel;
-    int new_y = dot_y + dot_y_vel;
+    // update dot position
+    dot_x = dot_x + dot_x_vel;
+    dot_y = dot_y + dot_y_vel;
 
     // check if dot is in bounds of either paddle, and reflect if so
-    if (new_x >= player1_x && new_x <= player1_x + PADDLE_LENGTH && new_y >= player1_y - dot_y_vel && new_y <= player1_y + dot_y_vel) {
+    if (dot_y > BOUND_Y) {
+      Add_Score_a(1, player2_score_str);
+      reset_round();
+    } else if (dot_y < -BOUND_Y) {
+      Add_Score_a(1, player1_score_str);
+      reset_round();
+    } else if (dot_x >= player1_x && dot_x <= player1_x + PADDLE_LENGTH && dot_y >= player1_y - dot_y_vel && dot_y <= player1_y + dot_y_vel) {
       dot_y_vel = -dot_y_vel;
-      new_y = dot_y + dot_y_vel;
-    } else if (new_x >= player2_x && new_x <= player2_x + PADDLE_LENGTH && new_y >= player2_y + dot_y_vel && new_y <= player2_y - dot_y_vel) {
+      dot_y = dot_y + 2 * dot_y_vel;
+    } else if (dot_x >= player2_x && dot_x <= player2_x + PADDLE_LENGTH && dot_y >= player2_y + dot_y_vel && dot_y <= player2_y - dot_y_vel) {
       dot_y_vel = -dot_y_vel;
-      new_y = dot_y + dot_y_vel;
+      dot_y = dot_y + 2 * dot_y_vel;
     }
-
-    // update dot position
-    dot_x = new_x;
-    dot_y = new_y;
 
     // reflect dot if it hits the side of the screen
     if (dot_x > BOUND_X || dot_x < -BOUND_X) {
