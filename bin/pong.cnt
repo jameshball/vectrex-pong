@@ -1,5 +1,4 @@
-HIGHEST_USED_RAM $C896
-COMMENT $C896 not used RAM onword...
+COMMENT $C89D not used RAM onword...
 LABEL $0000 _game_header
 LABEL $0017 _crt0_init_data
 LABEL $002F _crt0_copy_data
@@ -104,29 +103,40 @@ LABEL $03BA __Draw_Scores
 LABEL $03C1 __Draw_Score
 LABEL $03C8 __Wait_Bound
 LABEL $03CF _reset_round
-LABEL $03F2 _setup
-LABEL $0435 _main
-LABEL $043D L10
-LABEL $047D L11
-LABEL $0488 L18
-LABEL $04DE L6
-LABEL $04F0 L7
-LABEL $0502 L8
-LABEL $0514 L9
-LABEL $0572 L19
-LABEL $0597 L13
-LABEL $05CE L21
-LABEL $05D9 L22
-LABEL $C880 _player1_x
-LABEL $C881 _player1_y
-LABEL $C882 _player2_x
-LABEL $C883 _player2_y
-LABEL $C884 _player1_score_str
-LABEL $C88B _player2_score_str
-LABEL $C892 _dot_x
-LABEL $C893 _dot_y
-LABEL $C894 _dot_x_vel
-LABEL $C895 _dot_y_vel
+LABEL $03F1 _setup
+LABEL $0452 _main
+LABEL $04B7 L6
+LABEL $04E7 L13
+LABEL $04FB L15
+LABEL $04FE L8
+LABEL $055D L16
+LABEL $056F L17
+LABEL $0581 L18
+LABEL $0593 L19
+LABEL $05CB L20
+LABEL $067F L22
+LABEL $068B L11
+LABEL $069E L12
+LABEL $06CC L14
+LABEL $06D7 L25
+LABEL $06DA L23
+LABEL $0703 L10
+LABEL $C880 _default_velocity
+LABEL $C881 _current_song
+LABEL $C883 _player1_x
+LABEL $C884 _player1_y
+LABEL $C885 _player2_x
+LABEL $C886 _player2_y
+LABEL $C887 _player1_score_str
+LABEL $C88E _player2_score_str
+LABEL $C895 _dot_x
+LABEL $C896 _dot_y
+LABEL $C897 _dot_x_vel
+LABEL $C898 _dot_y_vel
+LABEL $C899 _dot_brightness
+LABEL $C89A _brightness_fade_in
+LABEL $C89B _dot_ticks
+LABEL $C89C _flashes
 LABEL $E7B5 ___Displ8_xy
 LABEL $E7D2 ___Displ16_xy
 LABEL $E98A ___Ranpos
@@ -361,188 +371,173 @@ COMMENT $03C3 BIOS call
 COMMENT $03CA BIOS call
 COMMENT $03CF dot_x
 COMMENT $03D2 dot_y
-COMMENT $03D7 dot_x_vel
-COMMENT $03DA dot_y_vel
-COMMENT $03DF player1_x
-COMMENT $03E4 player1_y
-COMMENT $03E9 player2_x
-COMMENT $03EE player2_y
-COMMENT $03F2 Vec_Joy_Mux_1_X
-COMMENT $03F5 Vec_Joy_Mux_1_Y
-COMMENT $03F8 Vec_Joy_Mux_2_X
-COMMENT $03FB Vec_Joy_Mux_2_Y
-COMMENT $040C player1_score_str
-COMMENT $040F player2_score_str
-COMMENT $0412 dot_x
-COMMENT $0415 dot_y
-COMMENT $041A dot_x_vel
-COMMENT $041D dot_y_vel
-COMMENT $0422 player1_x
-COMMENT $0427 player1_y
-COMMENT $042C player2_x
-COMMENT $0431 player2_y
-COMMENT $043D dot_y.14
-COMMENT $0445 player1_x.60, player1_x
-COMMENT $0448  ; player1_x.60, dot_x.12
-COMMENT $044E player1_x.60
-COMMENT $0450  ; player1_x.60, dot_x.12
-COMMENT $0456 player1_y
-COMMENT $0459 player1_y.61
-COMMENT $045B tmp52, dot_y_vel.13
-COMMENT $045D  ; tmp52, dot_y.14
-COMMENT $0463 player1_y.61
-COMMENT $0465 dot_y_vel.13
-COMMENT $0467 player1_y.61
-COMMENT $0469 dot_y.14
-COMMENT $046B : ;, player1_y.61
-COMMENT $0471 dot_y_vel.15, dot_y_vel.13
-COMMENT $0473 dot_y_vel.15
-COMMENT $0474 dot_y_vel.15, dot_y_vel
-COMMENT $0477 dot_y_vel.15
-COMMENT $0478 dot_y_vel.15, dot_y.14
-COMMENT $047A dot_y_vel.15, dot_y
-COMMENT $047D tmp59, dot_x
-COMMENT $0480 tmp59
-COMMENT $0482 : ; tmp59
-COMMENT $0495 VIA_t1_cnt_lo
-COMMENT $04AB dot_y
-COMMENT $04B0 dot_x
-COMMENT $04B6 dot_x
-COMMENT $04BC dot_y
-COMMENT $04C7 Vec_Btn_State
-COMMENT $04D2 player1_x.3, player1_x
-COMMENT $04D5 : ; player1_x.3
-COMMENT $04D9 player1_x.3
-COMMENT $04DB player1_x.3, player1_x
-COMMENT $04DE tmp45
-COMMENT $04E0 tmp45, D.3132
-COMMENT $04E4 player1_x.52, player1_x
-COMMENT $04E7 : ; player1_x.52
-COMMENT $04EB player1_x.52
-COMMENT $04ED player1_x.52, player1_x
-COMMENT $04F0 tmp46
-COMMENT $04F2 tmp46, D.3132
-COMMENT $04F6 player2_x.6, player2_x
-COMMENT $04F9 : ; player2_x.6
-COMMENT $04FD player2_x.6
-COMMENT $04FF player2_x.6, player2_x
-COMMENT $0508 player2_x.53, player2_x
-COMMENT $050B : ; player2_x.53
-COMMENT $050F player2_x.53
-COMMENT $0511 player2_x.53, player2_x
-COMMENT $0514 player1_y
-COMMENT $0519 player1_x
-COMMENT $0526 tmp49
-COMMENT $0528 tmp49, player1_x
-COMMENT $052B tmp49
-COMMENT $052D player1_y
-COMMENT $0538 player2_y
-COMMENT $053D player2_x
-COMMENT $054A dot_x_vel
-COMMENT $054D dot_x
-COMMENT $0550 dot_x.12
-COMMENT $0552 dot_x
-COMMENT $0555 dot_y_vel
-COMMENT $0558 dot_y_vel.13
-COMMENT $055A dot_y
-COMMENT $055D dot_y.14
-COMMENT $055F dot_y
-COMMENT $0572 dot_x
-COMMENT $0575 dot_y
-COMMENT $057A dot_x_vel
-COMMENT $057D dot_y_vel
-COMMENT $0582 player1_x
-COMMENT $0587 player1_y
-COMMENT $058C player2_x
-COMMENT $0591 player2_y
-COMMENT $0597 player2_x.62, player2_x
-COMMENT $059A  ; player2_x.62, dot_x.12
-COMMENT $05A0 player2_x.62
-COMMENT $05A2  ; player2_x.62, dot_x.12
-COMMENT $05A8 player2_y
-COMMENT $05AB player2_y.63
-COMMENT $05AD tmp56, dot_y_vel.13
-COMMENT $05AF  ; tmp56, dot_y.14
-COMMENT $05B5 tmp57, player2_y.63
-COMMENT $05B7 tmp57, dot_y_vel.13
-COMMENT $05B9  ; tmp57, dot_y.14
-COMMENT $05BF dot_y_vel.64, dot_y_vel.13
-COMMENT $05C1 dot_y_vel.64
-COMMENT $05C2 dot_y_vel.64, dot_y_vel
-COMMENT $05C5 dot_y_vel.64
-COMMENT $05C6 dot_y_vel.64, dot_y.14
-COMMENT $05C8 dot_y_vel.64, dot_y
-COMMENT $05D9 dot_x_vel
-C_INFO_BLOCK $03CF "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 34 "  dot_x = 0; " BKPOINT=0
-C_INFO_BLOCK $03D2 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 35 "  dot_y = 0; " BKPOINT=0
-C_INFO_BLOCK $03D5 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 36 "  dot_x_vel = 2; " BKPOINT=0
-C_INFO_BLOCK $03DA "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 37 "  dot_y_vel = 2; " BKPOINT=0
-C_INFO_BLOCK $03DD "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 39 "  player1_x = -HALF_PADDLE; " BKPOINT=0
-C_INFO_BLOCK $03E2 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 40 "  player1_y = PADDLE_Y; " BKPOINT=0
-C_INFO_BLOCK $03E7 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 41 "  player2_x = -HALF_PADDLE; " BKPOINT=0
-C_INFO_BLOCK $03EC "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 42 "  player2_y = -PADDLE_Y; " BKPOINT=0
-C_INFO_BLOCK $03F2 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 49 "  disable_controller_1_x(); " BKPOINT=0
-C_INFO_BLOCK $03F5 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 50 "  disable_controller_1_y(); " BKPOINT=0
-C_INFO_BLOCK $03F8 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 51 "  disable_controller_2_x(); " BKPOINT=0
-C_INFO_BLOCK $03FB "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 52 "  disable_controller_2_y(); " BKPOINT=0
-C_INFO_BLOCK $03FE "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 53 "  Clear_Score(player1_score_str); " BKPOINT=0
-C_INFO_BLOCK $0404 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 54 "  Clear_Score(player2_score_str); " BKPOINT=0
-C_INFO_BLOCK $040A "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 55 "  player1_score_str[6] = '€'; " BKPOINT=0
-C_INFO_BLOCK $040F "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 56 "  player2_score_str[6] = '€'; " BKPOINT=0
-C_INFO_BLOCK $0412 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 34 "  reset_round();,   dot_x = 0; " BKPOINT=0
-C_INFO_BLOCK $0415 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 35 "  dot_y = 0; " BKPOINT=0
-C_INFO_BLOCK $0418 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 36 "  dot_x_vel = 2; " BKPOINT=0
-C_INFO_BLOCK $041D "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 37 "  dot_y_vel = 2; " BKPOINT=0
-C_INFO_BLOCK $0420 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 39 "  player1_x = -HALF_PADDLE; " BKPOINT=0
-C_INFO_BLOCK $0425 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 40 "  player1_y = PADDLE_Y; " BKPOINT=0
-C_INFO_BLOCK $042A "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 41 "  player2_x = -HALF_PADDLE; " BKPOINT=0
-C_INFO_BLOCK $042F "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 42 "  player2_y = -PADDLE_Y; " BKPOINT=0
-C_INFO_BLOCK $0437 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 66 "  setup(); " BKPOINT=0
-C_INFO_BLOCK $043A "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 68 "  while (1) { " BKPOINT=0
-C_INFO_BLOCK $0471 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 114 "      dot_y_vel = -dot_y_vel; " BKPOINT=0
-C_INFO_BLOCK $0477 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 115 "      dot_y = dot_y + 2 * dot_y_vel; " BKPOINT=0
-C_INFO_BLOCK $047D "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 122 "    if (dot_x > BOUND_X || dot_x < -BOUND_X) { " BKPOINT=0
-C_INFO_BLOCK $0488 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 27 "    loop_setup();,   Wait_Recal(); " BKPOINT=0
-C_INFO_BLOCK $048B "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 28 "  check_buttons(); /* update status of buttons * / " BKPOINT=0
-C_INFO_BLOCK $048E "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 29 "  Intensity_a(MAX_BRIGHTNESS); /* set some brightness * / " BKPOINT=0
-C_INFO_BLOCK $0493 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 30 "  VIA_t1_cnt_lo = SCALE;      /* set scale factor * / " BKPOINT=0
-C_INFO_BLOCK $0498 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 72 "    Print_Str_d(127, -128, player1_score_str); " BKPOINT=0
-C_INFO_BLOCK $04A1 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 73 "    Print_Str_d(-128, -128, player2_score_str); " BKPOINT=0
-C_INFO_BLOCK $04AB "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 76 "    Dot_d(dot_y, dot_x); " BKPOINT=0
-C_INFO_BLOCK $04B6 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 77 "    Moveto_d(-dot_y, -dot_x); " BKPOINT=0
-C_INFO_BLOCK $04C7 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 80 "    if (button_1_1_held() && player1_x > -BOUND_X) { " BKPOINT=0
-C_INFO_BLOCK $04D9 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 81 "      player1_x -= PADDLE_SPEED; " BKPOINT=0
-C_INFO_BLOCK $04DE "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 83 "    if (button_1_2_held() && player1_x + PADDLE_LENGTH < BOUND_X) { " BKPOINT=0
-C_INFO_BLOCK $04EB "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 84 "      player1_x += PADDLE_SPEED; " BKPOINT=0
-C_INFO_BLOCK $04F0 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 86 "    if (button_1_3_held() && player2_x > - BOUND_X) { " BKPOINT=0
-C_INFO_BLOCK $04FD "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 87 "      player2_x -= PADDLE_SPEED; " BKPOINT=0
-C_INFO_BLOCK $0502 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 89 "    if (button_1_4_held() && player2_x + PADDLE_LENGTH < BOUND_X) { " BKPOINT=0
-C_INFO_BLOCK $050F "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 90 "      player2_x += PADDLE_SPEED; " BKPOINT=0
-C_INFO_BLOCK $0514 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 94 "    Moveto_d(player1_y, player1_x); " BKPOINT=0
-C_INFO_BLOCK $051F "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 95 "    Draw_Line_d(0, PADDLE_LENGTH); " BKPOINT=0
-C_INFO_BLOCK $0526 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 96 "    Moveto_d(-player1_y, -player1_x - PADDLE_LENGTH); " BKPOINT=0
-C_INFO_BLOCK $0538 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 99 "    Moveto_d(player2_y, player2_x); " BKPOINT=0
-C_INFO_BLOCK $0543 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 100 "    Draw_Line_d(0, PADDLE_LENGTH); " BKPOINT=0
-C_INFO_BLOCK $054A "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 103 "    dot_x = dot_x + dot_x_vel; " BKPOINT=0
-C_INFO_BLOCK $0555 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 104 "    dot_y = dot_y + dot_y_vel; " BKPOINT=0
-C_INFO_BLOCK $0562 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 107 "    if (dot_y > BOUND_Y) { " BKPOINT=0
-C_INFO_BLOCK $056A "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 108 "      Add_Score_a(1, player2_score_str); " BKPOINT=0
-C_INFO_BLOCK $0572 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 109 "      reset_round();  dot_x = 0; " BKPOINT=0
-C_INFO_BLOCK $0575 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 35 "  dot_y = 0; " BKPOINT=0
-C_INFO_BLOCK $0578 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 36 "  dot_x_vel = 2; " BKPOINT=0
-C_INFO_BLOCK $057D "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 37 "  dot_y_vel = 2; " BKPOINT=0
-C_INFO_BLOCK $0580 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 39 "  player1_x = -HALF_PADDLE; " BKPOINT=0
-C_INFO_BLOCK $0585 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 40 "  player1_y = PADDLE_Y; " BKPOINT=0
-C_INFO_BLOCK $058A "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 41 "  player2_x = -HALF_PADDLE; " BKPOINT=0
-C_INFO_BLOCK $058F "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 42 "  player2_y = -PADDLE_Y; " BKPOINT=0
-C_INFO_BLOCK $05BF "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 117 "      dot_y_vel = -dot_y_vel; " BKPOINT=0
-C_INFO_BLOCK $05C5 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 118 "      dot_y = dot_y + 2 * dot_y_vel; " BKPOINT=0
-C_INFO_BLOCK $05CE "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 111 "      Add_Score_a(1, player1_score_str); " BKPOINT=0
-C_INFO_BLOCK $05D6 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 112 "      reset_round(); " BKPOINT=0
-C_INFO_BLOCK $05D9 "C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\main.c "FN_END 123 "      dot_x_vel = -dot_x_vel; " BKPOINT=0
+COMMENT $03D5 default_velocity.4, default_velocity
+COMMENT $03D8 default_velocity.4
+COMMENT $03D9 default_velocity.4, default_velocity
+COMMENT $03DC default_velocity.4, dot_x_vel
+COMMENT $03DF default_velocity.4, dot_y_vel
+COMMENT $03E2 dot_ticks
+COMMENT $03E5 flashes
+COMMENT $03E8 dot_brightness
+COMMENT $03ED brightness_fade_in
+COMMENT $03F1 Vec_Joy_Mux_1_X
+COMMENT $03F4 Vec_Joy_Mux_1_Y
+COMMENT $03F7 Vec_Joy_Mux_2_X
+COMMENT $03FA Vec_Joy_Mux_2_Y
+COMMENT $03FF Vec_Music_Flag
+COMMENT $0405 current_song
+COMMENT $0416 player1_score_str
+COMMENT $0419 player2_score_str
+COMMENT $041E player1_x
+COMMENT $0423 player1_y
+COMMENT $0428 player2_x
+COMMENT $042D player2_y
+COMMENT $0430 dot_x
+COMMENT $0433 dot_y
+COMMENT $0436 default_velocity.4, default_velocity
+COMMENT $0439 default_velocity.4
+COMMENT $043A default_velocity.4, default_velocity
+COMMENT $043D default_velocity.4, dot_x_vel
+COMMENT $0440 default_velocity.4, dot_y_vel
+COMMENT $0443 dot_ticks
+COMMENT $0446 flashes
+COMMENT $0449 dot_brightness
+COMMENT $044E brightness_fade_in
+COMMENT $0454 Vec_Joy_Mux_1_X
+COMMENT $0457 Vec_Joy_Mux_1_Y
+COMMENT $045A Vec_Joy_Mux_2_X
+COMMENT $045D Vec_Joy_Mux_2_Y
+COMMENT $0462 Vec_Music_Flag
+COMMENT $0468 current_song
+COMMENT $0479 player1_score_str
+COMMENT $047C player2_score_str
+COMMENT $0481 player1_x
+COMMENT $0486 player1_y
+COMMENT $048B player2_x
+COMMENT $0490 player2_y
+COMMENT $0493 dot_x
+COMMENT $0496 dot_y
+COMMENT $0499 default_velocity.4, default_velocity
+COMMENT $049C default_velocity.4
+COMMENT $049D default_velocity.4, default_velocity
+COMMENT $04A0 default_velocity.4, dot_x_vel
+COMMENT $04A3 default_velocity.4, dot_y_vel
+COMMENT $04A6 dot_ticks
+COMMENT $04A9 flashes
+COMMENT $04AC dot_brightness
+COMMENT $04B1 brightness_fade_in
+COMMENT $04B7 dot_y_vel
+COMMENT $04E7 dot_ticks
+COMMENT $04EA dot_ticks.35, dot_ticks
+COMMENT $04ED : ; dot_ticks.35
+COMMENT $04F1 dot_brightness
+COMMENT $04F8 dot_brightness
+COMMENT $04FB dot_ticks
+COMMENT $0546 Vec_Btn_State
+COMMENT $0551 player1_x.8, player1_x
+COMMENT $0554 : ; player1_x.8
+COMMENT $0558 player1_x.8
+COMMENT $055A player1_x.8, player1_x
+COMMENT $055D tmp64
+COMMENT $055F tmp64, D.3305
+COMMENT $0563 player1_x.77, player1_x
+COMMENT $0566 : ; player1_x.77
+COMMENT $056A player1_x.77
+COMMENT $056C player1_x.77, player1_x
+COMMENT $056F tmp65
+COMMENT $0571 tmp65, D.3305
+COMMENT $0575 player2_x.11, player2_x
+COMMENT $0578 : ; player2_x.11
+COMMENT $057C player2_x.11
+COMMENT $057E player2_x.11, player2_x
+COMMENT $0587 player2_x.78, player2_x
+COMMENT $058A : ; player2_x.78
+COMMENT $058E player2_x.78
+COMMENT $0590 player2_x.78, player2_x
+COMMENT $0593 player1_y
+COMMENT $0598 player1_x
+COMMENT $05A5 tmp68
+COMMENT $05A7 tmp68, player1_x
+COMMENT $05AA tmp68
+COMMENT $05AC player1_y
+COMMENT $05B7 player2_y
+COMMENT $05BC player2_x
+COMMENT $05CE current_song
+COMMENT $05E4 VIA_t1_cnt_lo
+COMMENT $05FD dot_brightness
+COMMENT $0603 dot_y
+COMMENT $0608 dot_x
+COMMENT $0610 flashes
+COMMENT $061B dot_brightness
+COMMENT $061E dot_x_vel
+COMMENT $0621 dot_x_vel.19
+COMMENT $0623 dot_x
+COMMENT $0626 dot_x.20
+COMMENT $0628 dot_x
+COMMENT $062B dot_y_vel
+COMMENT $062E dot_y_vel.22
+COMMENT $0630 dot_y
+COMMENT $0633 dot_y.23
+COMMENT $0635 dot_y
+COMMENT $0647 player1_x
+COMMENT $064A player1_x.24
+COMMENT $064C tmp50, dot_x_vel.19
+COMMENT $064E  ; tmp50, dot_x.20
+COMMENT $0654 dot_x_vel.19
+COMMENT $0656 player1_x.24
+COMMENT $065A player1_x.24
+COMMENT $065C dot_x.20
+COMMENT $065E : ;, player1_x.24
+COMMENT $0664 player1_y
+COMMENT $0667 player1_y.25
+COMMENT $0669 tmp53, dot_y_vel.22
+COMMENT $066B  ; tmp53, dot_y.23
+COMMENT $0671 player1_y.25
+COMMENT $0673 dot_y_vel.22
+COMMENT $0675 player1_y.25
+COMMENT $0677 dot_y.23
+COMMENT $0679 : ;, player1_y.25
+COMMENT $067F dot_y_vel.81, dot_y_vel.22
+COMMENT $0681 dot_y_vel.81
+COMMENT $0682 dot_y_vel.81, dot_y_vel
+COMMENT $0685 dot_y_vel.81
+COMMENT $0686 dot_y_vel.81, dot_y.23
+COMMENT $0688 dot_y_vel.81, dot_y
+COMMENT $068B dot_x.20
+COMMENT $0695 dot_x_vel.19
+COMMENT $0698 dot_x_vel
+COMMENT $06CE dot_brightness
+COMMENT $06D1 flashes
+COMMENT $06DF dot_x
+COMMENT $06E2 dot_y
+COMMENT $06E5 default_velocity.4, default_velocity
+COMMENT $06E8 default_velocity.4
+COMMENT $06E9 default_velocity.4, default_velocity
+COMMENT $06EC default_velocity.4, dot_x_vel
+COMMENT $06EF default_velocity.4, dot_y_vel
+COMMENT $06F2 dot_ticks
+COMMENT $06F5 flashes
+COMMENT $06F8 dot_brightness
+COMMENT $06FD brightness_fade_in
+COMMENT $0703 player2_x
+COMMENT $0706 player2_x.28
+COMMENT $0708 tmp56, dot_x_vel.19
+COMMENT $070A  ; tmp56, dot_x.20
+COMMENT $0710 dot_x_vel.19
+COMMENT $0712 player2_x.28
+COMMENT $0716 player2_x.28
+COMMENT $0718 dot_x.20
+COMMENT $071A : ;, player2_x.28
+COMMENT $0720 player2_y
+COMMENT $0723 player2_y.29
+COMMENT $0725 tmp59, dot_y_vel.22
+COMMENT $0727  ; tmp59, dot_y.23
+COMMENT $072D tmp60, player2_y.29
+COMMENT $072F tmp60, dot_y_vel.22
+COMMENT $0731  ; tmp60, dot_y.23
 RANGE $0000-$0001 DB_DATA 8
 RANGE $0008-$0009 DB_DATA 8
 RANGE $000B-$000D DW_DATA 4
 RANGE $000D-$0012 DB_DATA 8
-RANGE $0017-$05DF CODE
+RANGE $0017-$073A CODE
 

@@ -27,7 +27,7 @@
 			<BankDefines></BankDefines>
 		</BankDefiness>
 		<WheelName></WheelName>
-		<IsCDebugging>true</IsCDebugging>
+		<IsCDebugging>false</IsCDebugging>
 		<IsCPeephole>false</IsCPeephole>
 		<IsCKeepEnriched>false</IsCKeepEnriched>
 		<IsCProject>false</IsCProject>

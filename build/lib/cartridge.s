@@ -2,7 +2,7 @@
 ;;; 4.3.6 (gcc6809)
 ;;; ABI version 1
 ;;; -mabi=bx -mint8 -fomit-frame-pointer -O3
-	.module	cartridge.enr.c
+	.module	cartridge.c
 ; GNU C (GCC) version 4.3.6 (gcc6809) (m6809-unknown-none)
 ;	compiled by GNU C version 7.4.0, GMP version 4.3.2, MPFR version 2.4.2.
 ; GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
@@ -12,7 +12,7 @@
 ; -IC:\Vide2.5.1.w64\Vide.w64\C\PeerC\vectrex\include -O3
 ; -D__RUM_FUNCTION=1 -DOMMIT_FRAMEPOINTER=1
 ; -IC:\Vide2.5.1.w64\Vide.w64\vectrex-pong\include
-; C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\cartridge.enr.c
+; C:\Vide2.5.1.w64\Vide.w64\vectrex-pong\source\cartridge.c
 ; options enabled:  -falign-loops -fargument-alias -fauto-inc-dec
 ; -fbranch-count-reg -fcaller-saves -fcommon -fcprop-registers
 ; -fcrossjumping -fcse-follow-jumps -fdefer-pop
