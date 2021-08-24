@@ -62,10 +62,10 @@
    0016                      62 _dot_x_vel:	.blkb	1
                              63 	.globl	_dot_y_vel
    0017                      64 _dot_y_vel:	.blkb	1
-                             65 	.globl	_default_velocity
+                             65 	.globl	_velocity_scale
                              66 	.area	.data
-   0000                      67 _default_velocity:
-   0000 02                   68 	.byte	2
+   0000                      67 _velocity_scale:
+   0000 01                   68 	.byte	1
                              69 	.area	.bss
                              70 	.globl	_dot_brightness
    0018                      71 _dot_brightness:	.blkb	1
@@ -75,380 +75,661 @@
    001A                      75 _dot_ticks:	.blkb	1
                              76 	.globl	_flashes
    001B                      77 _flashes:	.blkb	1
-                             78 	.area	.text
-                             79 	.globl	_reset_round
-   0000                      80 _reset_round:
-   0000 7F 00 14      [ 7]   81 	clr	_dot_x	; dot_x
-   0003 7F 00 15      [ 7]   82 	clr	_dot_y	; dot_y
-   0006 F6 00 00      [ 5]   83 	ldb	_default_velocity	; default_velocity.4, default_velocity
-   0009 50            [ 2]   84 	negb	; default_velocity.4
-   000A F7 00 00      [ 5]   85 	stb	_default_velocity	; default_velocity.4, default_velocity
-   000D F7 00 16      [ 5]   86 	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-   0010 F7 00 17      [ 5]   87 	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
-   0013 7F 00 1A      [ 7]   88 	clr	_dot_ticks	; dot_ticks
-   0016 7F 00 1B      [ 7]   89 	clr	_flashes	; flashes
-   0019 7F 00 18      [ 7]   90 	clr	_dot_brightness	; dot_brightness
-   001C C6 01         [ 2]   91 	ldb	#1	;,
-   001E F7 00 19      [ 5]   92 	stb	_brightness_fade_in	;, brightness_fade_in
-   0021 39            [ 5]   93 	rts
-                             94 	.globl	_setup
-   0022                      95 _setup:
-   0022 7F 00 00      [ 7]   96 	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
-   0025 7F 00 00      [ 7]   97 	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
-   0028 7F 00 00      [ 7]   98 	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
-   002B 7F 00 00      [ 7]   99 	clr	_Vec_Joy_Mux_2_Y	; Vec_Joy_Mux_2_Y
-   002E C6 01         [ 2]  100 	ldb	#1	;,
-   0030 F7 00 00      [ 5]  101 	stb	_Vec_Music_Flag	;, Vec_Music_Flag
-   0033 8E 00 00      [ 3]  102 	ldx	#_Vec_Music_9	;,
-   0036 BF 00 00      [ 6]  103 	stx	_current_song	;, current_song
-   0039 8E 00 06      [ 3]  104 	ldx	#_player1_score_str	;,
-   003C BD 00 00      [ 8]  105 	jsr	___Clear_Score
-   003F 8E 00 0D      [ 3]  106 	ldx	#_player2_score_str	;,
-   0042 BD 00 00      [ 8]  107 	jsr	___Clear_Score
-   0045 C6 80         [ 2]  108 	ldb	#-128	;,
-   0047 F7 00 0C      [ 5]  109 	stb	_player1_score_str+6	;, player1_score_str
-   004A F7 00 13      [ 5]  110 	stb	_player2_score_str+6	;, player2_score_str
-   004D C6 EE         [ 2]  111 	ldb	#-18	;,
-   004F F7 00 02      [ 5]  112 	stb	_player1_x	;, player1_x
-   0052 C6 64         [ 2]  113 	ldb	#100	;,
-   0054 F7 00 03      [ 5]  114 	stb	_player1_y	;, player1_y
-   0057 C6 EE         [ 2]  115 	ldb	#-18	;,
-   0059 F7 00 04      [ 5]  116 	stb	_player2_x	;, player2_x
-   005C C6 9C         [ 2]  117 	ldb	#-100	;,
-   005E F7 00 05      [ 5]  118 	stb	_player2_y	;, player2_y
-   0061 7F 00 14      [ 7]  119 	clr	_dot_x	; dot_x
-   0064 7F 00 15      [ 7]  120 	clr	_dot_y	; dot_y
-   0067 F6 00 00      [ 5]  121 	ldb	_default_velocity	; default_velocity.4, default_velocity
-   006A 50            [ 2]  122 	negb	; default_velocity.4
-   006B F7 00 00      [ 5]  123 	stb	_default_velocity	; default_velocity.4, default_velocity
-   006E F7 00 16      [ 5]  124 	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-   0071 F7 00 17      [ 5]  125 	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
-   0074 7F 00 1A      [ 7]  126 	clr	_dot_ticks	; dot_ticks
-   0077 7F 00 1B      [ 7]  127 	clr	_flashes	; flashes
-   007A 7F 00 18      [ 7]  128 	clr	_dot_brightness	; dot_brightness
-   007D C6 01         [ 2]  129 	ldb	#1	;,
-   007F F7 00 19      [ 5]  130 	stb	_brightness_fade_in	;, brightness_fade_in
-   0082 39            [ 5]  131 	rts
-                            132 	.globl	_main
-   0083                     133 _main:
-   0083 32 76         [ 5]  134 	leas	-10,s	;,,
-   0085 7F 00 00      [ 7]  135 	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
-   0088 7F 00 00      [ 7]  136 	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
-   008B 7F 00 00      [ 7]  137 	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
-   008E 7F 00 00      [ 7]  138 	clr	_Vec_Joy_Mux_2_Y	; Vec_Joy_Mux_2_Y
-   0091 C6 01         [ 2]  139 	ldb	#1	;,
-   0093 F7 00 00      [ 5]  140 	stb	_Vec_Music_Flag	;, Vec_Music_Flag
-   0096 8E 00 00      [ 3]  141 	ldx	#_Vec_Music_9	;,
-   0099 BF 00 00      [ 6]  142 	stx	_current_song	;, current_song
-   009C 8E 00 06      [ 3]  143 	ldx	#_player1_score_str	;,
-   009F BD 00 00      [ 8]  144 	jsr	___Clear_Score
-   00A2 8E 00 0D      [ 3]  145 	ldx	#_player2_score_str	;,
-   00A5 BD 00 00      [ 8]  146 	jsr	___Clear_Score
-   00A8 C6 80         [ 2]  147 	ldb	#-128	;,
-   00AA F7 00 0C      [ 5]  148 	stb	_player1_score_str+6	;, player1_score_str
-   00AD F7 00 13      [ 5]  149 	stb	_player2_score_str+6	;, player2_score_str
-   00B0 C6 EE         [ 2]  150 	ldb	#-18	;,
-   00B2 F7 00 02      [ 5]  151 	stb	_player1_x	;, player1_x
-   00B5 C6 64         [ 2]  152 	ldb	#100	;,
-   00B7 F7 00 03      [ 5]  153 	stb	_player1_y	;, player1_y
-   00BA C6 EE         [ 2]  154 	ldb	#-18	;,
-   00BC F7 00 04      [ 5]  155 	stb	_player2_x	;, player2_x
-   00BF C6 9C         [ 2]  156 	ldb	#-100	;,
-   00C1 F7 00 05      [ 5]  157 	stb	_player2_y	;, player2_y
-   00C4 7F 00 14      [ 7]  158 	clr	_dot_x	; dot_x
-   00C7 7F 00 15      [ 7]  159 	clr	_dot_y	; dot_y
-   00CA F6 00 00      [ 5]  160 	ldb	_default_velocity	; default_velocity.4, default_velocity
-   00CD 50            [ 2]  161 	negb	; default_velocity.4
-   00CE F7 00 00      [ 5]  162 	stb	_default_velocity	; default_velocity.4, default_velocity
-   00D1 F7 00 16      [ 5]  163 	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-   00D4 F7 00 17      [ 5]  164 	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
-   00D7 7F 00 1A      [ 7]  165 	clr	_dot_ticks	; dot_ticks
-   00DA 7F 00 1B      [ 7]  166 	clr	_flashes	; flashes
-   00DD 7F 00 18      [ 7]  167 	clr	_dot_brightness	; dot_brightness
-   00E0 C6 01         [ 2]  168 	ldb	#1	;,
-   00E2 F7 00 19      [ 5]  169 	stb	_brightness_fade_in	;, brightness_fade_in
-   00E5 16 01 14      [ 5]  170 	lbra	L20	;
-   00E8                     171 L6:
-   00E8 7D 00 17      [ 7]  172 	tst	_dot_y_vel	; dot_y_vel
-   00EB 10 2F 01 E0   [ 6]  173 	lble	L12	;
-   00EF C6 12         [ 2]  174 	ldb	#18	;,
-   00F1 E7 E2         [ 6]  175 	stb	,-s	;,
-   00F3 5F            [ 2]  176 	clrb	;
-   00F4 BD 00 00      [ 8]  177 	jsr	__Moveto_d
-   00F7 C6 12         [ 2]  178 	ldb	#18	;,
-   00F9 E7 E2         [ 6]  179 	stb	,-s	;,
-   00FB 5F            [ 2]  180 	clrb	;
-   00FC BD 00 00      [ 8]  181 	jsr	__Draw_Line_d
-   00FF C6 F7         [ 2]  182 	ldb	#-9	;,
-   0101 E7 E2         [ 6]  183 	stb	,-s	;,
-   0103 BD 00 00      [ 8]  184 	jsr	__Draw_Line_d
-   0106 C6 09         [ 2]  185 	ldb	#9	;,
-   0108 E7 E2         [ 6]  186 	stb	,-s	;,
-   010A BD 00 00      [ 8]  187 	jsr	__Moveto_d
-   010D C6 F7         [ 2]  188 	ldb	#-9	;,
-   010F E7 E2         [ 6]  189 	stb	,-s	;,
-   0111 C6 09         [ 2]  190 	ldb	#9	;,
-   0113 BD 00 00      [ 8]  191 	jsr	__Draw_Line_d
-   0116 32 65         [ 5]  192 	leas	5,s	;,,
-   0118                     193 L13:
-   0118 7C 00 1A      [ 7]  194 	inc	_dot_ticks	; dot_ticks
-   011B F6 00 1A      [ 5]  195 	ldb	_dot_ticks	; dot_ticks.35, dot_ticks
-   011E C1 09         [ 2]  196 	cmpb	#9	;cmpqi:	; dot_ticks.35,
-   0120 2F 0D         [ 3]  197 	ble	L8	;
-   0122 7D 00 18      [ 7]  198 	tst	_dot_brightness	; dot_brightness
-   0125 10 27 01 D4   [ 6]  199 	lbeq	L14	;
-   0129 7F 00 18      [ 7]  200 	clr	_dot_brightness	; dot_brightness
-   012C                     201 L15:
-   012C 7F 00 1A      [ 7]  202 	clr	_dot_ticks	; dot_ticks
-   012F                     203 L8:
-   012F BD 00 00      [ 8]  204 	jsr	___Reset0Ref
-   0132 C6 7F         [ 2]  205 	ldb	#127	;,
-   0134 BD 00 00      [ 8]  206 	jsr	__Intensity_a
-   0137 C6 7E         [ 2]  207 	ldb	#126	;,
-   0139 E7 E2         [ 6]  208 	stb	,-s	;,
-   013B CB 06         [ 2]  209 	addb	#6	;,
-   013D BD 00 00      [ 8]  210 	jsr	__Moveto_d
-   0140 C6 81         [ 2]  211 	ldb	#-127	;,
-   0142 E7 E2         [ 6]  212 	stb	,-s	;,
-   0144 5F            [ 2]  213 	clrb	;
-   0145 BD 00 00      [ 8]  214 	jsr	__Draw_Line_d
-   0148 C6 81         [ 2]  215 	ldb	#-127	;,
-   014A E7 E2         [ 6]  216 	stb	,-s	;,
-   014C 5F            [ 2]  217 	clrb	;
-   014D BD 00 00      [ 8]  218 	jsr	__Draw_Line_d
-   0150 6F E2         [ 8]  219 	clr	,-s	;
-   0152 C6 7C         [ 2]  220 	ldb	#124	;,
-   0154 BD 00 00      [ 8]  221 	jsr	__Moveto_d
-   0157 6F E2         [ 8]  222 	clr	,-s	;
-   0159 C6 7C         [ 2]  223 	ldb	#124	;,
-   015B BD 00 00      [ 8]  224 	jsr	__Moveto_d
-   015E C6 7F         [ 2]  225 	ldb	#127	;,
-   0160 E7 E2         [ 6]  226 	stb	,-s	;,
-   0162 5F            [ 2]  227 	clrb	;
-   0163 BD 00 00      [ 8]  228 	jsr	__Draw_Line_d
-   0166 C6 7F         [ 2]  229 	ldb	#127	;,
-   0168 E7 E2         [ 6]  230 	stb	,-s	;,
-   016A 5F            [ 2]  231 	clrb	;
-   016B BD 00 00      [ 8]  232 	jsr	__Draw_Line_d
-   016E C6 82         [ 2]  233 	ldb	#-126	;,
-   0170 E7 E2         [ 6]  234 	stb	,-s	;,
-   0172 CB 02         [ 2]  235 	addb	#2	;,
-   0174 BD 00 00      [ 8]  236 	jsr	__Moveto_d
-   0177 F6 00 00      [ 5]  237 	ldb	_Vec_Btn_State	;, Vec_Btn_State
-   017A E7 69         [ 5]  238 	stb	9,s	;, D.3305
-   017C 32 68         [ 5]  239 	leas	8,s	;,,
-   017E C5 01         [ 2]  240 	bitb	#1	;,
-   0180 27 0C         [ 3]  241 	beq	L16	;
-   0182 F6 00 02      [ 5]  242 	ldb	_player1_x	; player1_x.8, player1_x
-   0185 C1 89         [ 2]  243 	cmpb	#-119	;cmpqi:	; player1_x.8,
-   0187 2D 05         [ 3]  244 	blt	L16	;
-   0189 CB FD         [ 2]  245 	addb	#-3	; player1_x.8,
-   018B F7 00 02      [ 5]  246 	stb	_player1_x	; player1_x.8, player1_x
-   018E                     247 L16:
-   018E C6 02         [ 2]  248 	ldb	#2	; tmp64,
-   0190 E4 61         [ 5]  249 	andb	1,s	; tmp64, D.3305
-   0192 27 0C         [ 3]  250 	beq	L17	;
-   0194 F6 00 02      [ 5]  251 	ldb	_player1_x	; player1_x.77, player1_x
-   0197 C1 53         [ 2]  252 	cmpb	#83	;cmpqi:	; player1_x.77,
-   0199 2E 05         [ 3]  253 	bgt	L17	;
-   019B CB 03         [ 2]  254 	addb	#3	; player1_x.77,
-   019D F7 00 02      [ 5]  255 	stb	_player1_x	; player1_x.77, player1_x
-   01A0                     256 L17:
-   01A0 C6 04         [ 2]  257 	ldb	#4	; tmp65,
-   01A2 E4 61         [ 5]  258 	andb	1,s	; tmp65, D.3305
-   01A4 27 0C         [ 3]  259 	beq	L18	;
-   01A6 F6 00 04      [ 5]  260 	ldb	_player2_x	; player2_x.11, player2_x
-   01A9 C1 89         [ 2]  261 	cmpb	#-119	;cmpqi:	; player2_x.11,
-   01AB 2D 05         [ 3]  262 	blt	L18	;
-   01AD CB FD         [ 2]  263 	addb	#-3	; player2_x.11,
-   01AF F7 00 04      [ 5]  264 	stb	_player2_x	; player2_x.11, player2_x
-   01B2                     265 L18:
-   01B2 C6 08         [ 2]  266 	ldb	#8	;,
-   01B4 E4 61         [ 5]  267 	andb	1,s	;, D.3305
-   01B6 27 0C         [ 3]  268 	beq	L19	;
-   01B8 F6 00 04      [ 5]  269 	ldb	_player2_x	; player2_x.78, player2_x
-   01BB C1 53         [ 2]  270 	cmpb	#83	;cmpqi:	; player2_x.78,
-   01BD 2E 05         [ 3]  271 	bgt	L19	;
-   01BF CB 03         [ 2]  272 	addb	#3	; player2_x.78,
-   01C1 F7 00 04      [ 5]  273 	stb	_player2_x	; player2_x.78, player2_x
-   01C4                     274 L19:
-   01C4 F6 00 03      [ 5]  275 	ldb	_player1_y	;, player1_y
-   01C7 E7 E2         [ 6]  276 	stb	,-s	;,
-   01C9 F6 00 02      [ 5]  277 	ldb	_player1_x	;, player1_x
-   01CC BD 00 00      [ 8]  278 	jsr	__Moveto_d
-   01CF 6F E2         [ 8]  279 	clr	,-s	;
-   01D1 C6 24         [ 2]  280 	ldb	#36	;,
-   01D3 BD 00 00      [ 8]  281 	jsr	__Draw_Line_d
-   01D6 C6 DC         [ 2]  282 	ldb	#-36	; tmp68,
-   01D8 F0 00 02      [ 5]  283 	subb	_player1_x	; tmp68, player1_x
-   01DB E7 62         [ 5]  284 	stb	2,s	; tmp68,
-   01DD F6 00 03      [ 5]  285 	ldb	_player1_y	;, player1_y
-   01E0 50            [ 2]  286 	negb	;
-   01E1 34 04         [ 6]  287 	pshs	b	;
-   01E3 E6 63         [ 5]  288 	ldb	3,s	;,
-   01E5 BD 00 00      [ 8]  289 	jsr	__Moveto_d
-   01E8 F6 00 05      [ 5]  290 	ldb	_player2_y	;, player2_y
-   01EB E7 E2         [ 6]  291 	stb	,-s	;,
-   01ED F6 00 04      [ 5]  292 	ldb	_player2_x	;, player2_x
-   01F0 BD 00 00      [ 8]  293 	jsr	__Moveto_d
-   01F3 6F E2         [ 8]  294 	clr	,-s	;
-   01F5 C6 24         [ 2]  295 	ldb	#36	;,
-   01F7 BD 00 00      [ 8]  296 	jsr	__Draw_Line_d
-   01FA 32 65         [ 5]  297 	leas	5,s	;,,
-   01FC                     298 L20:
-   01FC BD 00 00      [ 8]  299 	jsr	___DP_to_C8
-   01FF BE 00 00      [ 6]  300 	ldx	_current_song	;, current_song
-   0202 BD 00 00      [ 8]  301 	jsr	__Init_Music_chk
-   0205 BD 00 00      [ 8]  302 	jsr	___Wait_Recal
-   0208 BD 00 00      [ 8]  303 	jsr	__Do_Sound
-   020B BD 00 00      [ 8]  304 	jsr	___Read_Btns
-   020E C6 7F         [ 2]  305 	ldb	#127	;,
-   0210 BD 00 00      [ 8]  306 	jsr	__Intensity_a
-   0213 C6 7F         [ 2]  307 	ldb	#127	;,
-   0215 F7 00 00      [ 5]  308 	stb	_VIA_t1_cnt_lo	;, VIA_t1_cnt_lo
-   0218 E7 E2         [ 6]  309 	stb	,-s	;,
-   021A 8E 00 06      [ 3]  310 	ldx	#_player1_score_str	;,
-   021D C6 BE         [ 2]  311 	ldb	#-66	;,
-   021F BD 00 00      [ 8]  312 	jsr	__Print_Str_d
-   0222 C6 80         [ 2]  313 	ldb	#-128	;,
-   0224 E7 E2         [ 6]  314 	stb	,-s	;,
-   0226 8E 00 0D      [ 3]  315 	ldx	#_player2_score_str	;,
-   0229 CB 3E         [ 2]  316 	addb	#62	;,
-   022B BD 00 00      [ 8]  317 	jsr	__Print_Str_d
-   022E F6 00 18      [ 5]  318 	ldb	_dot_brightness	;, dot_brightness
-   0231 BD 00 00      [ 8]  319 	jsr	__Intensity_a
-   0234 F6 00 15      [ 5]  320 	ldb	_dot_y	;, dot_y
-   0237 E7 E2         [ 6]  321 	stb	,-s	;,
-   0239 F6 00 14      [ 5]  322 	ldb	_dot_x	;, dot_x
-   023C BD 00 00      [ 8]  323 	jsr	__Dot_d
-   023F 32 63         [ 5]  324 	leas	3,s	;,,
-   0241 F6 00 1B      [ 5]  325 	ldb	_flashes	;, flashes
-   0244 C1 04         [ 2]  326 	cmpb	#4	;cmpqi:	;,
-   0246 10 2F FE 9E   [ 6]  327 	lble	L6	;
-   024A C6 7F         [ 2]  328 	ldb	#127	;,
-   024C F7 00 18      [ 5]  329 	stb	_dot_brightness	;, dot_brightness
-   024F F6 00 16      [ 5]  330 	ldb	_dot_x_vel	;, dot_x_vel
-   0252 E7 69         [ 5]  331 	stb	9,s	;, dot_x_vel.19
-   0254 FB 00 14      [ 5]  332 	addb	_dot_x	;, dot_x
-   0257 E7 68         [ 5]  333 	stb	8,s	;, dot_x.20
-   0259 F7 00 14      [ 5]  334 	stb	_dot_x	;, dot_x
-   025C F6 00 17      [ 5]  335 	ldb	_dot_y_vel	;, dot_y_vel
-   025F E7 67         [ 5]  336 	stb	7,s	;, dot_y_vel.22
-   0261 FB 00 15      [ 5]  337 	addb	_dot_y	;, dot_y
-   0264 E7 66         [ 5]  338 	stb	6,s	;, dot_y.23
-   0266 F7 00 15      [ 5]  339 	stb	_dot_y	;, dot_y
-   0269 8E 00 0D      [ 3]  340 	ldx	#_player2_score_str	;,
-   026C C1 7A         [ 2]  341 	cmpb	#122	;cmpqi:	;,
-   026E 10 2E 00 99   [ 6]  342 	lbgt	L23	;
-   0272 C1 86         [ 2]  343 	cmpb	#-122	;cmpqi:	;,
-   0274 10 2D 00 90   [ 6]  344 	lblt	L25	;
-   0278 F6 00 02      [ 5]  345 	ldb	_player1_x	;, player1_x
-   027B E7 65         [ 5]  346 	stb	5,s	;, player1_x.24
-   027D E0 69         [ 5]  347 	subb	9,s	; tmp50, dot_x_vel.19
-   027F E1 68         [ 5]  348 	cmpb	8,s	;cmpqi:(R)	; tmp50, dot_x.20
-   0281 10 2E 00 AF   [ 6]  349 	lbgt	L10	;
-   0285 E6 69         [ 5]  350 	ldb	9,s	;, dot_x_vel.19
-   0287 EB 65         [ 5]  351 	addb	5,s	;, player1_x.24
-   0289 CB 24         [ 2]  352 	addb	#36	;,
-   028B E7 65         [ 5]  353 	stb	5,s	;, player1_x.24
-   028D E6 68         [ 5]  354 	ldb	8,s	;, dot_x.20
-   028F E1 65         [ 5]  355 	cmpb	5,s	;cmpqi:	;, player1_x.24
-   0291 10 2E 00 9F   [ 6]  356 	lbgt	L10	;
-   0295 F6 00 03      [ 5]  357 	ldb	_player1_y	;, player1_y
-   0298 E7 64         [ 5]  358 	stb	4,s	;, player1_y.25
-   029A E0 67         [ 5]  359 	subb	7,s	; tmp53, dot_y_vel.22
-   029C E1 66         [ 5]  360 	cmpb	6,s	;cmpqi:(R)	; tmp53, dot_y.23
-   029E 10 2E 00 92   [ 6]  361 	lbgt	L10	;
-   02A2 E6 64         [ 5]  362 	ldb	4,s	;, player1_y.25
-   02A4 EB 67         [ 5]  363 	addb	7,s	;, dot_y_vel.22
-   02A6 E7 64         [ 5]  364 	stb	4,s	;, player1_y.25
-   02A8 E6 66         [ 5]  365 	ldb	6,s	;, dot_y.23
-   02AA E1 64         [ 5]  366 	cmpb	4,s	;cmpqi:	;, player1_y.25
-   02AC 10 2E 00 84   [ 6]  367 	lbgt	L10	;
-   02B0                     368 L22:
-   02B0 E6 67         [ 5]  369 	ldb	7,s	; dot_y_vel.81, dot_y_vel.22
-   02B2 50            [ 2]  370 	negb	; dot_y_vel.81
-   02B3 F7 00 17      [ 5]  371 	stb	_dot_y_vel	; dot_y_vel.81, dot_y_vel
-   02B6 58            [ 2]  372 	aslb	; dot_y_vel.81
-   02B7 EB 66         [ 5]  373 	addb	6,s	; dot_y_vel.81, dot_y.23
-   02B9 F7 00 15      [ 5]  374 	stb	_dot_y	; dot_y_vel.81, dot_y
-   02BC                     375 L11:
-   02BC E6 68         [ 5]  376 	ldb	8,s	;, dot_x.20
-   02BE CB 78         [ 2]  377 	addb	#120	;,
-   02C0 C1 F0         [ 2]  378 	cmpb	#-16	;cmpqi:	;,
-   02C2 10 23 FE 69   [ 6]  379 	lbls	L8	;
-   02C6 E6 69         [ 5]  380 	ldb	9,s	;, dot_x_vel.19
-   02C8 50            [ 2]  381 	negb	;
-   02C9 F7 00 16      [ 5]  382 	stb	_dot_x_vel	;, dot_x_vel
-   02CC 16 FE 60      [ 5]  383 	lbra	L8	;
-   02CF                     384 L12:
-   02CF C6 EE         [ 2]  385 	ldb	#-18	;,
-   02D1 E7 E2         [ 6]  386 	stb	,-s	;,
-   02D3 5F            [ 2]  387 	clrb	;
-   02D4 BD 00 00      [ 8]  388 	jsr	__Moveto_d
-   02D7 C6 EE         [ 2]  389 	ldb	#-18	;,
-   02D9 E7 E2         [ 6]  390 	stb	,-s	;,
-   02DB 5F            [ 2]  391 	clrb	;
-   02DC BD 00 00      [ 8]  392 	jsr	__Draw_Line_d
-   02DF C6 09         [ 2]  393 	ldb	#9	;,
-   02E1 E7 E2         [ 6]  394 	stb	,-s	;,
-   02E3 C6 F7         [ 2]  395 	ldb	#-9	;,
-   02E5 BD 00 00      [ 8]  396 	jsr	__Draw_Line_d
-   02E8 C6 F7         [ 2]  397 	ldb	#-9	;,
-   02EA E7 E2         [ 6]  398 	stb	,-s	;,
-   02EC C6 09         [ 2]  399 	ldb	#9	;,
-   02EE BD 00 00      [ 8]  400 	jsr	__Moveto_d
-   02F1 C6 09         [ 2]  401 	ldb	#9	;,
-   02F3 E7 E2         [ 6]  402 	stb	,-s	;,
-   02F5 BD 00 00      [ 8]  403 	jsr	__Draw_Line_d
-   02F8 32 65         [ 5]  404 	leas	5,s	;,,
-   02FA 16 FE 1B      [ 5]  405 	lbra	L13	;
-   02FD                     406 L14:
-   02FD C6 7F         [ 2]  407 	ldb	#127	;,
-   02FF F7 00 18      [ 5]  408 	stb	_dot_brightness	;, dot_brightness
-   0302 7C 00 1B      [ 7]  409 	inc	_flashes	; flashes
-   0305 16 FE 24      [ 5]  410 	lbra	L15	;
-   0308                     411 L25:
-   0308 8E 00 06      [ 3]  412 	ldx	#_player1_score_str	;,
-   030B                     413 L23:
-   030B C6 01         [ 2]  414 	ldb	#1	;,
-   030D BD 00 00      [ 8]  415 	jsr	__Add_Score_a
-   0310 7F 00 14      [ 7]  416 	clr	_dot_x	; dot_x
-   0313 7F 00 15      [ 7]  417 	clr	_dot_y	; dot_y
-   0316 F6 00 00      [ 5]  418 	ldb	_default_velocity	; default_velocity.4, default_velocity
-   0319 50            [ 2]  419 	negb	; default_velocity.4
-   031A F7 00 00      [ 5]  420 	stb	_default_velocity	; default_velocity.4, default_velocity
-   031D F7 00 16      [ 5]  421 	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-   0320 F7 00 17      [ 5]  422 	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
-   0323 7F 00 1A      [ 7]  423 	clr	_dot_ticks	; dot_ticks
-   0326 7F 00 1B      [ 7]  424 	clr	_flashes	; flashes
-   0329 7F 00 18      [ 7]  425 	clr	_dot_brightness	; dot_brightness
-   032C C6 01         [ 2]  426 	ldb	#1	;,
-   032E F7 00 19      [ 5]  427 	stb	_brightness_fade_in	;, brightness_fade_in
-   0331 16 FD FB      [ 5]  428 	lbra	L8	;
-   0334                     429 L10:
-   0334 F6 00 04      [ 5]  430 	ldb	_player2_x	;, player2_x
-   0337 E7 63         [ 5]  431 	stb	3,s	;, player2_x.28
-   0339 E0 69         [ 5]  432 	subb	9,s	; tmp56, dot_x_vel.19
-   033B E1 68         [ 5]  433 	cmpb	8,s	;cmpqi:(R)	; tmp56, dot_x.20
-   033D 10 2E FF 7B   [ 6]  434 	lbgt	L11	;
-   0341 E6 69         [ 5]  435 	ldb	9,s	;, dot_x_vel.19
-   0343 EB 63         [ 5]  436 	addb	3,s	;, player2_x.28
-   0345 CB 24         [ 2]  437 	addb	#36	;,
-   0347 E7 63         [ 5]  438 	stb	3,s	;, player2_x.28
-   0349 E6 68         [ 5]  439 	ldb	8,s	;, dot_x.20
-   034B E1 63         [ 5]  440 	cmpb	3,s	;cmpqi:	;, player2_x.28
-   034D 10 2E FF 6B   [ 6]  441 	lbgt	L11	;
-   0351 F6 00 05      [ 5]  442 	ldb	_player2_y	;, player2_y
-   0354 E7 62         [ 5]  443 	stb	2,s	;, player2_y.29
-   0356 EB 67         [ 5]  444 	addb	7,s	; tmp59, dot_y_vel.22
-   0358 E1 66         [ 5]  445 	cmpb	6,s	;cmpqi:(R)	; tmp59, dot_y.23
-   035A 10 2E FF 5E   [ 6]  446 	lbgt	L11	;
-   035E E6 62         [ 5]  447 	ldb	2,s	; tmp60, player2_y.29
-   0360 E0 67         [ 5]  448 	subb	7,s	; tmp60, dot_y_vel.22
-   0362 E1 66         [ 5]  449 	cmpb	6,s	;cmpqi:(R)	; tmp60, dot_y.23
-   0364 10 2D FF 54   [ 6]  450 	lblt	L11	;
-   0368 16 FF 45      [ 5]  451 	lbra	L22	;
+                             78 	.globl	_edge
+                             79 	.area	.data
+   0001                      80 _edge:
+   0001 01                   81 	.byte	1
+   0002 81                   82 	.byte	-127
+   0003 00                   83 	.byte	0
+   0004 81                   84 	.byte	-127
+   0005 00                   85 	.byte	0
+                             86 	.area	.text
+                             87 	.globl	_reset_round
+   0000                      88 _reset_round:
+   0000 32 7B         [ 5]   89 	leas	-5,s	;,,
+   0002 7F 00 14      [ 7]   90 	clr	_dot_x	; dot_x
+   0005 7F 00 15      [ 7]   91 	clr	_dot_y	; dot_y
+   0008 70 00 00      [ 7]   92 	neg	_velocity_scale	; velocity_scale
+   000B BD 00 00      [ 8]   93 	jsr	__Random
+   000E E7 E4         [ 4]   94 	stb	,s	;, D.3249
+   0010 F6 00 00      [ 5]   95 	ldb	_velocity_scale	;, velocity_scale
+   0013 E7 63         [ 5]   96 	stb	3,s	;, velocity_scale.49
+   0015 E6 E4         [ 4]   97 	ldb	,s	;, D.3249
+   0017 A6 63         [ 5]   98 	lda	3,s	;mulqihi3	; velocity_scale.49
+   0019 3D            [11]   99 	mul
+   001A 1F 01         [ 6]  100 	tfr	d,x	;, tmp31
+   001C 1F 10         [ 6]  101 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp31,
+   001E E7 62         [ 5]  102 	stb	2,s	;,
+   0020 1F 10         [ 6]  103 	tfr	x,d	; tmp31,
+   0022 2D 54         [ 3]  104 	blt	L6	;
+   0024                     105 L2:
+   0024 67 62         [ 7]  106 	asr	2,s	;
+   0026 67 62         [ 7]  107 	asr	2,s	;
+   0028 67 62         [ 7]  108 	asr	2,s	;
+   002A 67 62         [ 7]  109 	asr	2,s	;
+   002C 67 62         [ 7]  110 	asr	2,s	;
+   002E 67 62         [ 7]  111 	asr	2,s	;
+   0030 68 63         [ 7]  112 	asl	3,s	; velocity_scale.49
+   0032 E6 62         [ 5]  113 	ldb	2,s	;,
+   0034 EB 63         [ 5]  114 	addb	3,s	;, velocity_scale.49
+   0036 F7 00 16      [ 5]  115 	stb	_dot_x_vel	;, dot_x_vel
+   0039 BD 00 00      [ 8]  116 	jsr	__Random
+   003C E7 E4         [ 4]  117 	stb	,s	;, D.3251
+   003E F6 00 00      [ 5]  118 	ldb	_velocity_scale	;, velocity_scale
+   0041 E7 64         [ 5]  119 	stb	4,s	;, velocity_scale.50
+   0043 E6 E4         [ 4]  120 	ldb	,s	;, D.3251
+   0045 A6 64         [ 5]  121 	lda	4,s	;mulqihi3	; velocity_scale.50
+   0047 3D            [11]  122 	mul
+   0048 1F 01         [ 6]  123 	tfr	d,x	;, tmp37
+   004A 1F 10         [ 6]  124 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp37,
+   004C E7 61         [ 5]  125 	stb	1,s	;,
+   004E 1F 10         [ 6]  126 	tfr	x,d	; tmp37,
+   0050 2D 2F         [ 3]  127 	blt	L7	;
+   0052                     128 L3:
+   0052 67 61         [ 7]  129 	asr	1,s	;
+   0054 67 61         [ 7]  130 	asr	1,s	;
+   0056 67 61         [ 7]  131 	asr	1,s	;
+   0058 67 61         [ 7]  132 	asr	1,s	;
+   005A 67 61         [ 7]  133 	asr	1,s	;
+   005C 67 61         [ 7]  134 	asr	1,s	;
+   005E 68 64         [ 7]  135 	asl	4,s	; velocity_scale.50
+   0060 E6 61         [ 5]  136 	ldb	1,s	;,
+   0062 EB 64         [ 5]  137 	addb	4,s	;, velocity_scale.50
+   0064 F7 00 17      [ 5]  138 	stb	_dot_y_vel	;, dot_y_vel
+   0067 7F 00 1A      [ 7]  139 	clr	_dot_ticks	; dot_ticks
+   006A 7F 00 1B      [ 7]  140 	clr	_flashes	; flashes
+   006D 7F 00 18      [ 7]  141 	clr	_dot_brightness	; dot_brightness
+   0070 C6 01         [ 2]  142 	ldb	#1	;,
+   0072 F7 00 19      [ 5]  143 	stb	_brightness_fade_in	;, brightness_fade_in
+   0075 32 65         [ 5]  144 	leas	5,s	;,,
+   0077 39            [ 5]  145 	rts
+   0078                     146 L6:
+   0078 E6 62         [ 5]  147 	ldb	2,s	;,
+   007A CB 3F         [ 2]  148 	addb	#63	;,
+   007C E7 62         [ 5]  149 	stb	2,s	;,
+   007E 16 FF A3      [ 5]  150 	lbra	L2	;
+   0081                     151 L7:
+   0081 E6 61         [ 5]  152 	ldb	1,s	;,
+   0083 CB 3F         [ 2]  153 	addb	#63	;,
+   0085 E7 61         [ 5]  154 	stb	1,s	;,
+   0087 20 C9         [ 3]  155 	bra	L3	;
+                            156 	.globl	_setup
+   0089                     157 _setup:
+   0089 32 7B         [ 5]  158 	leas	-5,s	;,,
+   008B 7F 00 00      [ 7]  159 	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
+   008E 7F 00 00      [ 7]  160 	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
+   0091 7F 00 00      [ 7]  161 	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
+   0094 7F 00 00      [ 7]  162 	clr	_Vec_Joy_Mux_2_Y	; Vec_Joy_Mux_2_Y
+   0097 C6 01         [ 2]  163 	ldb	#1	;,
+   0099 F7 00 00      [ 5]  164 	stb	_Vec_Music_Flag	;, Vec_Music_Flag
+   009C 8E 00 00      [ 3]  165 	ldx	#_Vec_Music_9	;,
+   009F BF 00 00      [ 6]  166 	stx	_current_song	;, current_song
+   00A2 8E 00 06      [ 3]  167 	ldx	#_player1_score_str	;,
+   00A5 BD 00 00      [ 8]  168 	jsr	___Clear_Score
+   00A8 8E 00 0D      [ 3]  169 	ldx	#_player2_score_str	;,
+   00AB BD 00 00      [ 8]  170 	jsr	___Clear_Score
+   00AE C6 80         [ 2]  171 	ldb	#-128	;,
+   00B0 F7 00 0C      [ 5]  172 	stb	_player1_score_str+6	;, player1_score_str
+   00B3 F7 00 13      [ 5]  173 	stb	_player2_score_str+6	;, player2_score_str
+   00B6 C6 EE         [ 2]  174 	ldb	#-18	;,
+   00B8 F7 00 02      [ 5]  175 	stb	_player1_x	;, player1_x
+   00BB C6 64         [ 2]  176 	ldb	#100	;,
+   00BD F7 00 03      [ 5]  177 	stb	_player1_y	;, player1_y
+   00C0 C6 EE         [ 2]  178 	ldb	#-18	;,
+   00C2 F7 00 04      [ 5]  179 	stb	_player2_x	;, player2_x
+   00C5 C6 9C         [ 2]  180 	ldb	#-100	;,
+   00C7 F7 00 05      [ 5]  181 	stb	_player2_y	;, player2_y
+   00CA 7F 00 14      [ 7]  182 	clr	_dot_x	; dot_x
+   00CD 7F 00 15      [ 7]  183 	clr	_dot_y	; dot_y
+   00D0 70 00 00      [ 7]  184 	neg	_velocity_scale	; velocity_scale
+   00D3 BD 00 00      [ 8]  185 	jsr	__Random
+   00D6 E7 E4         [ 4]  186 	stb	,s	;, D.3383
+   00D8 F6 00 00      [ 5]  187 	ldb	_velocity_scale	;, velocity_scale
+   00DB E7 63         [ 5]  188 	stb	3,s	;, velocity_scale.64
+   00DD E6 E4         [ 4]  189 	ldb	,s	;, D.3383
+   00DF A6 63         [ 5]  190 	lda	3,s	;mulqihi3	; velocity_scale.64
+   00E1 3D            [11]  191 	mul
+   00E2 1F 01         [ 6]  192 	tfr	d,x	;, tmp34
+   00E4 1F 10         [ 6]  193 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp34,
+   00E6 E7 62         [ 5]  194 	stb	2,s	;,
+   00E8 1F 10         [ 6]  195 	tfr	x,d	; tmp34,
+   00EA 2D 54         [ 3]  196 	blt	L12	;
+   00EC                     197 L9:
+   00EC 67 62         [ 7]  198 	asr	2,s	;
+   00EE 67 62         [ 7]  199 	asr	2,s	;
+   00F0 67 62         [ 7]  200 	asr	2,s	;
+   00F2 67 62         [ 7]  201 	asr	2,s	;
+   00F4 67 62         [ 7]  202 	asr	2,s	;
+   00F6 67 62         [ 7]  203 	asr	2,s	;
+   00F8 68 63         [ 7]  204 	asl	3,s	; velocity_scale.64
+   00FA E6 62         [ 5]  205 	ldb	2,s	;,
+   00FC EB 63         [ 5]  206 	addb	3,s	;, velocity_scale.64
+   00FE F7 00 16      [ 5]  207 	stb	_dot_x_vel	;, dot_x_vel
+   0101 BD 00 00      [ 8]  208 	jsr	__Random
+   0104 E7 E4         [ 4]  209 	stb	,s	;, D.3384
+   0106 F6 00 00      [ 5]  210 	ldb	_velocity_scale	;, velocity_scale
+   0109 E7 64         [ 5]  211 	stb	4,s	;, velocity_scale.65
+   010B E6 E4         [ 4]  212 	ldb	,s	;, D.3384
+   010D A6 64         [ 5]  213 	lda	4,s	;mulqihi3	; velocity_scale.65
+   010F 3D            [11]  214 	mul
+   0110 1F 01         [ 6]  215 	tfr	d,x	;, tmp40
+   0112 1F 10         [ 6]  216 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp40,
+   0114 E7 61         [ 5]  217 	stb	1,s	;,
+   0116 1F 10         [ 6]  218 	tfr	x,d	; tmp40,
+   0118 2D 2F         [ 3]  219 	blt	L13	;
+   011A                     220 L10:
+   011A 67 61         [ 7]  221 	asr	1,s	;
+   011C 67 61         [ 7]  222 	asr	1,s	;
+   011E 67 61         [ 7]  223 	asr	1,s	;
+   0120 67 61         [ 7]  224 	asr	1,s	;
+   0122 67 61         [ 7]  225 	asr	1,s	;
+   0124 67 61         [ 7]  226 	asr	1,s	;
+   0126 68 64         [ 7]  227 	asl	4,s	; velocity_scale.65
+   0128 E6 61         [ 5]  228 	ldb	1,s	;,
+   012A EB 64         [ 5]  229 	addb	4,s	;, velocity_scale.65
+   012C F7 00 17      [ 5]  230 	stb	_dot_y_vel	;, dot_y_vel
+   012F 7F 00 1A      [ 7]  231 	clr	_dot_ticks	; dot_ticks
+   0132 7F 00 1B      [ 7]  232 	clr	_flashes	; flashes
+   0135 7F 00 18      [ 7]  233 	clr	_dot_brightness	; dot_brightness
+   0138 C6 01         [ 2]  234 	ldb	#1	;,
+   013A F7 00 19      [ 5]  235 	stb	_brightness_fade_in	;, brightness_fade_in
+   013D 32 65         [ 5]  236 	leas	5,s	;,,
+   013F 39            [ 5]  237 	rts
+   0140                     238 L12:
+   0140 E6 62         [ 5]  239 	ldb	2,s	;,
+   0142 CB 3F         [ 2]  240 	addb	#63	;,
+   0144 E7 62         [ 5]  241 	stb	2,s	;,
+   0146 16 FF A3      [ 5]  242 	lbra	L9	;
+   0149                     243 L13:
+   0149 E6 61         [ 5]  244 	ldb	1,s	;,
+   014B CB 3F         [ 2]  245 	addb	#63	;,
+   014D E7 61         [ 5]  246 	stb	1,s	;,
+   014F 20 C9         [ 3]  247 	bra	L10	;
+                            248 	.globl	_main
+   0151                     249 _main:
+   0151 32 E8 ED      [ 5]  250 	leas	-19,s	;,,
+   0154 7F 00 00      [ 7]  251 	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
+   0157 7F 00 00      [ 7]  252 	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
+   015A 7F 00 00      [ 7]  253 	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
+   015D 7F 00 00      [ 7]  254 	clr	_Vec_Joy_Mux_2_Y	; Vec_Joy_Mux_2_Y
+   0160 C6 01         [ 2]  255 	ldb	#1	;,
+   0162 F7 00 00      [ 5]  256 	stb	_Vec_Music_Flag	;, Vec_Music_Flag
+   0165 8E 00 00      [ 3]  257 	ldx	#_Vec_Music_9	;,
+   0168 BF 00 00      [ 6]  258 	stx	_current_song	;, current_song
+   016B 8E 00 06      [ 3]  259 	ldx	#_player1_score_str	;,
+   016E BD 00 00      [ 8]  260 	jsr	___Clear_Score
+   0171 8E 00 0D      [ 3]  261 	ldx	#_player2_score_str	;,
+   0174 BD 00 00      [ 8]  262 	jsr	___Clear_Score
+   0177 C6 80         [ 2]  263 	ldb	#-128	;,
+   0179 F7 00 0C      [ 5]  264 	stb	_player1_score_str+6	;, player1_score_str
+   017C F7 00 13      [ 5]  265 	stb	_player2_score_str+6	;, player2_score_str
+   017F C6 EE         [ 2]  266 	ldb	#-18	;,
+   0181 F7 00 02      [ 5]  267 	stb	_player1_x	;, player1_x
+   0184 C6 64         [ 2]  268 	ldb	#100	;,
+   0186 F7 00 03      [ 5]  269 	stb	_player1_y	;, player1_y
+   0189 C6 EE         [ 2]  270 	ldb	#-18	;,
+   018B F7 00 04      [ 5]  271 	stb	_player2_x	;, player2_x
+   018E C6 9C         [ 2]  272 	ldb	#-100	;,
+   0190 F7 00 05      [ 5]  273 	stb	_player2_y	;, player2_y
+   0193 7F 00 14      [ 7]  274 	clr	_dot_x	; dot_x
+   0196 7F 00 15      [ 7]  275 	clr	_dot_y	; dot_y
+   0199 70 00 00      [ 7]  276 	neg	_velocity_scale	; velocity_scale
+   019C BD 00 00      [ 8]  277 	jsr	__Random
+   019F E7 E4         [ 4]  278 	stb	,s	;, D.3415
+   01A1 F6 00 00      [ 5]  279 	ldb	_velocity_scale	;, velocity_scale
+   01A4 E7 6D         [ 5]  280 	stb	13,s	;, velocity_scale.89
+   01A6 E6 E4         [ 4]  281 	ldb	,s	;, D.3415
+   01A8 A6 6D         [ 5]  282 	lda	13,s	;mulqihi3	; velocity_scale.89
+   01AA 3D            [11]  283 	mul
+   01AB 1F 01         [ 6]  284 	tfr	d,x	;, tmp57
+   01AD 1F 10         [ 6]  285 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp57,
+   01AF E7 66         [ 5]  286 	stb	6,s	;,
+   01B1 1F 10         [ 6]  287 	tfr	x,d	; tmp57,
+   01B3 10 2D 03 CC   [ 6]  288 	lblt	L39	;
+   01B7                     289 L15:
+   01B7 67 66         [ 7]  290 	asr	6,s	;
+   01B9 67 66         [ 7]  291 	asr	6,s	;
+   01BB 67 66         [ 7]  292 	asr	6,s	;
+   01BD 67 66         [ 7]  293 	asr	6,s	;
+   01BF 67 66         [ 7]  294 	asr	6,s	;
+   01C1 67 66         [ 7]  295 	asr	6,s	;
+   01C3 68 6D         [ 7]  296 	asl	13,s	; velocity_scale.89
+   01C5 E6 66         [ 5]  297 	ldb	6,s	;,
+   01C7 EB 6D         [ 5]  298 	addb	13,s	;, velocity_scale.89
+   01C9 F7 00 16      [ 5]  299 	stb	_dot_x_vel	;, dot_x_vel
+   01CC BD 00 00      [ 8]  300 	jsr	__Random
+   01CF E7 E4         [ 4]  301 	stb	,s	;, D.3416
+   01D1 F6 00 00      [ 5]  302 	ldb	_velocity_scale	;, velocity_scale
+   01D4 E7 6E         [ 5]  303 	stb	14,s	;, velocity_scale.90
+   01D6 E6 E4         [ 4]  304 	ldb	,s	;, D.3416
+   01D8 A6 6E         [ 5]  305 	lda	14,s	;mulqihi3	; velocity_scale.90
+   01DA 3D            [11]  306 	mul
+   01DB 1F 01         [ 6]  307 	tfr	d,x	;, tmp63
+   01DD 1F 10         [ 6]  308 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp63,
+   01DF E7 65         [ 5]  309 	stb	5,s	;,
+   01E1 1F 10         [ 6]  310 	tfr	x,d	; tmp63,
+   01E3 10 2D 03 A5   [ 6]  311 	lblt	L40	;
+   01E7                     312 L16:
+   01E7 67 65         [ 7]  313 	asr	5,s	;
+   01E9 67 65         [ 7]  314 	asr	5,s	;
+   01EB 67 65         [ 7]  315 	asr	5,s	;
+   01ED 67 65         [ 7]  316 	asr	5,s	;
+   01EF 67 65         [ 7]  317 	asr	5,s	;
+   01F1 67 65         [ 7]  318 	asr	5,s	;
+   01F3 68 6E         [ 7]  319 	asl	14,s	; velocity_scale.90
+   01F5 E6 65         [ 5]  320 	ldb	5,s	;,
+   01F7 EB 6E         [ 5]  321 	addb	14,s	;, velocity_scale.90
+   01F9 F7 00 17      [ 5]  322 	stb	_dot_y_vel	;, dot_y_vel
+   01FC 7F 00 1A      [ 7]  323 	clr	_dot_ticks	; dot_ticks
+   01FF 7F 00 1B      [ 7]  324 	clr	_flashes	; flashes
+   0202 7F 00 18      [ 7]  325 	clr	_dot_brightness	; dot_brightness
+   0205 C6 01         [ 2]  326 	ldb	#1	;,
+   0207 F7 00 19      [ 5]  327 	stb	_brightness_fade_in	;, brightness_fade_in
+   020A 16 01 33      [ 5]  328 	lbra	L36	;
+   020D                     329 L17:
+   020D 7D 00 17      [ 7]  330 	tst	_dot_y_vel	; dot_y_vel
+   0210 10 2F 01 E4   [ 6]  331 	lble	L28	;
+   0214 C6 12         [ 2]  332 	ldb	#18	;,
+   0216 E7 E2         [ 6]  333 	stb	,-s	;,
+   0218 5F            [ 2]  334 	clrb	;
+   0219 BD 00 00      [ 8]  335 	jsr	__Moveto_d
+   021C C6 12         [ 2]  336 	ldb	#18	;,
+   021E E7 E2         [ 6]  337 	stb	,-s	;,
+   0220 5F            [ 2]  338 	clrb	;
+   0221 BD 00 00      [ 8]  339 	jsr	__Draw_Line_d
+   0224 C6 F7         [ 2]  340 	ldb	#-9	;,
+   0226 E7 E2         [ 6]  341 	stb	,-s	;,
+   0228 BD 00 00      [ 8]  342 	jsr	__Draw_Line_d
+   022B C6 09         [ 2]  343 	ldb	#9	;,
+   022D E7 E2         [ 6]  344 	stb	,-s	;,
+   022F BD 00 00      [ 8]  345 	jsr	__Moveto_d
+   0232 C6 F7         [ 2]  346 	ldb	#-9	;,
+   0234 E7 E2         [ 6]  347 	stb	,-s	;,
+   0236 C6 09         [ 2]  348 	ldb	#9	;,
+   0238 BD 00 00      [ 8]  349 	jsr	__Draw_Line_d
+   023B 32 65         [ 5]  350 	leas	5,s	;,,
+   023D                     351 L29:
+   023D 7C 00 1A      [ 7]  352 	inc	_dot_ticks	; dot_ticks
+   0240 F6 00 1A      [ 5]  353 	ldb	_dot_ticks	; dot_ticks.37, dot_ticks
+   0243 C1 09         [ 2]  354 	cmpb	#9	;cmpqi:	; dot_ticks.37,
+   0245 2F 0D         [ 3]  355 	ble	L27	;
+   0247 7D 00 18      [ 7]  356 	tst	_dot_brightness	; dot_brightness
+   024A 10 27 01 D8   [ 6]  357 	lbeq	L30	;
+   024E 7F 00 18      [ 7]  358 	clr	_dot_brightness	; dot_brightness
+   0251                     359 L31:
+   0251 7F 00 1A      [ 7]  360 	clr	_dot_ticks	; dot_ticks
+   0254                     361 L27:
+   0254 BD 00 00      [ 8]  362 	jsr	___Reset0Ref
+   0257 C6 7F         [ 2]  363 	ldb	#127	;,
+   0259 BD 00 00      [ 8]  364 	jsr	__Intensity_a
+   025C C6 7E         [ 2]  365 	ldb	#126	;,
+   025E E7 E2         [ 6]  366 	stb	,-s	;,
+   0260 CB 06         [ 2]  367 	addb	#6	;,
+   0262 BD 00 00      [ 8]  368 	jsr	__Moveto_d
+   0265 8E 00 01      [ 3]  369 	ldx	#_edge	;,
+   0268 BD 00 00      [ 8]  370 	jsr	___Draw_VLc
+   026B C6 7F         [ 2]  371 	ldb	#127	;,
+   026D E7 E2         [ 6]  372 	stb	,-s	;,
+   026F C6 7C         [ 2]  373 	ldb	#124	;,
+   0271 BD 00 00      [ 8]  374 	jsr	__Moveto_d
+   0274 C6 7F         [ 2]  375 	ldb	#127	;,
+   0276 E7 E2         [ 6]  376 	stb	,-s	;,
+   0278 C6 7C         [ 2]  377 	ldb	#124	;,
+   027A BD 00 00      [ 8]  378 	jsr	__Moveto_d
+   027D 8E 00 01      [ 3]  379 	ldx	#_edge	;,
+   0280 BD 00 00      [ 8]  380 	jsr	___Draw_VLc
+   0283 C6 7F         [ 2]  381 	ldb	#127	;,
+   0285 E7 E2         [ 6]  382 	stb	,-s	;,
+   0287 CB 05         [ 2]  383 	addb	#5	;,
+   0289 BD 00 00      [ 8]  384 	jsr	__Moveto_d
+   028C F6 00 00      [ 5]  385 	ldb	_Vec_Btn_State	;, Vec_Btn_State
+   028F E7 6B         [ 5]  386 	stb	11,s	;, D.3308
+   0291 32 64         [ 5]  387 	leas	4,s	;,,
+   0293 C5 01         [ 2]  388 	bitb	#1	;,
+   0295 27 0C         [ 3]  389 	beq	L32	;
+   0297 F6 00 02      [ 5]  390 	ldb	_player1_x	; player1_x.10, player1_x
+   029A C1 89         [ 2]  391 	cmpb	#-119	;cmpqi:	; player1_x.10,
+   029C 2D 05         [ 3]  392 	blt	L32	;
+   029E CB FD         [ 2]  393 	addb	#-3	; player1_x.10,
+   02A0 F7 00 02      [ 5]  394 	stb	_player1_x	; player1_x.10, player1_x
+   02A3                     395 L32:
+   02A3 C6 02         [ 2]  396 	ldb	#2	; tmp101,
+   02A5 E4 67         [ 5]  397 	andb	7,s	; tmp101, D.3308
+   02A7 27 0C         [ 3]  398 	beq	L33	;
+   02A9 F6 00 02      [ 5]  399 	ldb	_player1_x	; player1_x.85, player1_x
+   02AC C1 53         [ 2]  400 	cmpb	#83	;cmpqi:	; player1_x.85,
+   02AE 2E 05         [ 3]  401 	bgt	L33	;
+   02B0 CB 03         [ 2]  402 	addb	#3	; player1_x.85,
+   02B2 F7 00 02      [ 5]  403 	stb	_player1_x	; player1_x.85, player1_x
+   02B5                     404 L33:
+   02B5 C6 04         [ 2]  405 	ldb	#4	; tmp102,
+   02B7 E4 67         [ 5]  406 	andb	7,s	; tmp102, D.3308
+   02B9 27 0C         [ 3]  407 	beq	L34	;
+   02BB F6 00 04      [ 5]  408 	ldb	_player2_x	; player2_x.13, player2_x
+   02BE C1 89         [ 2]  409 	cmpb	#-119	;cmpqi:	; player2_x.13,
+   02C0 2D 05         [ 3]  410 	blt	L34	;
+   02C2 CB FD         [ 2]  411 	addb	#-3	; player2_x.13,
+   02C4 F7 00 04      [ 5]  412 	stb	_player2_x	; player2_x.13, player2_x
+   02C7                     413 L34:
+   02C7 C6 08         [ 2]  414 	ldb	#8	;,
+   02C9 E4 67         [ 5]  415 	andb	7,s	;, D.3308
+   02CB 27 0C         [ 3]  416 	beq	L35	;
+   02CD F6 00 04      [ 5]  417 	ldb	_player2_x	; player2_x.86, player2_x
+   02D0 C1 53         [ 2]  418 	cmpb	#83	;cmpqi:	; player2_x.86,
+   02D2 2E 05         [ 3]  419 	bgt	L35	;
+   02D4 CB 03         [ 2]  420 	addb	#3	; player2_x.86,
+   02D6 F7 00 04      [ 5]  421 	stb	_player2_x	; player2_x.86, player2_x
+   02D9                     422 L35:
+   02D9 F6 00 03      [ 5]  423 	ldb	_player1_y	;, player1_y
+   02DC E7 E2         [ 6]  424 	stb	,-s	;,
+   02DE F6 00 02      [ 5]  425 	ldb	_player1_x	;, player1_x
+   02E1 BD 00 00      [ 8]  426 	jsr	__Moveto_d
+   02E4 6F E2         [ 8]  427 	clr	,-s	;
+   02E6 C6 24         [ 2]  428 	ldb	#36	;,
+   02E8 BD 00 00      [ 8]  429 	jsr	__Draw_Line_d
+   02EB C6 F8         [ 2]  430 	ldb	#-8	;,
+   02ED E7 E2         [ 6]  431 	stb	,-s	;,
+   02EF 5F            [ 2]  432 	clrb	;
+   02F0 BD 00 00      [ 8]  433 	jsr	__Draw_Line_d
+   02F3 6F E2         [ 8]  434 	clr	,-s	;
+   02F5 C6 DC         [ 2]  435 	ldb	#-36	;,
+   02F7 BD 00 00      [ 8]  436 	jsr	__Draw_Line_d
+   02FA C6 08         [ 2]  437 	ldb	#8	;,
+   02FC E7 E2         [ 6]  438 	stb	,-s	;,
+   02FE 5F            [ 2]  439 	clrb	;
+   02FF BD 00 00      [ 8]  440 	jsr	__Draw_Line_d
+   0302 F6 00 02      [ 5]  441 	ldb	_player1_x	;, player1_x
+   0305 50            [ 2]  442 	negb	;
+   0306 E7 65         [ 5]  443 	stb	5,s	;,
+   0308 F6 00 03      [ 5]  444 	ldb	_player1_y	;, player1_y
+   030B 50            [ 2]  445 	negb	;
+   030C 34 04         [ 6]  446 	pshs	b	;
+   030E E6 66         [ 5]  447 	ldb	6,s	;,
+   0310 BD 00 00      [ 8]  448 	jsr	__Moveto_d
+   0313 F6 00 05      [ 5]  449 	ldb	_player2_y	;, player2_y
+   0316 E7 E2         [ 6]  450 	stb	,-s	;,
+   0318 F6 00 04      [ 5]  451 	ldb	_player2_x	;, player2_x
+   031B BD 00 00      [ 8]  452 	jsr	__Moveto_d
+   031E 6F E2         [ 8]  453 	clr	,-s	;
+   0320 C6 24         [ 2]  454 	ldb	#36	;,
+   0322 BD 00 00      [ 8]  455 	jsr	__Draw_Line_d
+   0325 32 68         [ 5]  456 	leas	8,s	;,,
+   0327 C6 F8         [ 2]  457 	ldb	#-8	;,
+   0329 E7 E2         [ 6]  458 	stb	,-s	;,
+   032B 5F            [ 2]  459 	clrb	;
+   032C BD 00 00      [ 8]  460 	jsr	__Draw_Line_d
+   032F 6F E2         [ 8]  461 	clr	,-s	;
+   0331 C6 DC         [ 2]  462 	ldb	#-36	;,
+   0333 BD 00 00      [ 8]  463 	jsr	__Draw_Line_d
+   0336 C6 08         [ 2]  464 	ldb	#8	;,
+   0338 E7 E2         [ 6]  465 	stb	,-s	;,
+   033A 5F            [ 2]  466 	clrb	;
+   033B BD 00 00      [ 8]  467 	jsr	__Draw_Line_d
+   033E 32 63         [ 5]  468 	leas	3,s	;,,
+   0340                     469 L36:
+   0340 BD 00 00      [ 8]  470 	jsr	___DP_to_C8
+   0343 BE 00 00      [ 6]  471 	ldx	_current_song	;, current_song
+   0346 BD 00 00      [ 8]  472 	jsr	__Init_Music_chk
+   0349 BD 00 00      [ 8]  473 	jsr	___Wait_Recal
+   034C BD 00 00      [ 8]  474 	jsr	__Do_Sound
+   034F BD 00 00      [ 8]  475 	jsr	___Read_Btns
+   0352 C6 7F         [ 2]  476 	ldb	#127	;,
+   0354 BD 00 00      [ 8]  477 	jsr	__Intensity_a
+   0357 C6 7F         [ 2]  478 	ldb	#127	;,
+   0359 F7 00 00      [ 5]  479 	stb	_VIA_t1_cnt_lo	;, VIA_t1_cnt_lo
+   035C E7 E2         [ 6]  480 	stb	,-s	;,
+   035E 8E 00 06      [ 3]  481 	ldx	#_player1_score_str	;,
+   0361 C6 BE         [ 2]  482 	ldb	#-66	;,
+   0363 BD 00 00      [ 8]  483 	jsr	__Print_Str_d
+   0366 C6 80         [ 2]  484 	ldb	#-128	;,
+   0368 E7 E2         [ 6]  485 	stb	,-s	;,
+   036A 8E 00 0D      [ 3]  486 	ldx	#_player2_score_str	;,
+   036D CB 3E         [ 2]  487 	addb	#62	;,
+   036F BD 00 00      [ 8]  488 	jsr	__Print_Str_d
+   0372 F6 00 18      [ 5]  489 	ldb	_dot_brightness	;, dot_brightness
+   0375 BD 00 00      [ 8]  490 	jsr	__Intensity_a
+   0378 F6 00 15      [ 5]  491 	ldb	_dot_y	;, dot_y
+   037B E7 E2         [ 6]  492 	stb	,-s	;,
+   037D F6 00 14      [ 5]  493 	ldb	_dot_x	;, dot_x
+   0380 BD 00 00      [ 8]  494 	jsr	__Dot_d
+   0383 32 63         [ 5]  495 	leas	3,s	;,,
+   0385 F6 00 1B      [ 5]  496 	ldb	_flashes	;, flashes
+   0388 C1 04         [ 2]  497 	cmpb	#4	;cmpqi:	;,
+   038A 10 2F FE 7F   [ 6]  498 	lble	L17	;
+   038E C6 7F         [ 2]  499 	ldb	#127	;,
+   0390 F7 00 18      [ 5]  500 	stb	_dot_brightness	;, dot_brightness
+   0393 F6 00 16      [ 5]  501 	ldb	_dot_x_vel	;, dot_x_vel
+   0396 FB 00 14      [ 5]  502 	addb	_dot_x	;, dot_x
+   0399 E7 6C         [ 5]  503 	stb	12,s	;, dot_x.22
+   039B F7 00 14      [ 5]  504 	stb	_dot_x	;, dot_x
+   039E F6 00 17      [ 5]  505 	ldb	_dot_y_vel	;, dot_y_vel
+   03A1 E7 6B         [ 5]  506 	stb	11,s	;, dot_y_vel.24
+   03A3 FB 00 15      [ 5]  507 	addb	_dot_y	;, dot_y
+   03A6 E7 6A         [ 5]  508 	stb	10,s	;, dot_y.25
+   03A8 F7 00 15      [ 5]  509 	stb	_dot_y	;, dot_y
+   03AB C1 7A         [ 2]  510 	cmpb	#122	;cmpqi:	;,
+   03AD 10 2E 00 80   [ 6]  511 	lbgt	L41	;
+   03B1 C1 86         [ 2]  512 	cmpb	#-122	;cmpqi:	;,
+   03B3 10 2D 01 00   [ 6]  513 	lblt	L42	;
+   03B7 6D 6B         [ 7]  514 	tst	11,s	; dot_y_vel.24
+   03B9 10 2F 01 71   [ 6]  515 	lble	L25	;
+   03BD F6 00 02      [ 5]  516 	ldb	_player1_x	; player1_x.26, player1_x
+   03C0 E1 6C         [ 5]  517 	cmpb	12,s	;cmpqi:(R)	; player1_x.26, dot_x.22
+   03C2 2E 23         [ 3]  518 	bgt	L21	;
+   03C4 CB 24         [ 2]  519 	addb	#36	; player1_x.26,
+   03C6 E1 6C         [ 5]  520 	cmpb	12,s	;cmpqi:(R)	; player1_x.26, dot_x.22
+   03C8 2D 1D         [ 3]  521 	blt	L21	;
+   03CA F6 00 03      [ 5]  522 	ldb	_player1_y	;, player1_y
+   03CD E7 69         [ 5]  523 	stb	9,s	;, player1_y.27
+   03CF CB F6         [ 2]  524 	addb	#-10	; tmp94,
+   03D1 E1 6A         [ 5]  525 	cmpb	10,s	;cmpqi:(R)	; tmp94, dot_y.25
+   03D3 2E 12         [ 3]  526 	bgt	L21	;
+   03D5 E6 6A         [ 5]  527 	ldb	10,s	;, dot_y.25
+   03D7 E1 69         [ 5]  528 	cmpb	9,s	;cmpqi:	;, player1_y.27
+   03D9 2E 0C         [ 3]  529 	bgt	L21	;
+   03DB                     530 L26:
+   03DB E6 6B         [ 5]  531 	ldb	11,s	; dot_y_vel.30, dot_y_vel.24
+   03DD 50            [ 2]  532 	negb	; dot_y_vel.30
+   03DE F7 00 17      [ 5]  533 	stb	_dot_y_vel	; dot_y_vel.30, dot_y_vel
+   03E1 58            [ 2]  534 	aslb	; dot_y_vel.30
+   03E2 EB 6A         [ 5]  535 	addb	10,s	; dot_y_vel.30, dot_y.25
+   03E4 F7 00 15      [ 5]  536 	stb	_dot_y	; dot_y_vel.30, dot_y
+   03E7                     537 L21:
+   03E7 F6 00 14      [ 5]  538 	ldb	_dot_x	; tmp99, dot_x
+   03EA CB 78         [ 2]  539 	addb	#120	; tmp99,
+   03EC C1 F0         [ 2]  540 	cmpb	#-16	;cmpqi:	; tmp99,
+   03EE 10 23 FE 62   [ 6]  541 	lbls	L27	;
+   03F2 70 00 16      [ 7]  542 	neg	_dot_x_vel	; dot_x_vel
+   03F5 16 FE 5C      [ 5]  543 	lbra	L27	;
+   03F8                     544 L28:
+   03F8 C6 EE         [ 2]  545 	ldb	#-18	;,
+   03FA E7 E2         [ 6]  546 	stb	,-s	;,
+   03FC 5F            [ 2]  547 	clrb	;
+   03FD BD 00 00      [ 8]  548 	jsr	__Moveto_d
+   0400 C6 EE         [ 2]  549 	ldb	#-18	;,
+   0402 E7 E2         [ 6]  550 	stb	,-s	;,
+   0404 5F            [ 2]  551 	clrb	;
+   0405 BD 00 00      [ 8]  552 	jsr	__Draw_Line_d
+   0408 C6 09         [ 2]  553 	ldb	#9	;,
+   040A E7 E2         [ 6]  554 	stb	,-s	;,
+   040C C6 F7         [ 2]  555 	ldb	#-9	;,
+   040E BD 00 00      [ 8]  556 	jsr	__Draw_Line_d
+   0411 C6 F7         [ 2]  557 	ldb	#-9	;,
+   0413 E7 E2         [ 6]  558 	stb	,-s	;,
+   0415 C6 09         [ 2]  559 	ldb	#9	;,
+   0417 BD 00 00      [ 8]  560 	jsr	__Moveto_d
+   041A C6 09         [ 2]  561 	ldb	#9	;,
+   041C E7 E2         [ 6]  562 	stb	,-s	;,
+   041E BD 00 00      [ 8]  563 	jsr	__Draw_Line_d
+   0421 32 65         [ 5]  564 	leas	5,s	;,,
+   0423 16 FE 17      [ 5]  565 	lbra	L29	;
+   0426                     566 L30:
+   0426 C6 7F         [ 2]  567 	ldb	#127	;,
+   0428 F7 00 18      [ 5]  568 	stb	_dot_brightness	;, dot_brightness
+   042B 7C 00 1B      [ 7]  569 	inc	_flashes	; flashes
+   042E 16 FE 20      [ 5]  570 	lbra	L31	;
+   0431                     571 L41:
+   0431 8E 00 0D      [ 3]  572 	ldx	#_player2_score_str	;,
+   0434 C6 01         [ 2]  573 	ldb	#1	;,
+   0436 BD 00 00      [ 8]  574 	jsr	__Add_Score_a
+   0439 7F 00 14      [ 7]  575 	clr	_dot_x	; dot_x
+   043C 7F 00 15      [ 7]  576 	clr	_dot_y	; dot_y
+   043F 70 00 00      [ 7]  577 	neg	_velocity_scale	; velocity_scale
+   0442 BD 00 00      [ 8]  578 	jsr	__Random
+   0445 E7 E4         [ 4]  579 	stb	,s	;, D.3453
+   0447 F6 00 00      [ 5]  580 	ldb	_velocity_scale	;, velocity_scale
+   044A E7 6F         [ 5]  581 	stb	15,s	;, velocity_scale.94
+   044C E6 E4         [ 4]  582 	ldb	,s	;, D.3453
+   044E A6 6F         [ 5]  583 	lda	15,s	;mulqihi3	; velocity_scale.94
+   0450 3D            [11]  584 	mul
+   0451 1F 01         [ 6]  585 	tfr	d,x	;, tmp69
+   0453 1F 10         [ 6]  586 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp69,
+   0455 E7 64         [ 5]  587 	stb	4,s	;,
+   0457 1F 10         [ 6]  588 	tfr	x,d	; tmp69,
+   0459 10 2D 01 0B   [ 6]  589 	lblt	L43	;
+   045D                     590 L19:
+   045D 67 64         [ 7]  591 	asr	4,s	;
+   045F 67 64         [ 7]  592 	asr	4,s	;
+   0461 67 64         [ 7]  593 	asr	4,s	;
+   0463 67 64         [ 7]  594 	asr	4,s	;
+   0465 67 64         [ 7]  595 	asr	4,s	;
+   0467 67 64         [ 7]  596 	asr	4,s	;
+   0469 68 6F         [ 7]  597 	asl	15,s	; velocity_scale.94
+   046B E6 64         [ 5]  598 	ldb	4,s	;,
+   046D EB 6F         [ 5]  599 	addb	15,s	;, velocity_scale.94
+   046F F7 00 16      [ 5]  600 	stb	_dot_x_vel	;, dot_x_vel
+   0472 BD 00 00      [ 8]  601 	jsr	__Random
+   0475 E7 E4         [ 4]  602 	stb	,s	;, D.3454
+   0477 F6 00 00      [ 5]  603 	ldb	_velocity_scale	;, velocity_scale
+   047A E7 E8 10      [ 5]  604 	stb	16,s	;, velocity_scale.95
+   047D E6 E4         [ 4]  605 	ldb	,s	;, D.3454
+   047F A6 E8 10      [ 5]  606 	lda	16,s	;mulqihi3	; velocity_scale.95
+   0482 3D            [11]  607 	mul
+   0483 1F 01         [ 6]  608 	tfr	d,x	;, tmp75
+   0485 1F 10         [ 6]  609 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp75,
+   0487 E7 63         [ 5]  610 	stb	3,s	;,
+   0489 1F 10         [ 6]  611 	tfr	x,d	; tmp75,
+   048B 10 2D 00 D0   [ 6]  612 	lblt	L44	;
+   048F                     613 L20:
+   048F 67 63         [ 7]  614 	asr	3,s	;
+   0491 67 63         [ 7]  615 	asr	3,s	;
+   0493 67 63         [ 7]  616 	asr	3,s	;
+   0495 67 63         [ 7]  617 	asr	3,s	;
+   0497 67 63         [ 7]  618 	asr	3,s	;
+   0499 67 63         [ 7]  619 	asr	3,s	;
+   049B 68 E8 10      [ 7]  620 	asl	16,s	; velocity_scale.95
+   049E E6 63         [ 5]  621 	ldb	3,s	;,
+   04A0 EB E8 10      [ 5]  622 	addb	16,s	;, velocity_scale.95
+   04A3                     623 L38:
+   04A3 F7 00 17      [ 5]  624 	stb	_dot_y_vel	;, dot_y_vel
+   04A6 7F 00 1A      [ 7]  625 	clr	_dot_ticks	; dot_ticks
+   04A9 7F 00 1B      [ 7]  626 	clr	_flashes	; flashes
+   04AC 7F 00 18      [ 7]  627 	clr	_dot_brightness	; dot_brightness
+   04AF C6 01         [ 2]  628 	ldb	#1	;,
+   04B1 F7 00 19      [ 5]  629 	stb	_brightness_fade_in	;, brightness_fade_in
+   04B4 16 FF 30      [ 5]  630 	lbra	L21	;
+   04B7                     631 L42:
+   04B7 8E 00 06      [ 3]  632 	ldx	#_player1_score_str	;,
+   04BA C6 01         [ 2]  633 	ldb	#1	;,
+   04BC BD 00 00      [ 8]  634 	jsr	__Add_Score_a
+   04BF 7F 00 14      [ 7]  635 	clr	_dot_x	; dot_x
+   04C2 7F 00 15      [ 7]  636 	clr	_dot_y	; dot_y
+   04C5 70 00 00      [ 7]  637 	neg	_velocity_scale	; velocity_scale
+   04C8 BD 00 00      [ 8]  638 	jsr	__Random
+   04CB E7 E4         [ 4]  639 	stb	,s	;, D.3466
+   04CD F6 00 00      [ 5]  640 	ldb	_velocity_scale	;, velocity_scale
+   04D0 E7 E8 11      [ 5]  641 	stb	17,s	;, velocity_scale.97
+   04D3 E6 E4         [ 4]  642 	ldb	,s	;, D.3466
+   04D5 A6 E8 11      [ 5]  643 	lda	17,s	;mulqihi3	; velocity_scale.97
+   04D8 3D            [11]  644 	mul
+   04D9 1F 01         [ 6]  645 	tfr	d,x	;, tmp81
+   04DB 1F 10         [ 6]  646 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp81,
+   04DD E7 62         [ 5]  647 	stb	2,s	;,
+   04DF 1F 10         [ 6]  648 	tfr	x,d	; tmp81,
+   04E1 10 2D 00 95   [ 6]  649 	lblt	L45	;
+   04E5                     650 L23:
+   04E5 67 62         [ 7]  651 	asr	2,s	;
+   04E7 67 62         [ 7]  652 	asr	2,s	;
+   04E9 67 62         [ 7]  653 	asr	2,s	;
+   04EB 67 62         [ 7]  654 	asr	2,s	;
+   04ED 67 62         [ 7]  655 	asr	2,s	;
+   04EF 67 62         [ 7]  656 	asr	2,s	;
+   04F1 68 E8 11      [ 7]  657 	asl	17,s	; velocity_scale.97
+   04F4 E6 62         [ 5]  658 	ldb	2,s	;,
+   04F6 EB E8 11      [ 5]  659 	addb	17,s	;, velocity_scale.97
+   04F9 F7 00 16      [ 5]  660 	stb	_dot_x_vel	;, dot_x_vel
+   04FC BD 00 00      [ 8]  661 	jsr	__Random
+   04FF E7 E4         [ 4]  662 	stb	,s	;, D.3467
+   0501 F6 00 00      [ 5]  663 	ldb	_velocity_scale	;, velocity_scale
+   0504 E7 E8 12      [ 5]  664 	stb	18,s	;, velocity_scale.98
+   0507 E6 E4         [ 4]  665 	ldb	,s	;, D.3467
+   0509 A6 E8 12      [ 5]  666 	lda	18,s	;mulqihi3	; velocity_scale.98
+   050C 3D            [11]  667 	mul
+   050D 1F 01         [ 6]  668 	tfr	d,x	;, tmp87
+   050F 1F 10         [ 6]  669 	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp87,
+   0511 E7 61         [ 5]  670 	stb	1,s	;,
+   0513 1F 10         [ 6]  671 	tfr	x,d	; tmp87,
+   0515 2D 5A         [ 3]  672 	blt	L46	;
+   0517                     673 L24:
+   0517 67 61         [ 7]  674 	asr	1,s	;
+   0519 67 61         [ 7]  675 	asr	1,s	;
+   051B 67 61         [ 7]  676 	asr	1,s	;
+   051D 67 61         [ 7]  677 	asr	1,s	;
+   051F 67 61         [ 7]  678 	asr	1,s	;
+   0521 67 61         [ 7]  679 	asr	1,s	;
+   0523 68 E8 12      [ 7]  680 	asl	18,s	; velocity_scale.98
+   0526 E6 61         [ 5]  681 	ldb	1,s	;,
+   0528 EB E8 12      [ 5]  682 	addb	18,s	;, velocity_scale.98
+   052B 16 FF 75      [ 5]  683 	lbra	L38	;
+   052E                     684 L25:
+   052E 6D 6B         [ 7]  685 	tst	11,s	; dot_y_vel.24
+   0530 10 27 FE B3   [ 6]  686 	lbeq	L21	;
+   0534 F6 00 04      [ 5]  687 	ldb	_player2_x	; player2_x.28, player2_x
+   0537 E1 6C         [ 5]  688 	cmpb	12,s	;cmpqi:(R)	; player2_x.28, dot_x.22
+   0539 10 2E FE AA   [ 6]  689 	lbgt	L21	;
+   053D CB 24         [ 2]  690 	addb	#36	; player2_x.28,
+   053F E1 6C         [ 5]  691 	cmpb	12,s	;cmpqi:(R)	; player2_x.28, dot_x.22
+   0541 10 2D FE A2   [ 6]  692 	lblt	L21	;
+   0545 F6 00 05      [ 5]  693 	ldb	_player2_y	;, player2_y
+   0548 E7 68         [ 5]  694 	stb	8,s	;, player2_y.29
+   054A CB F8         [ 2]  695 	addb	#-8	; tmp96,
+   054C E1 6A         [ 5]  696 	cmpb	10,s	;cmpqi:(R)	; tmp96, dot_y.25
+   054E 10 2E FE 95   [ 6]  697 	lbgt	L21	;
+   0552 6A 68         [ 7]  698 	dec	8,s	; player2_y.29
+   0554 E6 6A         [ 5]  699 	ldb	10,s	;, dot_y.25
+   0556 E1 68         [ 5]  700 	cmpb	8,s	;cmpqi:	;, player2_y.29
+   0558 10 2C FE 8B   [ 6]  701 	lbge	L21	;
+   055C 16 FE 7C      [ 5]  702 	lbra	L26	;
+   055F                     703 L44:
+   055F E6 63         [ 5]  704 	ldb	3,s	;,
+   0561 CB 3F         [ 2]  705 	addb	#63	;,
+   0563 E7 63         [ 5]  706 	stb	3,s	;,
+   0565 16 FF 27      [ 5]  707 	lbra	L20	;
+   0568                     708 L43:
+   0568 E6 64         [ 5]  709 	ldb	4,s	;,
+   056A CB 3F         [ 2]  710 	addb	#63	;,
+   056C E7 64         [ 5]  711 	stb	4,s	;,
+   056E 16 FE EC      [ 5]  712 	lbra	L19	;
+   0571                     713 L46:
+   0571 E6 61         [ 5]  714 	ldb	1,s	;,
+   0573 CB 3F         [ 2]  715 	addb	#63	;,
+   0575 E7 61         [ 5]  716 	stb	1,s	;,
+   0577 16 FF 9D      [ 5]  717 	lbra	L24	;
+   057A                     718 L45:
+   057A E6 62         [ 5]  719 	ldb	2,s	;,
+   057C CB 3F         [ 2]  720 	addb	#63	;,
+   057E E7 62         [ 5]  721 	stb	2,s	;,
+   0580 16 FF 62      [ 5]  722 	lbra	L23	;
+   0583                     723 L39:
+   0583 E6 66         [ 5]  724 	ldb	6,s	;,
+   0585 CB 3F         [ 2]  725 	addb	#63	;,
+   0587 E7 66         [ 5]  726 	stb	6,s	;,
+   0589 16 FC 2B      [ 5]  727 	lbra	L15	;
+   058C                     728 L40:
+   058C E6 65         [ 5]  729 	ldb	5,s	;,
+   058E CB 3F         [ 2]  730 	addb	#63	;,
+   0590 E7 65         [ 5]  731 	stb	5,s	;,
+   0592 16 FC 52      [ 5]  732 	lbra	L16	;
 ASxxxx Assembler V05.00  (Motorola 6809), page 1.
 Hexidecimal [16-Bits]
 
@@ -456,210 +737,348 @@ Symbol Table
 
     .__.$$$.       =   2710 L   |     .__.ABS.       =   0000 G
     .__.CPU.       =   0000 L   |     .__.H$L.       =   0001 L
-  4 A$main$100         002E GR  |   4 A$main$101         0030 GR
-  4 A$main$102         0033 GR  |   4 A$main$103         0036 GR
-  4 A$main$104         0039 GR  |   4 A$main$105         003C GR
-  4 A$main$106         003F GR  |   4 A$main$107         0042 GR
-  4 A$main$108         0045 GR  |   4 A$main$109         0047 GR
-  4 A$main$110         004A GR  |   4 A$main$111         004D GR
-  4 A$main$112         004F GR  |   4 A$main$113         0052 GR
-  4 A$main$114         0054 GR  |   4 A$main$115         0057 GR
-  4 A$main$116         0059 GR  |   4 A$main$117         005C GR
-  4 A$main$118         005E GR  |   4 A$main$119         0061 GR
-  4 A$main$120         0064 GR  |   4 A$main$121         0067 GR
-  4 A$main$122         006A GR  |   4 A$main$123         006B GR
-  4 A$main$124         006E GR  |   4 A$main$125         0071 GR
-  4 A$main$126         0074 GR  |   4 A$main$127         0077 GR
-  4 A$main$128         007A GR  |   4 A$main$129         007D GR
-  4 A$main$130         007F GR  |   4 A$main$131         0082 GR
-  4 A$main$134         0083 GR  |   4 A$main$135         0085 GR
-  4 A$main$136         0088 GR  |   4 A$main$137         008B GR
-  4 A$main$138         008E GR  |   4 A$main$139         0091 GR
-  4 A$main$140         0093 GR  |   4 A$main$141         0096 GR
-  4 A$main$142         0099 GR  |   4 A$main$143         009C GR
-  4 A$main$144         009F GR  |   4 A$main$145         00A2 GR
-  4 A$main$146         00A5 GR  |   4 A$main$147         00A8 GR
-  4 A$main$148         00AA GR  |   4 A$main$149         00AD GR
-  4 A$main$150         00B0 GR  |   4 A$main$151         00B2 GR
-  4 A$main$152         00B5 GR  |   4 A$main$153         00B7 GR
-  4 A$main$154         00BA GR  |   4 A$main$155         00BC GR
-  4 A$main$156         00BF GR  |   4 A$main$157         00C1 GR
-  4 A$main$158         00C4 GR  |   4 A$main$159         00C7 GR
-  4 A$main$160         00CA GR  |   4 A$main$161         00CD GR
-  4 A$main$162         00CE GR  |   4 A$main$163         00D1 GR
-  4 A$main$164         00D4 GR  |   4 A$main$165         00D7 GR
-  4 A$main$166         00DA GR  |   4 A$main$167         00DD GR
-  4 A$main$168         00E0 GR  |   4 A$main$169         00E2 GR
-  4 A$main$170         00E5 GR  |   4 A$main$172         00E8 GR
-  4 A$main$173         00EB GR  |   4 A$main$174         00EF GR
-  4 A$main$175         00F1 GR  |   4 A$main$176         00F3 GR
-  4 A$main$177         00F4 GR  |   4 A$main$178         00F7 GR
-  4 A$main$179         00F9 GR  |   4 A$main$180         00FB GR
-  4 A$main$181         00FC GR  |   4 A$main$182         00FF GR
-  4 A$main$183         0101 GR  |   4 A$main$184         0103 GR
-  4 A$main$185         0106 GR  |   4 A$main$186         0108 GR
-  4 A$main$187         010A GR  |   4 A$main$188         010D GR
-  4 A$main$189         010F GR  |   4 A$main$190         0111 GR
-  4 A$main$191         0113 GR  |   4 A$main$192         0116 GR
-  4 A$main$194         0118 GR  |   4 A$main$195         011B GR
-  4 A$main$196         011E GR  |   4 A$main$197         0120 GR
-  4 A$main$198         0122 GR  |   4 A$main$199         0125 GR
-  4 A$main$200         0129 GR  |   4 A$main$202         012C GR
-  4 A$main$204         012F GR  |   4 A$main$205         0132 GR
-  4 A$main$206         0134 GR  |   4 A$main$207         0137 GR
-  4 A$main$208         0139 GR  |   4 A$main$209         013B GR
-  4 A$main$210         013D GR  |   4 A$main$211         0140 GR
-  4 A$main$212         0142 GR  |   4 A$main$213         0144 GR
-  4 A$main$214         0145 GR  |   4 A$main$215         0148 GR
-  4 A$main$216         014A GR  |   4 A$main$217         014C GR
-  4 A$main$218         014D GR  |   4 A$main$219         0150 GR
-  4 A$main$220         0152 GR  |   4 A$main$221         0154 GR
-  4 A$main$222         0157 GR  |   4 A$main$223         0159 GR
-  4 A$main$224         015B GR  |   4 A$main$225         015E GR
-  4 A$main$226         0160 GR  |   4 A$main$227         0162 GR
-  4 A$main$228         0163 GR  |   4 A$main$229         0166 GR
-  4 A$main$230         0168 GR  |   4 A$main$231         016A GR
-  4 A$main$232         016B GR  |   4 A$main$233         016E GR
-  4 A$main$234         0170 GR  |   4 A$main$235         0172 GR
-  4 A$main$236         0174 GR  |   4 A$main$237         0177 GR
-  4 A$main$238         017A GR  |   4 A$main$239         017C GR
-  4 A$main$240         017E GR  |   4 A$main$241         0180 GR
-  4 A$main$242         0182 GR  |   4 A$main$243         0185 GR
-  4 A$main$244         0187 GR  |   4 A$main$245         0189 GR
-  4 A$main$246         018B GR  |   4 A$main$248         018E GR
-  4 A$main$249         0190 GR  |   4 A$main$250         0192 GR
-  4 A$main$251         0194 GR  |   4 A$main$252         0197 GR
-  4 A$main$253         0199 GR  |   4 A$main$254         019B GR
-  4 A$main$255         019D GR  |   4 A$main$257         01A0 GR
-  4 A$main$258         01A2 GR  |   4 A$main$259         01A4 GR
-  4 A$main$260         01A6 GR  |   4 A$main$261         01A9 GR
-  4 A$main$262         01AB GR  |   4 A$main$263         01AD GR
-  4 A$main$264         01AF GR  |   4 A$main$266         01B2 GR
-  4 A$main$267         01B4 GR  |   4 A$main$268         01B6 GR
-  4 A$main$269         01B8 GR  |   4 A$main$270         01BB GR
-  4 A$main$271         01BD GR  |   4 A$main$272         01BF GR
-  4 A$main$273         01C1 GR  |   4 A$main$275         01C4 GR
-  4 A$main$276         01C7 GR  |   4 A$main$277         01C9 GR
-  4 A$main$278         01CC GR  |   4 A$main$279         01CF GR
-  4 A$main$280         01D1 GR  |   4 A$main$281         01D3 GR
-  4 A$main$282         01D6 GR  |   4 A$main$283         01D8 GR
-  4 A$main$284         01DB GR  |   4 A$main$285         01DD GR
-  4 A$main$286         01E0 GR  |   4 A$main$287         01E1 GR
-  4 A$main$288         01E3 GR  |   4 A$main$289         01E5 GR
-  4 A$main$290         01E8 GR  |   4 A$main$291         01EB GR
-  4 A$main$292         01ED GR  |   4 A$main$293         01F0 GR
-  4 A$main$294         01F3 GR  |   4 A$main$295         01F5 GR
-  4 A$main$296         01F7 GR  |   4 A$main$297         01FA GR
-  4 A$main$299         01FC GR  |   4 A$main$300         01FF GR
-  4 A$main$301         0202 GR  |   4 A$main$302         0205 GR
-  4 A$main$303         0208 GR  |   4 A$main$304         020B GR
-  4 A$main$305         020E GR  |   4 A$main$306         0210 GR
-  4 A$main$307         0213 GR  |   4 A$main$308         0215 GR
-  4 A$main$309         0218 GR  |   4 A$main$310         021A GR
-  4 A$main$311         021D GR  |   4 A$main$312         021F GR
-  4 A$main$313         0222 GR  |   4 A$main$314         0224 GR
-  4 A$main$315         0226 GR  |   4 A$main$316         0229 GR
-  4 A$main$317         022B GR  |   4 A$main$318         022E GR
-  4 A$main$319         0231 GR  |   4 A$main$320         0234 GR
-  4 A$main$321         0237 GR  |   4 A$main$322         0239 GR
-  4 A$main$323         023C GR  |   4 A$main$324         023F GR
-  4 A$main$325         0241 GR  |   4 A$main$326         0244 GR
-  4 A$main$327         0246 GR  |   4 A$main$328         024A GR
-  4 A$main$329         024C GR  |   4 A$main$330         024F GR
-  4 A$main$331         0252 GR  |   4 A$main$332         0254 GR
-  4 A$main$333         0257 GR  |   4 A$main$334         0259 GR
-  4 A$main$335         025C GR  |   4 A$main$336         025F GR
-  4 A$main$337         0261 GR  |   4 A$main$338         0264 GR
-  4 A$main$339         0266 GR  |   4 A$main$340         0269 GR
-  4 A$main$341         026C GR  |   4 A$main$342         026E GR
-  4 A$main$343         0272 GR  |   4 A$main$344         0274 GR
-  4 A$main$345         0278 GR  |   4 A$main$346         027B GR
-  4 A$main$347         027D GR  |   4 A$main$348         027F GR
-  4 A$main$349         0281 GR  |   4 A$main$350         0285 GR
-  4 A$main$351         0287 GR  |   4 A$main$352         0289 GR
-  4 A$main$353         028B GR  |   4 A$main$354         028D GR
-  4 A$main$355         028F GR  |   4 A$main$356         0291 GR
-  4 A$main$357         0295 GR  |   4 A$main$358         0298 GR
-  4 A$main$359         029A GR  |   4 A$main$360         029C GR
-  4 A$main$361         029E GR  |   4 A$main$362         02A2 GR
-  4 A$main$363         02A4 GR  |   4 A$main$364         02A6 GR
-  4 A$main$365         02A8 GR  |   4 A$main$366         02AA GR
-  4 A$main$367         02AC GR  |   4 A$main$369         02B0 GR
-  4 A$main$370         02B2 GR  |   4 A$main$371         02B3 GR
-  4 A$main$372         02B6 GR  |   4 A$main$373         02B7 GR
-  4 A$main$374         02B9 GR  |   4 A$main$376         02BC GR
-  4 A$main$377         02BE GR  |   4 A$main$378         02C0 GR
-  4 A$main$379         02C2 GR  |   4 A$main$380         02C6 GR
-  4 A$main$381         02C8 GR  |   4 A$main$382         02C9 GR
-  4 A$main$383         02CC GR  |   4 A$main$385         02CF GR
-  4 A$main$386         02D1 GR  |   4 A$main$387         02D3 GR
-  4 A$main$388         02D4 GR  |   4 A$main$389         02D7 GR
-  4 A$main$390         02D9 GR  |   4 A$main$391         02DB GR
-  4 A$main$392         02DC GR  |   4 A$main$393         02DF GR
-  4 A$main$394         02E1 GR  |   4 A$main$395         02E3 GR
-  4 A$main$396         02E5 GR  |   4 A$main$397         02E8 GR
-  4 A$main$398         02EA GR  |   4 A$main$399         02EC GR
-  4 A$main$400         02EE GR  |   4 A$main$401         02F1 GR
-  4 A$main$402         02F3 GR  |   4 A$main$403         02F5 GR
-  4 A$main$404         02F8 GR  |   4 A$main$405         02FA GR
-  4 A$main$407         02FD GR  |   4 A$main$408         02FF GR
-  4 A$main$409         0302 GR  |   4 A$main$410         0305 GR
-  4 A$main$412         0308 GR  |   4 A$main$414         030B GR
-  4 A$main$415         030D GR  |   4 A$main$416         0310 GR
-  4 A$main$417         0313 GR  |   4 A$main$418         0316 GR
-  4 A$main$419         0319 GR  |   4 A$main$420         031A GR
-  4 A$main$421         031D GR  |   4 A$main$422         0320 GR
-  4 A$main$423         0323 GR  |   4 A$main$424         0326 GR
-  4 A$main$425         0329 GR  |   4 A$main$426         032C GR
-  4 A$main$427         032E GR  |   4 A$main$428         0331 GR
-  4 A$main$430         0334 GR  |   4 A$main$431         0337 GR
-  4 A$main$432         0339 GR  |   4 A$main$433         033B GR
-  4 A$main$434         033D GR  |   4 A$main$435         0341 GR
-  4 A$main$436         0343 GR  |   4 A$main$437         0345 GR
-  4 A$main$438         0347 GR  |   4 A$main$439         0349 GR
-  4 A$main$440         034B GR  |   4 A$main$441         034D GR
-  4 A$main$442         0351 GR  |   4 A$main$443         0354 GR
-  4 A$main$444         0356 GR  |   4 A$main$445         0358 GR
-  4 A$main$446         035A GR  |   4 A$main$447         035E GR
-  4 A$main$448         0360 GR  |   4 A$main$449         0362 GR
-  4 A$main$450         0364 GR  |   4 A$main$451         0368 GR
-  4 A$main$81          0000 GR  |   4 A$main$82          0003 GR
-  4 A$main$83          0006 GR  |   4 A$main$84          0009 GR
-  4 A$main$85          000A GR  |   4 A$main$86          000D GR
-  4 A$main$87          0010 GR  |   4 A$main$88          0013 GR
-  4 A$main$89          0016 GR  |   4 A$main$90          0019 GR
-  4 A$main$91          001C GR  |   4 A$main$92          001E GR
-  4 A$main$93          0021 GR  |   4 A$main$96          0022 GR
-  4 A$main$97          0025 GR  |   4 A$main$98          0028 GR
-  4 A$main$99          002B GR  |   4 L10                0334 R
-  4 L11                02BC R   |   4 L12                02CF R
-  4 L13                0118 R   |   4 L14                02FD R
-  4 L15                012C R   |   4 L16                018E R
-  4 L17                01A0 R   |   4 L18                01B2 R
-  4 L19                01C4 R   |   4 L20                01FC R
-  4 L22                02B0 R   |   4 L23                030B R
-  4 L25                0308 R   |   4 L6                 00E8 R
-  4 L8                 012F R   |     _VIA_t1_cnt_lo     **** GX
-    _Vec_Btn_State     **** GX  |     _Vec_Joy_Mux_1     **** GX
-    _Vec_Joy_Mux_1     **** GX  |     _Vec_Joy_Mux_2     **** GX
-    _Vec_Joy_Mux_2     **** GX  |     _Vec_Music_9       **** GX
-    _Vec_Music_Fla     **** GX  |     __Add_Score_a      **** GX
-    __Do_Sound         **** GX  |     __Dot_d            **** GX
-    __Draw_Line_d      **** GX  |     __Init_Music_c     **** GX
-    __Intensity_a      **** GX  |     __Moveto_d         **** GX
-    __Print_Str_d      **** GX  |     ___Clear_Score     **** GX
-    ___DP_to_C8        **** GX  |     ___Read_Btns       **** GX
-    ___Reset0Ref       **** GX  |     ___Wait_Recal      **** GX
-  2 _brightness_fa     0019 GR  |   2 _current_song      0000 GR
-  3 _default_veloc     0000 GR  |   2 _dot_brightnes     0018 GR
+  4 A$main$100         001A GR  |   4 A$main$101         001C GR
+  4 A$main$102         001E GR  |   4 A$main$103         0020 GR
+  4 A$main$104         0022 GR  |   4 A$main$106         0024 GR
+  4 A$main$107         0026 GR  |   4 A$main$108         0028 GR
+  4 A$main$109         002A GR  |   4 A$main$110         002C GR
+  4 A$main$111         002E GR  |   4 A$main$112         0030 GR
+  4 A$main$113         0032 GR  |   4 A$main$114         0034 GR
+  4 A$main$115         0036 GR  |   4 A$main$116         0039 GR
+  4 A$main$117         003C GR  |   4 A$main$118         003E GR
+  4 A$main$119         0041 GR  |   4 A$main$120         0043 GR
+  4 A$main$121         0045 GR  |   4 A$main$122         0047 GR
+  4 A$main$123         0048 GR  |   4 A$main$124         004A GR
+  4 A$main$125         004C GR  |   4 A$main$126         004E GR
+  4 A$main$127         0050 GR  |   4 A$main$129         0052 GR
+  4 A$main$130         0054 GR  |   4 A$main$131         0056 GR
+  4 A$main$132         0058 GR  |   4 A$main$133         005A GR
+  4 A$main$134         005C GR  |   4 A$main$135         005E GR
+  4 A$main$136         0060 GR  |   4 A$main$137         0062 GR
+  4 A$main$138         0064 GR  |   4 A$main$139         0067 GR
+  4 A$main$140         006A GR  |   4 A$main$141         006D GR
+  4 A$main$142         0070 GR  |   4 A$main$143         0072 GR
+  4 A$main$144         0075 GR  |   4 A$main$145         0077 GR
+  4 A$main$147         0078 GR  |   4 A$main$148         007A GR
+  4 A$main$149         007C GR  |   4 A$main$150         007E GR
+  4 A$main$152         0081 GR  |   4 A$main$153         0083 GR
+  4 A$main$154         0085 GR  |   4 A$main$155         0087 GR
+  4 A$main$158         0089 GR  |   4 A$main$159         008B GR
+  4 A$main$160         008E GR  |   4 A$main$161         0091 GR
+  4 A$main$162         0094 GR  |   4 A$main$163         0097 GR
+  4 A$main$164         0099 GR  |   4 A$main$165         009C GR
+  4 A$main$166         009F GR  |   4 A$main$167         00A2 GR
+  4 A$main$168         00A5 GR  |   4 A$main$169         00A8 GR
+  4 A$main$170         00AB GR  |   4 A$main$171         00AE GR
+  4 A$main$172         00B0 GR  |   4 A$main$173         00B3 GR
+  4 A$main$174         00B6 GR  |   4 A$main$175         00B8 GR
+  4 A$main$176         00BB GR  |   4 A$main$177         00BD GR
+  4 A$main$178         00C0 GR  |   4 A$main$179         00C2 GR
+  4 A$main$180         00C5 GR  |   4 A$main$181         00C7 GR
+  4 A$main$182         00CA GR  |   4 A$main$183         00CD GR
+  4 A$main$184         00D0 GR  |   4 A$main$185         00D3 GR
+  4 A$main$186         00D6 GR  |   4 A$main$187         00D8 GR
+  4 A$main$188         00DB GR  |   4 A$main$189         00DD GR
+  4 A$main$190         00DF GR  |   4 A$main$191         00E1 GR
+  4 A$main$192         00E2 GR  |   4 A$main$193         00E4 GR
+  4 A$main$194         00E6 GR  |   4 A$main$195         00E8 GR
+  4 A$main$196         00EA GR  |   4 A$main$198         00EC GR
+  4 A$main$199         00EE GR  |   4 A$main$200         00F0 GR
+  4 A$main$201         00F2 GR  |   4 A$main$202         00F4 GR
+  4 A$main$203         00F6 GR  |   4 A$main$204         00F8 GR
+  4 A$main$205         00FA GR  |   4 A$main$206         00FC GR
+  4 A$main$207         00FE GR  |   4 A$main$208         0101 GR
+  4 A$main$209         0104 GR  |   4 A$main$210         0106 GR
+  4 A$main$211         0109 GR  |   4 A$main$212         010B GR
+  4 A$main$213         010D GR  |   4 A$main$214         010F GR
+  4 A$main$215         0110 GR  |   4 A$main$216         0112 GR
+  4 A$main$217         0114 GR  |   4 A$main$218         0116 GR
+  4 A$main$219         0118 GR  |   4 A$main$221         011A GR
+  4 A$main$222         011C GR  |   4 A$main$223         011E GR
+  4 A$main$224         0120 GR  |   4 A$main$225         0122 GR
+  4 A$main$226         0124 GR  |   4 A$main$227         0126 GR
+  4 A$main$228         0128 GR  |   4 A$main$229         012A GR
+  4 A$main$230         012C GR  |   4 A$main$231         012F GR
+  4 A$main$232         0132 GR  |   4 A$main$233         0135 GR
+  4 A$main$234         0138 GR  |   4 A$main$235         013A GR
+  4 A$main$236         013D GR  |   4 A$main$237         013F GR
+  4 A$main$239         0140 GR  |   4 A$main$240         0142 GR
+  4 A$main$241         0144 GR  |   4 A$main$242         0146 GR
+  4 A$main$244         0149 GR  |   4 A$main$245         014B GR
+  4 A$main$246         014D GR  |   4 A$main$247         014F GR
+  4 A$main$250         0151 GR  |   4 A$main$251         0154 GR
+  4 A$main$252         0157 GR  |   4 A$main$253         015A GR
+  4 A$main$254         015D GR  |   4 A$main$255         0160 GR
+  4 A$main$256         0162 GR  |   4 A$main$257         0165 GR
+  4 A$main$258         0168 GR  |   4 A$main$259         016B GR
+  4 A$main$260         016E GR  |   4 A$main$261         0171 GR
+  4 A$main$262         0174 GR  |   4 A$main$263         0177 GR
+  4 A$main$264         0179 GR  |   4 A$main$265         017C GR
+  4 A$main$266         017F GR  |   4 A$main$267         0181 GR
+  4 A$main$268         0184 GR  |   4 A$main$269         0186 GR
+  4 A$main$270         0189 GR  |   4 A$main$271         018B GR
+  4 A$main$272         018E GR  |   4 A$main$273         0190 GR
+  4 A$main$274         0193 GR  |   4 A$main$275         0196 GR
+  4 A$main$276         0199 GR  |   4 A$main$277         019C GR
+  4 A$main$278         019F GR  |   4 A$main$279         01A1 GR
+  4 A$main$280         01A4 GR  |   4 A$main$281         01A6 GR
+  4 A$main$282         01A8 GR  |   4 A$main$283         01AA GR
+  4 A$main$284         01AB GR  |   4 A$main$285         01AD GR
+  4 A$main$286         01AF GR  |   4 A$main$287         01B1 GR
+  4 A$main$288         01B3 GR  |   4 A$main$290         01B7 GR
+  4 A$main$291         01B9 GR  |   4 A$main$292         01BB GR
+  4 A$main$293         01BD GR  |   4 A$main$294         01BF GR
+  4 A$main$295         01C1 GR  |   4 A$main$296         01C3 GR
+  4 A$main$297         01C5 GR  |   4 A$main$298         01C7 GR
+  4 A$main$299         01C9 GR  |   4 A$main$300         01CC GR
+  4 A$main$301         01CF GR  |   4 A$main$302         01D1 GR
+  4 A$main$303         01D4 GR  |   4 A$main$304         01D6 GR
+  4 A$main$305         01D8 GR  |   4 A$main$306         01DA GR
+  4 A$main$307         01DB GR  |   4 A$main$308         01DD GR
+  4 A$main$309         01DF GR  |   4 A$main$310         01E1 GR
+  4 A$main$311         01E3 GR  |   4 A$main$313         01E7 GR
+  4 A$main$314         01E9 GR  |   4 A$main$315         01EB GR
+  4 A$main$316         01ED GR  |   4 A$main$317         01EF GR
+  4 A$main$318         01F1 GR  |   4 A$main$319         01F3 GR
+  4 A$main$320         01F5 GR  |   4 A$main$321         01F7 GR
+  4 A$main$322         01F9 GR  |   4 A$main$323         01FC GR
+  4 A$main$324         01FF GR  |   4 A$main$325         0202 GR
+  4 A$main$326         0205 GR  |   4 A$main$327         0207 GR
+  4 A$main$328         020A GR  |   4 A$main$330         020D GR
+  4 A$main$331         0210 GR  |   4 A$main$332         0214 GR
+  4 A$main$333         0216 GR  |   4 A$main$334         0218 GR
+  4 A$main$335         0219 GR  |   4 A$main$336         021C GR
+  4 A$main$337         021E GR  |   4 A$main$338         0220 GR
+  4 A$main$339         0221 GR  |   4 A$main$340         0224 GR
+  4 A$main$341         0226 GR  |   4 A$main$342         0228 GR
+  4 A$main$343         022B GR  |   4 A$main$344         022D GR
+  4 A$main$345         022F GR  |   4 A$main$346         0232 GR
+  4 A$main$347         0234 GR  |   4 A$main$348         0236 GR
+  4 A$main$349         0238 GR  |   4 A$main$350         023B GR
+  4 A$main$352         023D GR  |   4 A$main$353         0240 GR
+  4 A$main$354         0243 GR  |   4 A$main$355         0245 GR
+  4 A$main$356         0247 GR  |   4 A$main$357         024A GR
+  4 A$main$358         024E GR  |   4 A$main$360         0251 GR
+  4 A$main$362         0254 GR  |   4 A$main$363         0257 GR
+  4 A$main$364         0259 GR  |   4 A$main$365         025C GR
+  4 A$main$366         025E GR  |   4 A$main$367         0260 GR
+  4 A$main$368         0262 GR  |   4 A$main$369         0265 GR
+  4 A$main$370         0268 GR  |   4 A$main$371         026B GR
+  4 A$main$372         026D GR  |   4 A$main$373         026F GR
+  4 A$main$374         0271 GR  |   4 A$main$375         0274 GR
+  4 A$main$376         0276 GR  |   4 A$main$377         0278 GR
+  4 A$main$378         027A GR  |   4 A$main$379         027D GR
+  4 A$main$380         0280 GR  |   4 A$main$381         0283 GR
+  4 A$main$382         0285 GR  |   4 A$main$383         0287 GR
+  4 A$main$384         0289 GR  |   4 A$main$385         028C GR
+  4 A$main$386         028F GR  |   4 A$main$387         0291 GR
+  4 A$main$388         0293 GR  |   4 A$main$389         0295 GR
+  4 A$main$390         0297 GR  |   4 A$main$391         029A GR
+  4 A$main$392         029C GR  |   4 A$main$393         029E GR
+  4 A$main$394         02A0 GR  |   4 A$main$396         02A3 GR
+  4 A$main$397         02A5 GR  |   4 A$main$398         02A7 GR
+  4 A$main$399         02A9 GR  |   4 A$main$400         02AC GR
+  4 A$main$401         02AE GR  |   4 A$main$402         02B0 GR
+  4 A$main$403         02B2 GR  |   4 A$main$405         02B5 GR
+  4 A$main$406         02B7 GR  |   4 A$main$407         02B9 GR
+  4 A$main$408         02BB GR  |   4 A$main$409         02BE GR
+  4 A$main$410         02C0 GR  |   4 A$main$411         02C2 GR
+  4 A$main$412         02C4 GR  |   4 A$main$414         02C7 GR
+  4 A$main$415         02C9 GR  |   4 A$main$416         02CB GR
+  4 A$main$417         02CD GR  |   4 A$main$418         02D0 GR
+  4 A$main$419         02D2 GR  |   4 A$main$420         02D4 GR
+  4 A$main$421         02D6 GR  |   4 A$main$423         02D9 GR
+  4 A$main$424         02DC GR  |   4 A$main$425         02DE GR
+  4 A$main$426         02E1 GR  |   4 A$main$427         02E4 GR
+  4 A$main$428         02E6 GR  |   4 A$main$429         02E8 GR
+  4 A$main$430         02EB GR  |   4 A$main$431         02ED GR
+  4 A$main$432         02EF GR  |   4 A$main$433         02F0 GR
+  4 A$main$434         02F3 GR  |   4 A$main$435         02F5 GR
+  4 A$main$436         02F7 GR  |   4 A$main$437         02FA GR
+  4 A$main$438         02FC GR  |   4 A$main$439         02FE GR
+  4 A$main$440         02FF GR  |   4 A$main$441         0302 GR
+  4 A$main$442         0305 GR  |   4 A$main$443         0306 GR
+  4 A$main$444         0308 GR  |   4 A$main$445         030B GR
+  4 A$main$446         030C GR  |   4 A$main$447         030E GR
+  4 A$main$448         0310 GR  |   4 A$main$449         0313 GR
+  4 A$main$450         0316 GR  |   4 A$main$451         0318 GR
+  4 A$main$452         031B GR  |   4 A$main$453         031E GR
+  4 A$main$454         0320 GR  |   4 A$main$455         0322 GR
+  4 A$main$456         0325 GR  |   4 A$main$457         0327 GR
+  4 A$main$458         0329 GR  |   4 A$main$459         032B GR
+  4 A$main$460         032C GR  |   4 A$main$461         032F GR
+  4 A$main$462         0331 GR  |   4 A$main$463         0333 GR
+  4 A$main$464         0336 GR  |   4 A$main$465         0338 GR
+  4 A$main$466         033A GR  |   4 A$main$467         033B GR
+  4 A$main$468         033E GR  |   4 A$main$470         0340 GR
+  4 A$main$471         0343 GR  |   4 A$main$472         0346 GR
+  4 A$main$473         0349 GR  |   4 A$main$474         034C GR
+  4 A$main$475         034F GR  |   4 A$main$476         0352 GR
+  4 A$main$477         0354 GR  |   4 A$main$478         0357 GR
+  4 A$main$479         0359 GR  |   4 A$main$480         035C GR
+  4 A$main$481         035E GR  |   4 A$main$482         0361 GR
+  4 A$main$483         0363 GR  |   4 A$main$484         0366 GR
+  4 A$main$485         0368 GR  |   4 A$main$486         036A GR
+  4 A$main$487         036D GR  |   4 A$main$488         036F GR
+  4 A$main$489         0372 GR  |   4 A$main$490         0375 GR
+  4 A$main$491         0378 GR  |   4 A$main$492         037B GR
+  4 A$main$493         037D GR  |   4 A$main$494         0380 GR
+  4 A$main$495         0383 GR  |   4 A$main$496         0385 GR
+  4 A$main$497         0388 GR  |   4 A$main$498         038A GR
+  4 A$main$499         038E GR  |   4 A$main$500         0390 GR
+  4 A$main$501         0393 GR  |   4 A$main$502         0396 GR
+  4 A$main$503         0399 GR  |   4 A$main$504         039B GR
+  4 A$main$505         039E GR  |   4 A$main$506         03A1 GR
+  4 A$main$507         03A3 GR  |   4 A$main$508         03A6 GR
+  4 A$main$509         03A8 GR  |   4 A$main$510         03AB GR
+  4 A$main$511         03AD GR  |   4 A$main$512         03B1 GR
+  4 A$main$513         03B3 GR  |   4 A$main$514         03B7 GR
+  4 A$main$515         03B9 GR  |   4 A$main$516         03BD GR
+  4 A$main$517         03C0 GR  |   4 A$main$518         03C2 GR
+  4 A$main$519         03C4 GR  |   4 A$main$520         03C6 GR
+  4 A$main$521         03C8 GR  |   4 A$main$522         03CA GR
+  4 A$main$523         03CD GR  |   4 A$main$524         03CF GR
+  4 A$main$525         03D1 GR  |   4 A$main$526         03D3 GR
+  4 A$main$527         03D5 GR  |   4 A$main$528         03D7 GR
+  4 A$main$529         03D9 GR  |   4 A$main$531         03DB GR
+  4 A$main$532         03DD GR  |   4 A$main$533         03DE GR
+  4 A$main$534         03E1 GR  |   4 A$main$535         03E2 GR
+  4 A$main$536         03E4 GR  |   4 A$main$538         03E7 GR
+  4 A$main$539         03EA GR  |   4 A$main$540         03EC GR
+  4 A$main$541         03EE GR  |   4 A$main$542         03F2 GR
+  4 A$main$543         03F5 GR  |   4 A$main$545         03F8 GR
+  4 A$main$546         03FA GR  |   4 A$main$547         03FC GR
+  4 A$main$548         03FD GR  |   4 A$main$549         0400 GR
+  4 A$main$550         0402 GR  |   4 A$main$551         0404 GR
+  4 A$main$552         0405 GR  |   4 A$main$553         0408 GR
+  4 A$main$554         040A GR  |   4 A$main$555         040C GR
+  4 A$main$556         040E GR  |   4 A$main$557         0411 GR
+  4 A$main$558         0413 GR  |   4 A$main$559         0415 GR
+  4 A$main$560         0417 GR  |   4 A$main$561         041A GR
+  4 A$main$562         041C GR  |   4 A$main$563         041E GR
+  4 A$main$564         0421 GR  |   4 A$main$565         0423 GR
+  4 A$main$567         0426 GR  |   4 A$main$568         0428 GR
+  4 A$main$569         042B GR  |   4 A$main$570         042E GR
+  4 A$main$572         0431 GR  |   4 A$main$573         0434 GR
+  4 A$main$574         0436 GR  |   4 A$main$575         0439 GR
+  4 A$main$576         043C GR  |   4 A$main$577         043F GR
+  4 A$main$578         0442 GR  |   4 A$main$579         0445 GR
+  4 A$main$580         0447 GR  |   4 A$main$581         044A GR
+  4 A$main$582         044C GR  |   4 A$main$583         044E GR
+  4 A$main$584         0450 GR  |   4 A$main$585         0451 GR
+  4 A$main$586         0453 GR  |   4 A$main$587         0455 GR
+  4 A$main$588         0457 GR  |   4 A$main$589         0459 GR
+  4 A$main$591         045D GR  |   4 A$main$592         045F GR
+  4 A$main$593         0461 GR  |   4 A$main$594         0463 GR
+  4 A$main$595         0465 GR  |   4 A$main$596         0467 GR
+  4 A$main$597         0469 GR  |   4 A$main$598         046B GR
+  4 A$main$599         046D GR  |   4 A$main$600         046F GR
+  4 A$main$601         0472 GR  |   4 A$main$602         0475 GR
+  4 A$main$603         0477 GR  |   4 A$main$604         047A GR
+  4 A$main$605         047D GR  |   4 A$main$606         047F GR
+  4 A$main$607         0482 GR  |   4 A$main$608         0483 GR
+  4 A$main$609         0485 GR  |   4 A$main$610         0487 GR
+  4 A$main$611         0489 GR  |   4 A$main$612         048B GR
+  4 A$main$614         048F GR  |   4 A$main$615         0491 GR
+  4 A$main$616         0493 GR  |   4 A$main$617         0495 GR
+  4 A$main$618         0497 GR  |   4 A$main$619         0499 GR
+  4 A$main$620         049B GR  |   4 A$main$621         049E GR
+  4 A$main$622         04A0 GR  |   4 A$main$624         04A3 GR
+  4 A$main$625         04A6 GR  |   4 A$main$626         04A9 GR
+  4 A$main$627         04AC GR  |   4 A$main$628         04AF GR
+  4 A$main$629         04B1 GR  |   4 A$main$630         04B4 GR
+  4 A$main$632         04B7 GR  |   4 A$main$633         04BA GR
+  4 A$main$634         04BC GR  |   4 A$main$635         04BF GR
+  4 A$main$636         04C2 GR  |   4 A$main$637         04C5 GR
+  4 A$main$638         04C8 GR  |   4 A$main$639         04CB GR
+  4 A$main$640         04CD GR  |   4 A$main$641         04D0 GR
+  4 A$main$642         04D3 GR  |   4 A$main$643         04D5 GR
+  4 A$main$644         04D8 GR  |   4 A$main$645         04D9 GR
+  4 A$main$646         04DB GR  |   4 A$main$647         04DD GR
+  4 A$main$648         04DF GR  |   4 A$main$649         04E1 GR
+  4 A$main$651         04E5 GR  |   4 A$main$652         04E7 GR
+  4 A$main$653         04E9 GR  |   4 A$main$654         04EB GR
+  4 A$main$655         04ED GR  |   4 A$main$656         04EF GR
+  4 A$main$657         04F1 GR  |   4 A$main$658         04F4 GR
+  4 A$main$659         04F6 GR  |   4 A$main$660         04F9 GR
+  4 A$main$661         04FC GR  |   4 A$main$662         04FF GR
+  4 A$main$663         0501 GR  |   4 A$main$664         0504 GR
+  4 A$main$665         0507 GR  |   4 A$main$666         0509 GR
+  4 A$main$667         050C GR  |   4 A$main$668         050D GR
+  4 A$main$669         050F GR  |   4 A$main$670         0511 GR
+  4 A$main$671         0513 GR  |   4 A$main$672         0515 GR
+  4 A$main$674         0517 GR  |   4 A$main$675         0519 GR
+  4 A$main$676         051B GR  |   4 A$main$677         051D GR
+  4 A$main$678         051F GR  |   4 A$main$679         0521 GR
+  4 A$main$680         0523 GR  |   4 A$main$681         0526 GR
+  4 A$main$682         0528 GR  |   4 A$main$683         052B GR
+  4 A$main$685         052E GR  |   4 A$main$686         0530 GR
+  4 A$main$687         0534 GR  |   4 A$main$688         0537 GR
+  4 A$main$689         0539 GR  |   4 A$main$690         053D GR
+  4 A$main$691         053F GR  |   4 A$main$692         0541 GR
+  4 A$main$693         0545 GR  |   4 A$main$694         0548 GR
+  4 A$main$695         054A GR  |   4 A$main$696         054C GR
+  4 A$main$697         054E GR  |   4 A$main$698         0552 GR
+  4 A$main$699         0554 GR  |   4 A$main$700         0556 GR
+  4 A$main$701         0558 GR  |   4 A$main$702         055C GR
+  4 A$main$704         055F GR  |   4 A$main$705         0561 GR
+  4 A$main$706         0563 GR  |   4 A$main$707         0565 GR
+  4 A$main$709         0568 GR  |   4 A$main$710         056A GR
+  4 A$main$711         056C GR  |   4 A$main$712         056E GR
+  4 A$main$714         0571 GR  |   4 A$main$715         0573 GR
+  4 A$main$716         0575 GR  |   4 A$main$717         0577 GR
+  4 A$main$719         057A GR  |   4 A$main$720         057C GR
+  4 A$main$721         057E GR  |   4 A$main$722         0580 GR
+  4 A$main$724         0583 GR  |   4 A$main$725         0585 GR
+  4 A$main$726         0587 GR  |   4 A$main$727         0589 GR
+  4 A$main$729         058C GR  |   4 A$main$730         058E GR
+  4 A$main$731         0590 GR  |   4 A$main$732         0592 GR
+  4 A$main$89          0000 GR  |   4 A$main$90          0002 GR
+  4 A$main$91          0005 GR  |   4 A$main$92          0008 GR
+  4 A$main$93          000B GR  |   4 A$main$94          000E GR
+  4 A$main$95          0010 GR  |   4 A$main$96          0013 GR
+  4 A$main$97          0015 GR  |   4 A$main$98          0017 GR
+  4 A$main$99          0019 GR  |   4 L10                011A R
+  4 L12                0140 R   |   4 L13                0149 R
+  4 L15                01B7 R   |   4 L16                01E7 R
+  4 L17                020D R   |   4 L19                045D R
+  4 L2                 0024 R   |   4 L20                048F R
+  4 L21                03E7 R   |   4 L23                04E5 R
+  4 L24                0517 R   |   4 L25                052E R
+  4 L26                03DB R   |   4 L27                0254 R
+  4 L28                03F8 R   |   4 L29                023D R
+  4 L3                 0052 R   |   4 L30                0426 R
+  4 L31                0251 R   |   4 L32                02A3 R
+  4 L33                02B5 R   |   4 L34                02C7 R
+  4 L35                02D9 R   |   4 L36                0340 R
+  4 L38                04A3 R   |   4 L39                0583 R
+  4 L40                058C R   |   4 L41                0431 R
+  4 L42                04B7 R   |   4 L43                0568 R
+  4 L44                055F R   |   4 L45                057A R
+  4 L46                0571 R   |   4 L6                 0078 R
+  4 L7                 0081 R   |   4 L9                 00EC R
+    _VIA_t1_cnt_lo     **** GX  |     _Vec_Btn_State     **** GX
+    _Vec_Joy_Mux_1     **** GX  |     _Vec_Joy_Mux_1     **** GX
+    _Vec_Joy_Mux_2     **** GX  |     _Vec_Joy_Mux_2     **** GX
+    _Vec_Music_9       **** GX  |     _Vec_Music_Fla     **** GX
+    __Add_Score_a      **** GX  |     __Do_Sound         **** GX
+    __Dot_d            **** GX  |     __Draw_Line_d      **** GX
+    __Init_Music_c     **** GX  |     __Intensity_a      **** GX
+    __Moveto_d         **** GX  |     __Print_Str_d      **** GX
+    __Random           **** GX  |     ___Clear_Score     **** GX
+    ___DP_to_C8        **** GX  |     ___Draw_VLc        **** GX
+    ___Read_Btns       **** GX  |     ___Reset0Ref       **** GX
+    ___Wait_Recal      **** GX  |   2 _brightness_fa     0019 GR
+  2 _current_song      0000 GR  |   2 _dot_brightnes     0018 GR
   2 _dot_ticks         001A GR  |   2 _dot_x             0014 GR
   2 _dot_x_vel         0016 GR  |   2 _dot_y             0015 GR
-  2 _dot_y_vel         0017 GR  |   2 _flashes           001B GR
-  4 _main              0083 GR  |   2 _player1_score     0006 GR
-  2 _player1_x         0002 GR  |   2 _player1_y         0003 GR
-  2 _player2_score     000D GR  |   2 _player2_x         0004 GR
-  2 _player2_y         0005 GR  |   4 _reset_round       0000 GR
-  4 _setup             0022 GR
+  2 _dot_y_vel         0017 GR  |   3 _edge              0001 GR
+  2 _flashes           001B GR  |   4 _main              0151 GR
+  2 _player1_score     0006 GR  |   2 _player1_x         0002 GR
+  2 _player1_y         0003 GR  |   2 _player2_score     000D GR
+  2 _player2_x         0004 GR  |   2 _player2_y         0005 GR
+  4 _reset_round       0000 GR  |   4 _setup             0089 GR
+  3 _velocity_scal     0000 GR
 
 ASxxxx Assembler V05.00  (Motorola 6809), page 2.
 Hexidecimal [16-Bits]
@@ -669,8 +1088,8 @@ Area Table
 [_CSEG]
    0 _CODE            size    0   flags C080
    2 .bss             size   1C   flags    0
-   3 .data            size    1   flags  100
-   4 .text            size  36B   flags  100
+   3 .data            size    6   flags  100
+   4 .text            size  595   flags  100
 [_DSEG]
    1 _DATA            size    0   flags C0C0
 

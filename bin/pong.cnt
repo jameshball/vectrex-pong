@@ -1,4 +1,4 @@
-COMMENT $C89D not used RAM onword...
+COMMENT $C8A2 not used RAM onword...
 LABEL $0000 _game_header
 LABEL $0017 _crt0_init_data
 LABEL $002F _crt0_copy_data
@@ -103,40 +103,62 @@ LABEL $03BA __Draw_Scores
 LABEL $03C1 __Draw_Score
 LABEL $03C8 __Wait_Bound
 LABEL $03CF _reset_round
-LABEL $03F1 _setup
-LABEL $0452 _main
-LABEL $04B7 L6
-LABEL $04E7 L13
-LABEL $04FB L15
-LABEL $04FE L8
-LABEL $055D L16
-LABEL $056F L17
-LABEL $0581 L18
-LABEL $0593 L19
-LABEL $05CB L20
-LABEL $067F L22
-LABEL $068B L11
-LABEL $069E L12
-LABEL $06CC L14
-LABEL $06D7 L25
-LABEL $06DA L23
-LABEL $0703 L10
-LABEL $C880 _default_velocity
-LABEL $C881 _current_song
-LABEL $C883 _player1_x
-LABEL $C884 _player1_y
-LABEL $C885 _player2_x
-LABEL $C886 _player2_y
-LABEL $C887 _player1_score_str
-LABEL $C88E _player2_score_str
-LABEL $C895 _dot_x
-LABEL $C896 _dot_y
-LABEL $C897 _dot_x_vel
-LABEL $C898 _dot_y_vel
-LABEL $C899 _dot_brightness
-LABEL $C89A _brightness_fade_in
-LABEL $C89B _dot_ticks
-LABEL $C89C _flashes
+LABEL $03F3 L2
+LABEL $0421 L3
+LABEL $0447 L6
+LABEL $0450 L7
+LABEL $0458 _setup
+LABEL $04BB L9
+LABEL $04E9 L10
+LABEL $050F L12
+LABEL $0518 L13
+LABEL $0520 _main
+LABEL $0586 L15
+LABEL $05B6 L16
+LABEL $05DC L17
+LABEL $060C L29
+LABEL $0620 L31
+LABEL $0623 L27
+LABEL $0672 L32
+LABEL $0684 L33
+LABEL $0696 L34
+LABEL $06A8 L35
+LABEL $070F L36
+LABEL $07AA L26
+LABEL $07B6 L21
+LABEL $07C7 L28
+LABEL $07F5 L30
+LABEL $0800 L41
+LABEL $082C L19
+LABEL $085E L20
+LABEL $0872 L38
+LABEL $0886 L42
+LABEL $08B4 L23
+LABEL $08E6 L24
+LABEL $08FD L25
+LABEL $092E L44
+LABEL $0937 L43
+LABEL $0940 L46
+LABEL $0949 L45
+LABEL $0952 L39
+LABEL $095B L40
+LABEL $C880 _velocity_scale
+LABEL $C881 _edge
+LABEL $C886 _current_song
+LABEL $C888 _player1_x
+LABEL $C889 _player1_y
+LABEL $C88A _player2_x
+LABEL $C88B _player2_y
+LABEL $C88C _player1_score_str
+LABEL $C893 _player2_score_str
+LABEL $C89A _dot_x
+LABEL $C89B _dot_y
+LABEL $C89C _dot_x_vel
+LABEL $C89D _dot_y_vel
+LABEL $C89E _dot_brightness
+LABEL $C89F _brightness_fade_in
+LABEL $C8A0 _dot_ticks
+LABEL $C8A1 _flashes
 LABEL $E7B5 ___Displ8_xy
 LABEL $E7D2 ___Displ16_xy
 LABEL $E98A ___Ranpos
@@ -369,175 +391,238 @@ COMMENT $03B4 BIOS call
 COMMENT $03BC BIOS call
 COMMENT $03C3 BIOS call
 COMMENT $03CA BIOS call
-COMMENT $03CF dot_x
-COMMENT $03D2 dot_y
-COMMENT $03D5 default_velocity.4, default_velocity
-COMMENT $03D8 default_velocity.4
-COMMENT $03D9 default_velocity.4, default_velocity
-COMMENT $03DC default_velocity.4, dot_x_vel
-COMMENT $03DF default_velocity.4, dot_y_vel
-COMMENT $03E2 dot_ticks
-COMMENT $03E5 flashes
-COMMENT $03E8 dot_brightness
-COMMENT $03ED brightness_fade_in
-COMMENT $03F1 Vec_Joy_Mux_1_X
-COMMENT $03F4 Vec_Joy_Mux_1_Y
-COMMENT $03F7 Vec_Joy_Mux_2_X
-COMMENT $03FA Vec_Joy_Mux_2_Y
-COMMENT $03FF Vec_Music_Flag
-COMMENT $0405 current_song
-COMMENT $0416 player1_score_str
-COMMENT $0419 player2_score_str
-COMMENT $041E player1_x
-COMMENT $0423 player1_y
-COMMENT $0428 player2_x
-COMMENT $042D player2_y
-COMMENT $0430 dot_x
-COMMENT $0433 dot_y
-COMMENT $0436 default_velocity.4, default_velocity
-COMMENT $0439 default_velocity.4
-COMMENT $043A default_velocity.4, default_velocity
-COMMENT $043D default_velocity.4, dot_x_vel
-COMMENT $0440 default_velocity.4, dot_y_vel
-COMMENT $0443 dot_ticks
-COMMENT $0446 flashes
-COMMENT $0449 dot_brightness
-COMMENT $044E brightness_fade_in
-COMMENT $0454 Vec_Joy_Mux_1_X
-COMMENT $0457 Vec_Joy_Mux_1_Y
-COMMENT $045A Vec_Joy_Mux_2_X
-COMMENT $045D Vec_Joy_Mux_2_Y
-COMMENT $0462 Vec_Music_Flag
-COMMENT $0468 current_song
-COMMENT $0479 player1_score_str
-COMMENT $047C player2_score_str
-COMMENT $0481 player1_x
-COMMENT $0486 player1_y
-COMMENT $048B player2_x
-COMMENT $0490 player2_y
-COMMENT $0493 dot_x
-COMMENT $0496 dot_y
-COMMENT $0499 default_velocity.4, default_velocity
-COMMENT $049C default_velocity.4
-COMMENT $049D default_velocity.4, default_velocity
-COMMENT $04A0 default_velocity.4, dot_x_vel
-COMMENT $04A3 default_velocity.4, dot_y_vel
-COMMENT $04A6 dot_ticks
-COMMENT $04A9 flashes
-COMMENT $04AC dot_brightness
-COMMENT $04B1 brightness_fade_in
-COMMENT $04B7 dot_y_vel
-COMMENT $04E7 dot_ticks
-COMMENT $04EA dot_ticks.35, dot_ticks
-COMMENT $04ED : ; dot_ticks.35
-COMMENT $04F1 dot_brightness
-COMMENT $04F8 dot_brightness
-COMMENT $04FB dot_ticks
-COMMENT $0546 Vec_Btn_State
-COMMENT $0551 player1_x.8, player1_x
-COMMENT $0554 : ; player1_x.8
-COMMENT $0558 player1_x.8
-COMMENT $055A player1_x.8, player1_x
-COMMENT $055D tmp64
-COMMENT $055F tmp64, D.3305
-COMMENT $0563 player1_x.77, player1_x
-COMMENT $0566 : ; player1_x.77
-COMMENT $056A player1_x.77
-COMMENT $056C player1_x.77, player1_x
-COMMENT $056F tmp65
-COMMENT $0571 tmp65, D.3305
-COMMENT $0575 player2_x.11, player2_x
-COMMENT $0578 : ; player2_x.11
-COMMENT $057C player2_x.11
-COMMENT $057E player2_x.11, player2_x
-COMMENT $0587 player2_x.78, player2_x
-COMMENT $058A : ; player2_x.78
-COMMENT $058E player2_x.78
-COMMENT $0590 player2_x.78, player2_x
-COMMENT $0593 player1_y
-COMMENT $0598 player1_x
-COMMENT $05A5 tmp68
-COMMENT $05A7 tmp68, player1_x
-COMMENT $05AA tmp68
-COMMENT $05AC player1_y
-COMMENT $05B7 player2_y
-COMMENT $05BC player2_x
-COMMENT $05CE current_song
-COMMENT $05E4 VIA_t1_cnt_lo
-COMMENT $05FD dot_brightness
-COMMENT $0603 dot_y
-COMMENT $0608 dot_x
-COMMENT $0610 flashes
-COMMENT $061B dot_brightness
-COMMENT $061E dot_x_vel
-COMMENT $0621 dot_x_vel.19
-COMMENT $0623 dot_x
-COMMENT $0626 dot_x.20
-COMMENT $0628 dot_x
-COMMENT $062B dot_y_vel
-COMMENT $062E dot_y_vel.22
-COMMENT $0630 dot_y
-COMMENT $0633 dot_y.23
-COMMENT $0635 dot_y
-COMMENT $0647 player1_x
-COMMENT $064A player1_x.24
-COMMENT $064C tmp50, dot_x_vel.19
-COMMENT $064E  ; tmp50, dot_x.20
-COMMENT $0654 dot_x_vel.19
-COMMENT $0656 player1_x.24
-COMMENT $065A player1_x.24
-COMMENT $065C dot_x.20
-COMMENT $065E : ;, player1_x.24
-COMMENT $0664 player1_y
-COMMENT $0667 player1_y.25
-COMMENT $0669 tmp53, dot_y_vel.22
-COMMENT $066B  ; tmp53, dot_y.23
-COMMENT $0671 player1_y.25
-COMMENT $0673 dot_y_vel.22
-COMMENT $0675 player1_y.25
-COMMENT $0677 dot_y.23
-COMMENT $0679 : ;, player1_y.25
-COMMENT $067F dot_y_vel.81, dot_y_vel.22
-COMMENT $0681 dot_y_vel.81
-COMMENT $0682 dot_y_vel.81, dot_y_vel
-COMMENT $0685 dot_y_vel.81
-COMMENT $0686 dot_y_vel.81, dot_y.23
-COMMENT $0688 dot_y_vel.81, dot_y
-COMMENT $068B dot_x.20
-COMMENT $0695 dot_x_vel.19
-COMMENT $0698 dot_x_vel
-COMMENT $06CE dot_brightness
-COMMENT $06D1 flashes
-COMMENT $06DF dot_x
-COMMENT $06E2 dot_y
-COMMENT $06E5 default_velocity.4, default_velocity
-COMMENT $06E8 default_velocity.4
-COMMENT $06E9 default_velocity.4, default_velocity
-COMMENT $06EC default_velocity.4, dot_x_vel
-COMMENT $06EF default_velocity.4, dot_y_vel
-COMMENT $06F2 dot_ticks
-COMMENT $06F5 flashes
-COMMENT $06F8 dot_brightness
-COMMENT $06FD brightness_fade_in
-COMMENT $0703 player2_x
-COMMENT $0706 player2_x.28
-COMMENT $0708 tmp56, dot_x_vel.19
-COMMENT $070A  ; tmp56, dot_x.20
-COMMENT $0710 dot_x_vel.19
-COMMENT $0712 player2_x.28
-COMMENT $0716 player2_x.28
-COMMENT $0718 dot_x.20
-COMMENT $071A : ;, player2_x.28
-COMMENT $0720 player2_y
-COMMENT $0723 player2_y.29
-COMMENT $0725 tmp59, dot_y_vel.22
-COMMENT $0727  ; tmp59, dot_y.23
-COMMENT $072D tmp60, player2_y.29
-COMMENT $072F tmp60, dot_y_vel.22
-COMMENT $0731  ; tmp60, dot_y.23
+COMMENT $03D1 dot_x
+COMMENT $03D4 dot_y
+COMMENT $03D7 velocity_scale
+COMMENT $03DF velocity_scale
+COMMENT $03E2 velocity_scale.49
+COMMENT $03E6 mulqihi3 ; velocity_scale.49
+COMMENT $03E9 tmp31
+COMMENT $03EB movlsbqihi: R:x -> R:b ; tmp31
+COMMENT $03EF tmp31
+COMMENT $03FF velocity_scale.49
+COMMENT $0403 velocity_scale.49
+COMMENT $0405 dot_x_vel
+COMMENT $040D velocity_scale
+COMMENT $0410 velocity_scale.50
+COMMENT $0414 mulqihi3 ; velocity_scale.50
+COMMENT $0417 tmp37
+COMMENT $0419 movlsbqihi: R:x -> R:b ; tmp37
+COMMENT $041D tmp37
+COMMENT $042D velocity_scale.50
+COMMENT $0431 velocity_scale.50
+COMMENT $0433 dot_y_vel
+COMMENT $0436 dot_ticks
+COMMENT $0439 flashes
+COMMENT $043C dot_brightness
+COMMENT $0441 brightness_fade_in
+COMMENT $045A Vec_Joy_Mux_1_X
+COMMENT $045D Vec_Joy_Mux_1_Y
+COMMENT $0460 Vec_Joy_Mux_2_X
+COMMENT $0463 Vec_Joy_Mux_2_Y
+COMMENT $0468 Vec_Music_Flag
+COMMENT $046E current_song
+COMMENT $047F player1_score_str
+COMMENT $0482 player2_score_str
+COMMENT $0487 player1_x
+COMMENT $048C player1_y
+COMMENT $0491 player2_x
+COMMENT $0496 player2_y
+COMMENT $0499 dot_x
+COMMENT $049C dot_y
+COMMENT $049F velocity_scale
+COMMENT $04A7 velocity_scale
+COMMENT $04AA velocity_scale.64
+COMMENT $04AE mulqihi3 ; velocity_scale.64
+COMMENT $04B1 tmp34
+COMMENT $04B3 movlsbqihi: R:x -> R:b ; tmp34
+COMMENT $04B7 tmp34
+COMMENT $04C7 velocity_scale.64
+COMMENT $04CB velocity_scale.64
+COMMENT $04CD dot_x_vel
+COMMENT $04D5 velocity_scale
+COMMENT $04D8 velocity_scale.65
+COMMENT $04DC mulqihi3 ; velocity_scale.65
+COMMENT $04DF tmp40
+COMMENT $04E1 movlsbqihi: R:x -> R:b ; tmp40
+COMMENT $04E5 tmp40
+COMMENT $04F5 velocity_scale.65
+COMMENT $04F9 velocity_scale.65
+COMMENT $04FB dot_y_vel
+COMMENT $04FE dot_ticks
+COMMENT $0501 flashes
+COMMENT $0504 dot_brightness
+COMMENT $0509 brightness_fade_in
+COMMENT $0523 Vec_Joy_Mux_1_X
+COMMENT $0526 Vec_Joy_Mux_1_Y
+COMMENT $0529 Vec_Joy_Mux_2_X
+COMMENT $052C Vec_Joy_Mux_2_Y
+COMMENT $0531 Vec_Music_Flag
+COMMENT $0537 current_song
+COMMENT $0548 player1_score_str
+COMMENT $054B player2_score_str
+COMMENT $0550 player1_x
+COMMENT $0555 player1_y
+COMMENT $055A player2_x
+COMMENT $055F player2_y
+COMMENT $0562 dot_x
+COMMENT $0565 dot_y
+COMMENT $0568 velocity_scale
+COMMENT $0570 velocity_scale
+COMMENT $0573 velocity_scale.89
+COMMENT $0577 mulqihi3 ; velocity_scale.89
+COMMENT $057A tmp57
+COMMENT $057C movlsbqihi: R:x -> R:b ; tmp57
+COMMENT $0580 tmp57
+COMMENT $0592 velocity_scale.89
+COMMENT $0596 velocity_scale.89
+COMMENT $0598 dot_x_vel
+COMMENT $05A0 velocity_scale
+COMMENT $05A3 velocity_scale.90
+COMMENT $05A7 mulqihi3 ; velocity_scale.90
+COMMENT $05AA tmp63
+COMMENT $05AC movlsbqihi: R:x -> R:b ; tmp63
+COMMENT $05B0 tmp63
+COMMENT $05C2 velocity_scale.90
+COMMENT $05C6 velocity_scale.90
+COMMENT $05C8 dot_y_vel
+COMMENT $05CB dot_ticks
+COMMENT $05CE flashes
+COMMENT $05D1 dot_brightness
+COMMENT $05D6 brightness_fade_in
+COMMENT $05DC dot_y_vel
+COMMENT $060C dot_ticks
+COMMENT $060F dot_ticks.37, dot_ticks
+COMMENT $0612 : ; dot_ticks.37
+COMMENT $0616 dot_brightness
+COMMENT $061D dot_brightness
+COMMENT $0620 dot_ticks
+COMMENT $065B Vec_Btn_State
+COMMENT $0666 player1_x.10, player1_x
+COMMENT $0669 : ; player1_x.10
+COMMENT $066D player1_x.10
+COMMENT $066F player1_x.10, player1_x
+COMMENT $0672 tmp101
+COMMENT $0674 tmp101, D.3308
+COMMENT $0678 player1_x.85, player1_x
+COMMENT $067B : ; player1_x.85
+COMMENT $067F player1_x.85
+COMMENT $0681 player1_x.85, player1_x
+COMMENT $0684 tmp102
+COMMENT $0686 tmp102, D.3308
+COMMENT $068A player2_x.13, player2_x
+COMMENT $068D : ; player2_x.13
+COMMENT $0691 player2_x.13
+COMMENT $0693 player2_x.13, player2_x
+COMMENT $069C player2_x.86, player2_x
+COMMENT $069F : ; player2_x.86
+COMMENT $06A3 player2_x.86
+COMMENT $06A5 player2_x.86, player2_x
+COMMENT $06A8 player1_y
+COMMENT $06AD player1_x
+COMMENT $06D1 player1_x
+COMMENT $06D7 player1_y
+COMMENT $06E2 player2_y
+COMMENT $06E7 player2_x
+COMMENT $0712 current_song
+COMMENT $0728 VIA_t1_cnt_lo
+COMMENT $0741 dot_brightness
+COMMENT $0747 dot_y
+COMMENT $074C dot_x
+COMMENT $0754 flashes
+COMMENT $075F dot_brightness
+COMMENT $0762 dot_x_vel
+COMMENT $0765 dot_x
+COMMENT $0768 dot_x.22
+COMMENT $076A dot_x
+COMMENT $076D dot_y_vel
+COMMENT $0770 dot_y_vel.24
+COMMENT $0772 dot_y
+COMMENT $0775 dot_y.25
+COMMENT $0777 dot_y
+COMMENT $0786 dot_y_vel.24
+COMMENT $078C player1_x.26, player1_x
+COMMENT $078F  ; player1_x.26, dot_x.22
+COMMENT $0793 player1_x.26
+COMMENT $0795  ; player1_x.26, dot_x.22
+COMMENT $0799 player1_y
+COMMENT $079C player1_y.27
+COMMENT $079E tmp94
+COMMENT $07A0  ; tmp94, dot_y.25
+COMMENT $07A4 dot_y.25
+COMMENT $07A6 : ;, player1_y.27
+COMMENT $07AA dot_y_vel.30, dot_y_vel.24
+COMMENT $07AC dot_y_vel.30
+COMMENT $07AD dot_y_vel.30, dot_y_vel
+COMMENT $07B0 dot_y_vel.30
+COMMENT $07B1 dot_y_vel.30, dot_y.25
+COMMENT $07B3 dot_y_vel.30, dot_y
+COMMENT $07B6 tmp99, dot_x
+COMMENT $07B9 tmp99
+COMMENT $07BB : ; tmp99
+COMMENT $07C1 dot_x_vel
+COMMENT $07F7 dot_brightness
+COMMENT $07FA flashes
+COMMENT $0808 dot_x
+COMMENT $080B dot_y
+COMMENT $080E velocity_scale
+COMMENT $0816 velocity_scale
+COMMENT $0819 velocity_scale.94
+COMMENT $081D mulqihi3 ; velocity_scale.94
+COMMENT $0820 tmp69
+COMMENT $0822 movlsbqihi: R:x -> R:b ; tmp69
+COMMENT $0826 tmp69
+COMMENT $0838 velocity_scale.94
+COMMENT $083C velocity_scale.94
+COMMENT $083E dot_x_vel
+COMMENT $0846 velocity_scale
+COMMENT $0849 velocity_scale.95
+COMMENT $084E mulqihi3 ; velocity_scale.95
+COMMENT $0852 tmp75
+COMMENT $0854 movlsbqihi: R:x -> R:b ; tmp75
+COMMENT $0858 tmp75
+COMMENT $086A velocity_scale.95
+COMMENT $086F velocity_scale.95
+COMMENT $0872 dot_y_vel
+COMMENT $0875 dot_ticks
+COMMENT $0878 flashes
+COMMENT $087B dot_brightness
+COMMENT $0880 brightness_fade_in
+COMMENT $088E dot_x
+COMMENT $0891 dot_y
+COMMENT $0894 velocity_scale
+COMMENT $089C velocity_scale
+COMMENT $089F velocity_scale.97
+COMMENT $08A4 mulqihi3 ; velocity_scale.97
+COMMENT $08A8 tmp81
+COMMENT $08AA movlsbqihi: R:x -> R:b ; tmp81
+COMMENT $08AE tmp81
+COMMENT $08C0 velocity_scale.97
+COMMENT $08C5 velocity_scale.97
+COMMENT $08C8 dot_x_vel
+COMMENT $08D0 velocity_scale
+COMMENT $08D3 velocity_scale.98
+COMMENT $08D8 mulqihi3 ; velocity_scale.98
+COMMENT $08DC tmp87
+COMMENT $08DE movlsbqihi: R:x -> R:b ; tmp87
+COMMENT $08E2 tmp87
+COMMENT $08F2 velocity_scale.98
+COMMENT $08F7 velocity_scale.98
+COMMENT $08FD dot_y_vel.24
+COMMENT $0903 player2_x.28, player2_x
+COMMENT $0906  ; player2_x.28, dot_x.22
+COMMENT $090C player2_x.28
+COMMENT $090E  ; player2_x.28, dot_x.22
+COMMENT $0914 player2_y
+COMMENT $0917 player2_y.29
+COMMENT $0919 tmp96
+COMMENT $091B  ; tmp96, dot_y.25
+COMMENT $0921 player2_y.29
+COMMENT $0923 dot_y.25
+COMMENT $0925 : ;, player2_y.29
 RANGE $0000-$0001 DB_DATA 8
 RANGE $0008-$0009 DB_DATA 8
 RANGE $000B-$000D DW_DATA 4
 RANGE $000D-$0012 DB_DATA 8
-RANGE $0017-$073A CODE
+RANGE $0017-$0964 CODE
 

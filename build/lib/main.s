@@ -62,10 +62,10 @@ _dot_y:	.blkb	1
 _dot_x_vel:	.blkb	1
 	.globl	_dot_y_vel
 _dot_y_vel:	.blkb	1
-	.globl	_default_velocity
+	.globl	_velocity_scale
 	.area	.data
-_default_velocity:
-	.byte	2
+_velocity_scale:
+	.byte	1
 	.area	.bss
 	.globl	_dot_brightness
 _dot_brightness:	.blkb	1
@@ -75,24 +75,87 @@ _brightness_fade_in:	.blkb	1
 _dot_ticks:	.blkb	1
 	.globl	_flashes
 _flashes:	.blkb	1
+	.globl	_edge
+	.area	.data
+_edge:
+	.byte	1
+	.byte	-127
+	.byte	0
+	.byte	-127
+	.byte	0
 	.area	.text
 	.globl	_reset_round
 _reset_round:
+	leas	-5,s	;,,
 	clr	_dot_x	; dot_x
 	clr	_dot_y	; dot_y
-	ldb	_default_velocity	; default_velocity.4, default_velocity
-	negb	; default_velocity.4
-	stb	_default_velocity	; default_velocity.4, default_velocity
-	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
+	neg	_velocity_scale	; velocity_scale
+	jsr	__Random
+	stb	,s	;, D.3249
+	ldb	_velocity_scale	;, velocity_scale
+	stb	3,s	;, velocity_scale.49
+	ldb	,s	;, D.3249
+	lda	3,s	;mulqihi3	; velocity_scale.49
+	mul
+	tfr	d,x	;, tmp31
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp31,
+	stb	2,s	;,
+	tfr	x,d	; tmp31,
+	blt	L6	;
+L2:
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asl	3,s	; velocity_scale.49
+	ldb	2,s	;,
+	addb	3,s	;, velocity_scale.49
+	stb	_dot_x_vel	;, dot_x_vel
+	jsr	__Random
+	stb	,s	;, D.3251
+	ldb	_velocity_scale	;, velocity_scale
+	stb	4,s	;, velocity_scale.50
+	ldb	,s	;, D.3251
+	lda	4,s	;mulqihi3	; velocity_scale.50
+	mul
+	tfr	d,x	;, tmp37
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp37,
+	stb	1,s	;,
+	tfr	x,d	; tmp37,
+	blt	L7	;
+L3:
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asl	4,s	; velocity_scale.50
+	ldb	1,s	;,
+	addb	4,s	;, velocity_scale.50
+	stb	_dot_y_vel	;, dot_y_vel
 	clr	_dot_ticks	; dot_ticks
 	clr	_flashes	; flashes
 	clr	_dot_brightness	; dot_brightness
 	ldb	#1	;,
 	stb	_brightness_fade_in	;, brightness_fade_in
+	leas	5,s	;,,
 	rts
+L6:
+	ldb	2,s	;,
+	addb	#63	;,
+	stb	2,s	;,
+	lbra	L2	;
+L7:
+	ldb	1,s	;,
+	addb	#63	;,
+	stb	1,s	;,
+	bra	L3	;
 	.globl	_setup
 _setup:
+	leas	-5,s	;,,
 	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
 	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
 	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
@@ -118,20 +181,73 @@ _setup:
 	stb	_player2_y	;, player2_y
 	clr	_dot_x	; dot_x
 	clr	_dot_y	; dot_y
-	ldb	_default_velocity	; default_velocity.4, default_velocity
-	negb	; default_velocity.4
-	stb	_default_velocity	; default_velocity.4, default_velocity
-	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
+	neg	_velocity_scale	; velocity_scale
+	jsr	__Random
+	stb	,s	;, D.3383
+	ldb	_velocity_scale	;, velocity_scale
+	stb	3,s	;, velocity_scale.64
+	ldb	,s	;, D.3383
+	lda	3,s	;mulqihi3	; velocity_scale.64
+	mul
+	tfr	d,x	;, tmp34
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp34,
+	stb	2,s	;,
+	tfr	x,d	; tmp34,
+	blt	L12	;
+L9:
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asl	3,s	; velocity_scale.64
+	ldb	2,s	;,
+	addb	3,s	;, velocity_scale.64
+	stb	_dot_x_vel	;, dot_x_vel
+	jsr	__Random
+	stb	,s	;, D.3384
+	ldb	_velocity_scale	;, velocity_scale
+	stb	4,s	;, velocity_scale.65
+	ldb	,s	;, D.3384
+	lda	4,s	;mulqihi3	; velocity_scale.65
+	mul
+	tfr	d,x	;, tmp40
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp40,
+	stb	1,s	;,
+	tfr	x,d	; tmp40,
+	blt	L13	;
+L10:
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asl	4,s	; velocity_scale.65
+	ldb	1,s	;,
+	addb	4,s	;, velocity_scale.65
+	stb	_dot_y_vel	;, dot_y_vel
 	clr	_dot_ticks	; dot_ticks
 	clr	_flashes	; flashes
 	clr	_dot_brightness	; dot_brightness
 	ldb	#1	;,
 	stb	_brightness_fade_in	;, brightness_fade_in
+	leas	5,s	;,,
 	rts
+L12:
+	ldb	2,s	;,
+	addb	#63	;,
+	stb	2,s	;,
+	lbra	L9	;
+L13:
+	ldb	1,s	;,
+	addb	#63	;,
+	stb	1,s	;,
+	bra	L10	;
 	.globl	_main
 _main:
-	leas	-10,s	;,,
+	leas	-19,s	;,,
 	clr	_Vec_Joy_Mux_1_X	; Vec_Joy_Mux_1_X
 	clr	_Vec_Joy_Mux_1_Y	; Vec_Joy_Mux_1_Y
 	clr	_Vec_Joy_Mux_2_X	; Vec_Joy_Mux_2_X
@@ -157,20 +273,62 @@ _main:
 	stb	_player2_y	;, player2_y
 	clr	_dot_x	; dot_x
 	clr	_dot_y	; dot_y
-	ldb	_default_velocity	; default_velocity.4, default_velocity
-	negb	; default_velocity.4
-	stb	_default_velocity	; default_velocity.4, default_velocity
-	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
+	neg	_velocity_scale	; velocity_scale
+	jsr	__Random
+	stb	,s	;, D.3415
+	ldb	_velocity_scale	;, velocity_scale
+	stb	13,s	;, velocity_scale.89
+	ldb	,s	;, D.3415
+	lda	13,s	;mulqihi3	; velocity_scale.89
+	mul
+	tfr	d,x	;, tmp57
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp57,
+	stb	6,s	;,
+	tfr	x,d	; tmp57,
+	lblt	L39	;
+L15:
+	asr	6,s	;
+	asr	6,s	;
+	asr	6,s	;
+	asr	6,s	;
+	asr	6,s	;
+	asr	6,s	;
+	asl	13,s	; velocity_scale.89
+	ldb	6,s	;,
+	addb	13,s	;, velocity_scale.89
+	stb	_dot_x_vel	;, dot_x_vel
+	jsr	__Random
+	stb	,s	;, D.3416
+	ldb	_velocity_scale	;, velocity_scale
+	stb	14,s	;, velocity_scale.90
+	ldb	,s	;, D.3416
+	lda	14,s	;mulqihi3	; velocity_scale.90
+	mul
+	tfr	d,x	;, tmp63
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp63,
+	stb	5,s	;,
+	tfr	x,d	; tmp63,
+	lblt	L40	;
+L16:
+	asr	5,s	;
+	asr	5,s	;
+	asr	5,s	;
+	asr	5,s	;
+	asr	5,s	;
+	asr	5,s	;
+	asl	14,s	; velocity_scale.90
+	ldb	5,s	;,
+	addb	14,s	;, velocity_scale.90
+	stb	_dot_y_vel	;, dot_y_vel
 	clr	_dot_ticks	; dot_ticks
 	clr	_flashes	; flashes
 	clr	_dot_brightness	; dot_brightness
 	ldb	#1	;,
 	stb	_brightness_fade_in	;, brightness_fade_in
-	lbra	L20	;
-L6:
+	lbra	L36	;
+L17:
 	tst	_dot_y_vel	; dot_y_vel
-	lble	L12	;
+	lble	L28	;
 	ldb	#18	;,
 	stb	,-s	;,
 	clrb	;
@@ -190,17 +348,17 @@ L6:
 	ldb	#9	;,
 	jsr	__Draw_Line_d
 	leas	5,s	;,,
-L13:
+L29:
 	inc	_dot_ticks	; dot_ticks
-	ldb	_dot_ticks	; dot_ticks.35, dot_ticks
-	cmpb	#9	;cmpqi:	; dot_ticks.35,
-	ble	L8	;
+	ldb	_dot_ticks	; dot_ticks.37, dot_ticks
+	cmpb	#9	;cmpqi:	; dot_ticks.37,
+	ble	L27	;
 	tst	_dot_brightness	; dot_brightness
-	lbeq	L14	;
+	lbeq	L30	;
 	clr	_dot_brightness	; dot_brightness
-L15:
+L31:
 	clr	_dot_ticks	; dot_ticks
-L8:
+L27:
 	jsr	___Reset0Ref
 	ldb	#127	;,
 	jsr	__Intensity_a
@@ -208,70 +366,60 @@ L8:
 	stb	,-s	;,
 	addb	#6	;,
 	jsr	__Moveto_d
-	ldb	#-127	;,
+	ldx	#_edge	;,
+	jsr	___Draw_VLc
+	ldb	#127	;,
 	stb	,-s	;,
-	clrb	;
-	jsr	__Draw_Line_d
-	ldb	#-127	;,
-	stb	,-s	;,
-	clrb	;
-	jsr	__Draw_Line_d
-	clr	,-s	;
-	ldb	#124	;,
-	jsr	__Moveto_d
-	clr	,-s	;
 	ldb	#124	;,
 	jsr	__Moveto_d
 	ldb	#127	;,
 	stb	,-s	;,
-	clrb	;
-	jsr	__Draw_Line_d
+	ldb	#124	;,
+	jsr	__Moveto_d
+	ldx	#_edge	;,
+	jsr	___Draw_VLc
 	ldb	#127	;,
 	stb	,-s	;,
-	clrb	;
-	jsr	__Draw_Line_d
-	ldb	#-126	;,
-	stb	,-s	;,
-	addb	#2	;,
+	addb	#5	;,
 	jsr	__Moveto_d
 	ldb	_Vec_Btn_State	;, Vec_Btn_State
-	stb	9,s	;, D.3305
-	leas	8,s	;,,
+	stb	11,s	;, D.3308
+	leas	4,s	;,,
 	bitb	#1	;,
-	beq	L16	;
-	ldb	_player1_x	; player1_x.8, player1_x
-	cmpb	#-119	;cmpqi:	; player1_x.8,
-	blt	L16	;
-	addb	#-3	; player1_x.8,
-	stb	_player1_x	; player1_x.8, player1_x
-L16:
-	ldb	#2	; tmp64,
-	andb	1,s	; tmp64, D.3305
-	beq	L17	;
-	ldb	_player1_x	; player1_x.77, player1_x
-	cmpb	#83	;cmpqi:	; player1_x.77,
-	bgt	L17	;
-	addb	#3	; player1_x.77,
-	stb	_player1_x	; player1_x.77, player1_x
-L17:
-	ldb	#4	; tmp65,
-	andb	1,s	; tmp65, D.3305
-	beq	L18	;
-	ldb	_player2_x	; player2_x.11, player2_x
-	cmpb	#-119	;cmpqi:	; player2_x.11,
-	blt	L18	;
-	addb	#-3	; player2_x.11,
-	stb	_player2_x	; player2_x.11, player2_x
-L18:
+	beq	L32	;
+	ldb	_player1_x	; player1_x.10, player1_x
+	cmpb	#-119	;cmpqi:	; player1_x.10,
+	blt	L32	;
+	addb	#-3	; player1_x.10,
+	stb	_player1_x	; player1_x.10, player1_x
+L32:
+	ldb	#2	; tmp101,
+	andb	7,s	; tmp101, D.3308
+	beq	L33	;
+	ldb	_player1_x	; player1_x.85, player1_x
+	cmpb	#83	;cmpqi:	; player1_x.85,
+	bgt	L33	;
+	addb	#3	; player1_x.85,
+	stb	_player1_x	; player1_x.85, player1_x
+L33:
+	ldb	#4	; tmp102,
+	andb	7,s	; tmp102, D.3308
+	beq	L34	;
+	ldb	_player2_x	; player2_x.13, player2_x
+	cmpb	#-119	;cmpqi:	; player2_x.13,
+	blt	L34	;
+	addb	#-3	; player2_x.13,
+	stb	_player2_x	; player2_x.13, player2_x
+L34:
 	ldb	#8	;,
-	andb	1,s	;, D.3305
-	beq	L19	;
-	ldb	_player2_x	; player2_x.78, player2_x
-	cmpb	#83	;cmpqi:	; player2_x.78,
-	bgt	L19	;
-	addb	#3	; player2_x.78,
-	stb	_player2_x	; player2_x.78, player2_x
-L19:
+	andb	7,s	;, D.3308
+	beq	L35	;
+	ldb	_player2_x	; player2_x.86, player2_x
+	cmpb	#83	;cmpqi:	; player2_x.86,
+	bgt	L35	;
+	addb	#3	; player2_x.86,
+	stb	_player2_x	; player2_x.86, player2_x
+L35:
 	ldb	_player1_y	;, player1_y
 	stb	,-s	;,
 	ldb	_player1_x	;, player1_x
@@ -279,13 +427,24 @@ L19:
 	clr	,-s	;
 	ldb	#36	;,
 	jsr	__Draw_Line_d
-	ldb	#-36	; tmp68,
-	subb	_player1_x	; tmp68, player1_x
-	stb	2,s	; tmp68,
+	ldb	#-8	;,
+	stb	,-s	;,
+	clrb	;
+	jsr	__Draw_Line_d
+	clr	,-s	;
+	ldb	#-36	;,
+	jsr	__Draw_Line_d
+	ldb	#8	;,
+	stb	,-s	;,
+	clrb	;
+	jsr	__Draw_Line_d
+	ldb	_player1_x	;, player1_x
+	negb	;
+	stb	5,s	;,
 	ldb	_player1_y	;, player1_y
 	negb	;
 	pshs	b	;
-	ldb	3,s	;,
+	ldb	6,s	;,
 	jsr	__Moveto_d
 	ldb	_player2_y	;, player2_y
 	stb	,-s	;,
@@ -294,8 +453,20 @@ L19:
 	clr	,-s	;
 	ldb	#36	;,
 	jsr	__Draw_Line_d
-	leas	5,s	;,,
-L20:
+	leas	8,s	;,,
+	ldb	#-8	;,
+	stb	,-s	;,
+	clrb	;
+	jsr	__Draw_Line_d
+	clr	,-s	;
+	ldb	#-36	;,
+	jsr	__Draw_Line_d
+	ldb	#8	;,
+	stb	,-s	;,
+	clrb	;
+	jsr	__Draw_Line_d
+	leas	3,s	;,,
+L36:
 	jsr	___DP_to_C8
 	ldx	_current_song	;, current_song
 	jsr	__Init_Music_chk
@@ -324,64 +495,53 @@ L20:
 	leas	3,s	;,,
 	ldb	_flashes	;, flashes
 	cmpb	#4	;cmpqi:	;,
-	lble	L6	;
+	lble	L17	;
 	ldb	#127	;,
 	stb	_dot_brightness	;, dot_brightness
 	ldb	_dot_x_vel	;, dot_x_vel
-	stb	9,s	;, dot_x_vel.19
 	addb	_dot_x	;, dot_x
-	stb	8,s	;, dot_x.20
+	stb	12,s	;, dot_x.22
 	stb	_dot_x	;, dot_x
 	ldb	_dot_y_vel	;, dot_y_vel
-	stb	7,s	;, dot_y_vel.22
+	stb	11,s	;, dot_y_vel.24
 	addb	_dot_y	;, dot_y
-	stb	6,s	;, dot_y.23
+	stb	10,s	;, dot_y.25
 	stb	_dot_y	;, dot_y
-	ldx	#_player2_score_str	;,
 	cmpb	#122	;cmpqi:	;,
-	lbgt	L23	;
+	lbgt	L41	;
 	cmpb	#-122	;cmpqi:	;,
-	lblt	L25	;
-	ldb	_player1_x	;, player1_x
-	stb	5,s	;, player1_x.24
-	subb	9,s	; tmp50, dot_x_vel.19
-	cmpb	8,s	;cmpqi:(R)	; tmp50, dot_x.20
-	lbgt	L10	;
-	ldb	9,s	;, dot_x_vel.19
-	addb	5,s	;, player1_x.24
-	addb	#36	;,
-	stb	5,s	;, player1_x.24
-	ldb	8,s	;, dot_x.20
-	cmpb	5,s	;cmpqi:	;, player1_x.24
-	lbgt	L10	;
+	lblt	L42	;
+	tst	11,s	; dot_y_vel.24
+	lble	L25	;
+	ldb	_player1_x	; player1_x.26, player1_x
+	cmpb	12,s	;cmpqi:(R)	; player1_x.26, dot_x.22
+	bgt	L21	;
+	addb	#36	; player1_x.26,
+	cmpb	12,s	;cmpqi:(R)	; player1_x.26, dot_x.22
+	blt	L21	;
 	ldb	_player1_y	;, player1_y
-	stb	4,s	;, player1_y.25
-	subb	7,s	; tmp53, dot_y_vel.22
-	cmpb	6,s	;cmpqi:(R)	; tmp53, dot_y.23
-	lbgt	L10	;
-	ldb	4,s	;, player1_y.25
-	addb	7,s	;, dot_y_vel.22
-	stb	4,s	;, player1_y.25
-	ldb	6,s	;, dot_y.23
-	cmpb	4,s	;cmpqi:	;, player1_y.25
-	lbgt	L10	;
-L22:
-	ldb	7,s	; dot_y_vel.81, dot_y_vel.22
-	negb	; dot_y_vel.81
-	stb	_dot_y_vel	; dot_y_vel.81, dot_y_vel
-	aslb	; dot_y_vel.81
-	addb	6,s	; dot_y_vel.81, dot_y.23
-	stb	_dot_y	; dot_y_vel.81, dot_y
-L11:
-	ldb	8,s	;, dot_x.20
-	addb	#120	;,
-	cmpb	#-16	;cmpqi:	;,
-	lbls	L8	;
-	ldb	9,s	;, dot_x_vel.19
-	negb	;
-	stb	_dot_x_vel	;, dot_x_vel
-	lbra	L8	;
-L12:
+	stb	9,s	;, player1_y.27
+	addb	#-10	; tmp94,
+	cmpb	10,s	;cmpqi:(R)	; tmp94, dot_y.25
+	bgt	L21	;
+	ldb	10,s	;, dot_y.25
+	cmpb	9,s	;cmpqi:	;, player1_y.27
+	bgt	L21	;
+L26:
+	ldb	11,s	; dot_y_vel.30, dot_y_vel.24
+	negb	; dot_y_vel.30
+	stb	_dot_y_vel	; dot_y_vel.30, dot_y_vel
+	aslb	; dot_y_vel.30
+	addb	10,s	; dot_y_vel.30, dot_y.25
+	stb	_dot_y	; dot_y_vel.30, dot_y
+L21:
+	ldb	_dot_x	; tmp99, dot_x
+	addb	#120	; tmp99,
+	cmpb	#-16	;cmpqi:	; tmp99,
+	lbls	L27	;
+	neg	_dot_x_vel	; dot_x_vel
+	lbra	L27	;
+L28:
 	ldb	#-18	;,
 	stb	,-s	;,
 	clrb	;
@@ -402,50 +562,171 @@ L12:
 	stb	,-s	;,
 	jsr	__Draw_Line_d
 	leas	5,s	;,,
-	lbra	L13	;
-L14:
+	lbra	L29	;
+L30:
 	ldb	#127	;,
 	stb	_dot_brightness	;, dot_brightness
 	inc	_flashes	; flashes
-	lbra	L15	;
-L25:
-	ldx	#_player1_score_str	;,
-L23:
+	lbra	L31	;
+L41:
+	ldx	#_player2_score_str	;,
 	ldb	#1	;,
 	jsr	__Add_Score_a
 	clr	_dot_x	; dot_x
 	clr	_dot_y	; dot_y
-	ldb	_default_velocity	; default_velocity.4, default_velocity
-	negb	; default_velocity.4
-	stb	_default_velocity	; default_velocity.4, default_velocity
-	stb	_dot_x_vel	; default_velocity.4, dot_x_vel
-	stb	_dot_y_vel	; default_velocity.4, dot_y_vel
+	neg	_velocity_scale	; velocity_scale
+	jsr	__Random
+	stb	,s	;, D.3453
+	ldb	_velocity_scale	;, velocity_scale
+	stb	15,s	;, velocity_scale.94
+	ldb	,s	;, D.3453
+	lda	15,s	;mulqihi3	; velocity_scale.94
+	mul
+	tfr	d,x	;, tmp69
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp69,
+	stb	4,s	;,
+	tfr	x,d	; tmp69,
+	lblt	L43	;
+L19:
+	asr	4,s	;
+	asr	4,s	;
+	asr	4,s	;
+	asr	4,s	;
+	asr	4,s	;
+	asr	4,s	;
+	asl	15,s	; velocity_scale.94
+	ldb	4,s	;,
+	addb	15,s	;, velocity_scale.94
+	stb	_dot_x_vel	;, dot_x_vel
+	jsr	__Random
+	stb	,s	;, D.3454
+	ldb	_velocity_scale	;, velocity_scale
+	stb	16,s	;, velocity_scale.95
+	ldb	,s	;, D.3454
+	lda	16,s	;mulqihi3	; velocity_scale.95
+	mul
+	tfr	d,x	;, tmp75
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp75,
+	stb	3,s	;,
+	tfr	x,d	; tmp75,
+	lblt	L44	;
+L20:
+	asr	3,s	;
+	asr	3,s	;
+	asr	3,s	;
+	asr	3,s	;
+	asr	3,s	;
+	asr	3,s	;
+	asl	16,s	; velocity_scale.95
+	ldb	3,s	;,
+	addb	16,s	;, velocity_scale.95
+L38:
+	stb	_dot_y_vel	;, dot_y_vel
 	clr	_dot_ticks	; dot_ticks
 	clr	_flashes	; flashes
 	clr	_dot_brightness	; dot_brightness
 	ldb	#1	;,
 	stb	_brightness_fade_in	;, brightness_fade_in
-	lbra	L8	;
-L10:
-	ldb	_player2_x	;, player2_x
-	stb	3,s	;, player2_x.28
-	subb	9,s	; tmp56, dot_x_vel.19
-	cmpb	8,s	;cmpqi:(R)	; tmp56, dot_x.20
-	lbgt	L11	;
-	ldb	9,s	;, dot_x_vel.19
-	addb	3,s	;, player2_x.28
-	addb	#36	;,
-	stb	3,s	;, player2_x.28
-	ldb	8,s	;, dot_x.20
-	cmpb	3,s	;cmpqi:	;, player2_x.28
-	lbgt	L11	;
+	lbra	L21	;
+L42:
+	ldx	#_player1_score_str	;,
+	ldb	#1	;,
+	jsr	__Add_Score_a
+	clr	_dot_x	; dot_x
+	clr	_dot_y	; dot_y
+	neg	_velocity_scale	; velocity_scale
+	jsr	__Random
+	stb	,s	;, D.3466
+	ldb	_velocity_scale	;, velocity_scale
+	stb	17,s	;, velocity_scale.97
+	ldb	,s	;, D.3466
+	lda	17,s	;mulqihi3	; velocity_scale.97
+	mul
+	tfr	d,x	;, tmp81
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp81,
+	stb	2,s	;,
+	tfr	x,d	; tmp81,
+	lblt	L45	;
+L23:
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asr	2,s	;
+	asl	17,s	; velocity_scale.97
+	ldb	2,s	;,
+	addb	17,s	;, velocity_scale.97
+	stb	_dot_x_vel	;, dot_x_vel
+	jsr	__Random
+	stb	,s	;, D.3467
+	ldb	_velocity_scale	;, velocity_scale
+	stb	18,s	;, velocity_scale.98
+	ldb	,s	;, D.3467
+	lda	18,s	;mulqihi3	; velocity_scale.98
+	mul
+	tfr	d,x	;, tmp87
+	tfr	x,d	;movlsbqihi: R:x -> R:b	; tmp87,
+	stb	1,s	;,
+	tfr	x,d	; tmp87,
+	blt	L46	;
+L24:
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asr	1,s	;
+	asl	18,s	; velocity_scale.98
+	ldb	1,s	;,
+	addb	18,s	;, velocity_scale.98
+	lbra	L38	;
+L25:
+	tst	11,s	; dot_y_vel.24
+	lbeq	L21	;
+	ldb	_player2_x	; player2_x.28, player2_x
+	cmpb	12,s	;cmpqi:(R)	; player2_x.28, dot_x.22
+	lbgt	L21	;
+	addb	#36	; player2_x.28,
+	cmpb	12,s	;cmpqi:(R)	; player2_x.28, dot_x.22
+	lblt	L21	;
 	ldb	_player2_y	;, player2_y
-	stb	2,s	;, player2_y.29
-	addb	7,s	; tmp59, dot_y_vel.22
-	cmpb	6,s	;cmpqi:(R)	; tmp59, dot_y.23
-	lbgt	L11	;
-	ldb	2,s	; tmp60, player2_y.29
-	subb	7,s	; tmp60, dot_y_vel.22
-	cmpb	6,s	;cmpqi:(R)	; tmp60, dot_y.23
-	lblt	L11	;
-	lbra	L22	;
+	stb	8,s	;, player2_y.29
+	addb	#-8	; tmp96,
+	cmpb	10,s	;cmpqi:(R)	; tmp96, dot_y.25
+	lbgt	L21	;
+	dec	8,s	; player2_y.29
+	ldb	10,s	;, dot_y.25
+	cmpb	8,s	;cmpqi:	;, player2_y.29
+	lbge	L21	;
+	lbra	L26	;
+L44:
+	ldb	3,s	;,
+	addb	#63	;,
+	stb	3,s	;,
+	lbra	L20	;
+L43:
+	ldb	4,s	;,
+	addb	#63	;,
+	stb	4,s	;,
+	lbra	L19	;
+L46:
+	ldb	1,s	;,
+	addb	#63	;,
+	stb	1,s	;,
+	lbra	L24	;
+L45:
+	ldb	2,s	;,
+	addb	#63	;,
+	stb	2,s	;,
+	lbra	L23	;
+L39:
+	ldb	6,s	;,
+	addb	#63	;,
+	stb	6,s	;,
+	lbra	L15	;
+L40:
+	ldb	5,s	;,
+	addb	#63	;,
+	stb	5,s	;,
+	lbra	L16	;

@@ -1869,7 +1869,7 @@ static inline int joystick_2_up()
  return (joystick_2_y() > 0);
 }
 # 6 "C:\\Vide2.5.1.w64\\Vide.w64\\vectrex-pong\\source\\main.c" 2
-# 23 "C:\\Vide2.5.1.w64\\Vide.w64\\vectrex-pong\\source\\main.c"
+# 24 "C:\\Vide2.5.1.w64\\Vide.w64\\vectrex-pong\\source\\main.c"
 unsigned char *current_song;
 
 int player1_x, player1_y;
@@ -1880,19 +1880,20 @@ char player2_score_str[7];
 
 int dot_x, dot_y;
 int dot_x_vel, dot_y_vel;
-int default_velocity = 2;
+int velocity_scale = 1;
 unsigned int dot_brightness;
 int brightness_fade_in;
 
 int dot_ticks;
 int flashes;
 
+int edge[] = { 1, -127, 0, -127, 0 };
 
 
 
 
-static inline void play_song(void* song)
-{
+
+static inline void play_song(void* song) {
   Vec_Music_Flag = 1;
   current_song = song;
 }
@@ -1910,9 +1911,9 @@ static inline void loop_setup(void) {
 void reset_round(void) {
   dot_x = 0;
   dot_y = 0;
-  default_velocity = -default_velocity;
-  dot_x_vel = default_velocity;
-  dot_y_vel = default_velocity;
+  velocity_scale = -velocity_scale;
+  dot_x_vel = velocity_scale * (int) Random() / 64 + 2 * velocity_scale;
+  dot_y_vel = velocity_scale * (int) Random() / 64 + 2 * velocity_scale;
   dot_ticks = 0;
   flashes = 0;
   dot_brightness = 0;
@@ -1961,17 +1962,23 @@ static inline void draw_paddles(void) {
 
   Moveto_d(player1_y, player1_x);
   Draw_Line_d(0, 0x24);
-  Moveto_d(-player1_y, -player1_x - 0x24);
+  Draw_Line_d(-8, 0);
+  Draw_Line_d(0, -0x24);
+  Draw_Line_d(8, 0);
+  Moveto_d(-player1_y, -player1_x);
 
 
   Moveto_d(player2_y, player2_x);
   Draw_Line_d(0, 0x24);
+  Draw_Line_d(-8, 0);
+  Draw_Line_d(0, -0x24);
+  Draw_Line_d(8, 0);
 }
 
 static void move_dot(void) {
 
-  dot_x = dot_x + dot_x_vel;
-  dot_y = dot_y + dot_y_vel;
+  dot_x += dot_x_vel;
+  dot_y += dot_y_vel;
 
 
   if (dot_y > 122) {
@@ -1980,12 +1987,9 @@ static void move_dot(void) {
   } else if (dot_y < -122) {
     Add_Score_a(1, player1_score_str);
     reset_round();
-  } else if (dot_x >= player1_x - dot_x_vel && dot_x <= player1_x + 0x24 + dot_x_vel && dot_y >= player1_y - dot_y_vel && dot_y <= player1_y + dot_y_vel) {
+  } else if ((dot_y_vel > 0 && player1_x <= dot_x && dot_x <= player1_x + 0x24 && player1_y - 8 - 2 <= dot_y && dot_y <= player1_y) ||(dot_y_vel < 0 && player2_x <= dot_x && dot_x <= player2_x + 0x24 && player2_y - 8 <= dot_y && dot_y <= player2_y - 2)) {
     dot_y_vel = -dot_y_vel;
-    dot_y = dot_y + 2 * dot_y_vel;
-  } else if (dot_x >= player2_x - dot_x_vel && dot_x <= player2_x + 0x24 + dot_x_vel && dot_y >= player2_y + dot_y_vel && dot_y <= player2_y - dot_y_vel) {
-    dot_y_vel = -dot_y_vel;
-    dot_y = dot_y + 2 * dot_y_vel;
+    dot_y += 2 * dot_y_vel;
   }
 
 
@@ -1996,13 +2000,11 @@ static void move_dot(void) {
 
 static inline void draw_edges(void) {
   Moveto_d(126, -(120 + 4));
-  Draw_Line_d(-127, 0);
-  Draw_Line_d(-127, 0);
-  Moveto_d(0, (120 + 4));
-  Moveto_d(0, (120 + 4));
-  Draw_Line_d(127, 0);
-  Draw_Line_d(127, 0);
-  Moveto_d(-126, -(120 + 4));
+  Draw_VLc((void *) edge);
+  Moveto_d(127, (120 + 4));
+  Moveto_d(127, (120 + 4));
+  Draw_VLc((void *) edge);
+  Moveto_d(127, -(120 + 4));
 }
 
 
